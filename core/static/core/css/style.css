@@ -1,0 +1,167 @@
+/* =========================================================
+   VARIABLES GLOBALES
+========================================================= */
+
+:root {
+    --sidebar-width: 255px;
+    --topbar-height: 72px;
+
+    --page-bg: #f4f7fb;
+    --text-color: #102a43;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    overflow-x: hidden;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background: var(--page-bg);
+
+    color: var(--text-color);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   APPLICATION
+========================================================= */
+
+.app {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    position: relative;
+
+    /*
+       La sidebar fait 255px.
+       Toute l'application principale commence donc
+       après ces 255px.
+    */
+
+    margin-left: var(--sidebar-width);
+
+    width: calc(100% - var(--sidebar-width));
+
+    min-width: 0;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--page-bg);
+}
+
+
+/* =========================================================
+   CONTENU
+========================================================= */
+
+.content {
+    position: relative;
+
+    width: 100%;
+
+    min-width: 0;
+
+    flex: 1;
+
+    padding: 24px;
+
+    background: var(--page-bg);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.main footer {
+    width: 100%;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   TABLEAUX / ELEMENTS LARGES
+========================================================= */
+
+.table-responsive {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+
+    .content {
+        padding: 20px 16px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    :root {
+        --topbar-height: 64px;
+    }
+
+
+    .content {
+        padding: 16px 12px;
+    }
+
+}

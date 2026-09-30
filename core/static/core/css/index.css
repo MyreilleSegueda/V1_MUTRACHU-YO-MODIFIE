@@ -1,0 +1,1638 @@
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    margin-bottom: 24px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.page-header h1 {
+    margin: 0;
+
+    color: #08245a;
+
+    font-size: 33px;
+    font-weight: 800;
+}
+
+.page-header h2 {
+    margin: 0;
+
+    color: #08245a;
+
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.page-header p {
+    margin: 4px 0 0;
+
+    color: #5d7190;
+}
+
+.page-header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* DATE */
+
+.current-date {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    color: #435d82;
+
+    font-size: 13px;
+}
+
+.current-date i {
+    color: #0b4786;
+
+    font-size: 20px;
+}
+
+.vertical-line {
+    width: 1px;
+    height: 22px;
+
+    background: #ccd8e5;
+}
+
+.period-select {
+    width: 200px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   KPI GRID
+========================================================= */
+
+.kpi-grid {
+    display: grid;
+
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-bottom: 22px;
+
+    overflow: visible;
+}
+
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+.kpi-card {
+    position: relative;
+
+    min-height: 120px;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    color: #ffffff;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 18px rgba(20, 55, 90, 0.07);
+
+    transform: translateY(0) scale(1);
+
+    transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        filter 0.28s ease;
+
+    will-change: transform;
+}
+
+
+/* COULEURS KPI */
+
+.kpi-card.blue {
+    background:
+        linear-gradient(
+            135deg,
+            #198bff 0%,
+            #147de5 100%
+        );
+}
+
+.kpi-card.green {
+    background:
+        linear-gradient(
+            135deg,
+            #20b96a 0%,
+            #11a558 100%
+        );
+}
+
+.kpi-card.orange {
+    background:
+        linear-gradient(
+            135deg,
+            #ff9f24 0%,
+            #ff941c 100%
+        );
+}
+
+.kpi-card.purple {
+    background:
+        linear-gradient(
+            135deg,
+            #9b52ee 0%,
+            #873fe1 100%
+        );
+}
+
+.kpi-card.red {
+    background:
+        linear-gradient(
+            135deg,
+            #fa6073 0%,
+            #f4485d 100%
+        );
+}
+
+
+/* CONTENU KPI */
+
+.kpi-card > div {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.kpi-icon {
+    position: relative;
+
+    z-index: 2;
+
+    flex-shrink: 0;
+
+    font-size: 41px;
+
+    transition:
+        transform 0.28s ease,
+        opacity 0.28s ease;
+}
+
+.kpi-card strong {
+    color: #ffffff;
+
+    font-size: 29px;
+    font-weight: 700;
+
+    line-height: 1.1;
+}
+
+.kpi-card span {
+    margin-top: 6px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.kpi-card small {
+    margin-top: 8px;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   KPI HOVER
+========================================================= */
+
+.kpi-card:hover {
+    transform:
+        translateY(-7px)
+        scale(1.015);
+
+    box-shadow:
+        0 16px 32px rgba(20, 55, 90, 0.20);
+
+    filter: brightness(1.03);
+}
+
+.kpi-card:hover .kpi-icon {
+    transform:
+        scale(1.13)
+        rotate(-3deg);
+}
+
+
+/* REFLET */
+
+.kpi-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -90%;
+
+    z-index: 1;
+
+    width: 55%;
+    height: 100%;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.06) 25%,
+            rgba(255, 255, 255, 0.25) 50%,
+            rgba(255, 255, 255, 0.06) 75%,
+            transparent 100%
+        );
+
+    transform: skewX(-15deg);
+
+    transition: left 0.6s ease;
+}
+
+.kpi-card:hover::before {
+    left: 135%;
+}
+
+
+/* CLIC */
+
+.kpi-card:active {
+    transform:
+        translateY(-3px)
+        scale(0.99);
+
+    transition-duration: 0.1s;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.dashboard-row {
+    display: grid;
+
+    gap: 15px;
+
+    margin-bottom: 16px;
+}
+
+.first-row {
+    grid-template-columns:
+        2.15fr
+        1.15fr
+        1.35fr;
+}
+
+.second-row {
+    grid-template-columns:
+        1fr
+        1fr;
+}
+
+
+/* =========================================================
+   DASHBOARD CARDS
+========================================================= */
+
+.dashboard-card {
+    padding: 13px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 4px 15px rgba(13, 52, 88, 0.035);
+}
+
+.card-heading {
+    margin-bottom: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-heading h3 {
+    margin: 0;
+
+    color: #08245a;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.card-heading h3 i {
+    margin-right: 8px;
+
+    color: var(--primary);
+}
+
+.card-heading a {
+    color: var(--primary);
+
+    font-size: 12px;
+}
+
+.card-heading select {
+    width: 110px;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   CHARTS
+========================================================= */
+
+.chart-container {
+    position: relative;
+
+    height: 225px;
+}
+
+
+/* =========================================================
+   GENDER CHART
+========================================================= */
+
+.gender-chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.donut-container {
+    position: relative;
+
+    width: 200px;
+    height: 200px;
+}
+
+.donut-center {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    pointer-events: none;
+}
+
+.donut-center strong {
+    color: #08245a;
+
+    font-size: 22px;
+}
+
+.donut-center span {
+    color: #506987;
+
+    font-size: 11px;
+}
+
+.gender-legend {
+    display: flex;
+
+    gap: 24px;
+
+    color: #17325f;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.legend-dot {
+    width: 15px;
+    height: 15px;
+
+    margin-right: 5px;
+
+    display: inline-block;
+
+    vertical-align: middle;
+
+    border-radius: 50%;
+}
+
+.legend-dot.male {
+    background: #1e90ff;
+}
+
+.legend-dot.female {
+    background: #fa526a;
+}
+
+
+/* =========================================================
+   ALERTES
+========================================================= */
+
+.alert-row {
+    min-height: 56px;
+
+    margin-bottom: 7px;
+
+    padding: 9px 12px;
+
+    display: grid;
+
+    grid-template-columns:
+        25px
+        1fr
+        15px;
+
+    align-items: center;
+
+    gap: 8px;
+
+    border-radius: 6px;
+
+    color: #102956;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.alert-row:hover {
+    transform: translateX(3px);
+
+    box-shadow:
+        0 4px 10px rgba(25, 55, 90, 0.06);
+}
+
+.alert-row > i:first-child {
+    font-size: 20px;
+}
+
+.alert-red {
+    background: #fff0f1;
+}
+
+.alert-red > i:first-child {
+    color: #f82f48;
+}
+
+.alert-orange {
+    background: #fff5e7;
+}
+
+.alert-orange > i:first-child {
+    color: #f69b16;
+}
+
+.alert-blue {
+    background: #edf6ff;
+}
+
+.alert-blue > i:first-child {
+    color: #1685f5;
+}
+
+.alert-green {
+    background: #ecf9f1;
+}
+
+.alert-green > i:first-child {
+    color: #15ad60;
+}
+
+
+/* =========================================================
+   TABLEAU MEMBRES STANDARD
+========================================================= */
+
+.member-table {
+    margin-bottom: 0;
+
+    color: #0b2a59;
+
+    font-size: 12px;
+}
+
+.member-table thead th {
+    background: #edf4fa;
+
+    color: #102858;
+
+    border-color: #dde8f2;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.member-table td {
+    border-color: #e3ebf3;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+    padding: 4px 12px;
+
+    display: inline-block;
+
+    border-radius: 5px;
+
+    color: #ffffff;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status.active {
+    background: #12ae5d;
+}
+
+.status.suspended {
+    background: #ff9d20;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.action-eye {
+    color: #087ef2;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.age-chart {
+    height: 210px;
+}
+
+
+/* =========================================================
+   DERNIERS MEMBRES ENROLES
+========================================================= */
+
+.recent-members {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe8f2;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 4px 16px rgba(20, 48, 85, 0.06);
+}
+
+
+/* =========================================================
+   HEADER DERNIERS MEMBRES
+========================================================= */
+
+.recent-members-header {
+    min-height: 65px;
+
+    padding: 0 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e2eaf3;
+}
+
+.recent-members-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: #09285b;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.recent-members-heading i {
+    color: #087ff5;
+
+    font-size: 24px;
+}
+
+.recent-members-all {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: #087ff5;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.recent-members-all:hover {
+    color: #0067ce;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   TABLEAU DERNIERS MEMBRES
+========================================================= */
+
+.recent-members-table {
+    width: 100%;
+
+    margin: 0;
+
+    table-layout: fixed;
+
+    color: #102d59;
+
+    font-size: 15px;
+}
+
+
+/* EN-TÊTES */
+
+.recent-members-table thead th {
+    height: 52px;
+
+    padding: 0 18px;
+
+    vertical-align: middle;
+
+    background: #eef4fa;
+
+    color: #102b59;
+
+    border-right: 1px solid #dce6ef;
+    border-bottom: 1px solid #d7e2ed;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.recent-members-table thead th:last-child {
+    border-right: none;
+}
+
+
+/* =========================================================
+   LARGEURS DES COLONNES
+========================================================= */
+
+.recent-members-table th:nth-child(1),
+.recent-members-table td:nth-child(1) {
+    width: 8%;
+
+    text-align: center;
+}
+
+.recent-members-table th:nth-child(2),
+.recent-members-table td:nth-child(2) {
+    width: 12%;
+
+    text-align: center;
+}
+
+.recent-members-table th:nth-child(3),
+.recent-members-table td:nth-child(3) {
+    width: 27%;
+}
+
+.recent-members-table th:nth-child(4),
+.recent-members-table td:nth-child(4) {
+    width: 27%;
+}
+
+.recent-members-table th:nth-child(5),
+.recent-members-table td:nth-child(5) {
+    width: 26%;
+}
+
+
+/* =========================================================
+   LIGNES DERNIERS MEMBRES
+========================================================= */
+
+.recent-members-table tbody td {
+    height: 58px;
+
+    padding: 7px 18px;
+
+    vertical-align: middle;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e3ebf3;
+    border-bottom: 1px solid #e3ebf3;
+
+    transition:
+        background 0.18s ease;
+}
+
+.recent-members-table tbody td:last-child {
+    border-right: none;
+}
+
+.recent-members-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* LIGNE ALTERNÉE */
+
+.recent-members-table tbody tr:nth-child(even) td {
+    background: #fbfdff;
+}
+
+
+/* HOVER LIGNE */
+
+.recent-members-table tbody tr:hover td {
+    background: #f1f7ff;
+}
+
+
+/* =========================================================
+   NUMERO MEMBRE
+========================================================= */
+
+.member-number {
+    color: #637b99;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PHOTO MEMBRE
+========================================================= */
+
+.member-photo,
+.member-photo-empty {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 8px;
+}
+
+.member-photo {
+    display: block;
+
+    margin: auto;
+
+    object-fit: cover;
+
+    border: 1px solid #d5e1ec;
+}
+
+.member-photo-empty {
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e9f2fb;
+
+    color: #6884a4;
+
+    font-size: 21px;
+}
+
+
+/* =========================================================
+   NOM MEMBRE
+========================================================= */
+
+.member-name {
+    color: #09295c;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PRENOM
+========================================================= */
+
+.recent-members-table td:nth-child(4) {
+    color: #193a66;
+
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   MATRICULE
+========================================================= */
+
+.member-matricule {
+    padding: 6px 10px;
+
+    display: inline-block;
+
+    background: #edf6ff;
+
+    color: #086dcc;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    min-height: 70px;
+
+    padding: 0 35px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #ffffff;
+
+    border-top: 1px solid #dde8f2;
+
+    color: #4d6384;
+
+    font-size: 12px;
+}
+
+.footer div {
+    display: flex;
+
+    gap: 14px;
+}
+
+.footer a {
+    color: #355b8f;
+}
+
+.footer a:hover {
+    color: #087ff5;
+}
+
+
+/* =========================================================
+   RESPONSIVE - GRAND ÉCRAN
+========================================================= */
+
+@media (max-width: 1400px) {
+
+    .kpi-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .first-row {
+        grid-template-columns:
+            2fr
+            1fr;
+    }
+
+    .alerts-card {
+        grid-column: span 2;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLETTE
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .sidebar {
+        transform: translateX(-100%);
+
+        transition: transform 0.25s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        width: 100%;
+
+        margin-left: 0;
+    }
+
+    .kpi-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .first-row,
+    .second-row {
+        grid-template-columns: 1fr;
+    }
+
+    .alerts-card {
+        grid-column: auto;
+    }
+
+    .page-header {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .search-box {
+        width: min(500px, 50vw);
+    }
+
+    .recent-members-table {
+        min-width: 700px;
+    }
+
+    .recent-members-header {
+        padding: 0 15px;
+    }
+
+    .recent-members-heading {
+        font-size: 17px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .content {
+        padding:
+            15px
+            12px
+            20px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .kpi-card {
+        min-height: 105px;
+    }
+
+    .topbar-right .user-info,
+    .topbar-right .separator {
+        display: none;
+    }
+
+    .search-box {
+        display: none;
+    }
+
+    .page-header-actions {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+    .page-header h1 {
+        font-size: 27px;
+    }
+
+    .page-header h2 {
+        font-size: 18px;
+    }
+
+    .recent-members-table {
+        min-width: 700px;
+    }
+
+    .recent-members-heading {
+        font-size: 16px;
+    }
+
+    .recent-members-heading i {
+        font-size: 20px;
+    }
+
+    .recent-members-all {
+        font-size: 12px;
+    }
+
+    .footer {
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 10px;
+
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITE - REDUCTION DES ANIMATIONS
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+
+    .kpi-card,
+    .kpi-card::before,
+    .kpi-icon,
+    .alert-row {
+        transition: none;
+    }
+
+    .kpi-card:hover {
+        transform: none;
+    }
+
+    .kpi-card:hover .kpi-icon {
+        transform: none;
+    }
+
+    .alert-row:hover {
+        transform: none;
+    }
+}
+
+
+/* =========================================================
+   DERNIERS MEMBRES - CONTENEUR
+========================================================= */
+
+.recent-members {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e5edf5;
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 30px rgba(15, 52, 90, 0.06);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.recent-members-header {
+    min-height: 82px;
+
+    padding: 16px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #edf2f7;
+}
+
+
+.recent-members-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+/* ICONE HEADER */
+
+.recent-members-icon {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #eaf4ff;
+
+    color: #087ff5;
+
+    font-size: 21px;
+}
+
+
+/* TITRE */
+
+.recent-members-heading h3 {
+    margin: 0;
+
+    color: #09285b;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* SOUS-TITRE */
+
+.recent-members-heading p {
+    margin: 3px 0 0;
+
+    color: #8293a9;
+
+    font-size: 12px;
+    font-weight: 400;
+}
+
+
+/* VOIR TOUS */
+
+.recent-members-all {
+    height: 38px;
+
+    padding: 0 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 8px;
+
+    color: #087ff5;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.recent-members-all:hover {
+    background: #edf6ff;
+
+    color: #006bd6;
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.recent-members-table {
+    width: 100%;
+
+    margin: 0;
+
+    color: #18385f;
+
+    font-size: 15px;
+
+    table-layout: fixed;
+}
+
+
+/* =========================================================
+   ENTETE TABLE
+========================================================= */
+
+.recent-members-table thead th {
+    height: 48px;
+
+    padding: 0 20px;
+
+    vertical-align: middle;
+
+    background: #f7f9fc;
+
+    color: #72839a;
+
+    border: none;
+    border-bottom: 1px solid #e8eef5;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+
+/* =========================================================
+   LARGEUR COLONNES
+========================================================= */
+
+.recent-members-table th:nth-child(1),
+.recent-members-table td:nth-child(1) {
+    width: 8%;
+
+    text-align: center;
+}
+
+
+.recent-members-table th:nth-child(2),
+.recent-members-table td:nth-child(2) {
+    width: 12%;
+
+    text-align: center;
+}
+
+
+.recent-members-table th:nth-child(3),
+.recent-members-table td:nth-child(3) {
+    width: 28%;
+}
+
+
+.recent-members-table th:nth-child(4),
+.recent-members-table td:nth-child(4) {
+    width: 25%;
+}
+
+
+.recent-members-table th:nth-child(5),
+.recent-members-table td:nth-child(5) {
+    width: 27%;
+}
+
+
+/* =========================================================
+   LIGNES
+========================================================= */
+
+.recent-members-table tbody tr {
+    position: relative;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.recent-members-table tbody td {
+    height: 68px;
+
+    padding: 8px 20px;
+
+    vertical-align: middle;
+
+    background: #ffffff;
+
+    border: none;
+    border-bottom: 1px solid #edf2f7;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.recent-members-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   HOVER LIGNE
+========================================================= */
+
+.recent-members-table tbody tr:hover td {
+    background: #f6faff;
+}
+
+
+/* BARRE BLEUE A GAUCHE */
+
+.recent-members-table tbody tr td:first-child {
+    position: relative;
+}
+
+
+.recent-members-table tbody tr td:first-child::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 50%;
+
+    width: 3px;
+    height: 0;
+
+    border-radius: 0 5px 5px 0;
+
+    background: #1687f8;
+
+    transform: translateY(-50%);
+
+    transition: height 0.2s ease;
+}
+
+
+.recent-members-table tbody tr:hover td:first-child::before {
+    height: 34px;
+}
+
+
+/* =========================================================
+   NUMERO
+========================================================= */
+
+.member-index {
+    color: #93a2b5;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PHOTO
+========================================================= */
+
+.member-photo,
+.member-photo-empty {
+    width: 46px;
+    height: 46px;
+
+    border-radius: 12px;
+}
+
+
+.member-photo {
+    display: block;
+
+    margin: auto;
+
+    object-fit: cover;
+
+    border: 2px solid #ffffff;
+
+    box-shadow:
+        0 2px 8px rgba(23, 54, 90, 0.14);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.recent-members-table tbody tr:hover .member-photo {
+    transform: scale(1.07);
+
+    box-shadow:
+        0 5px 14px rgba(23, 54, 90, 0.18);
+}
+
+
+/* PHOTO VIDE */
+
+.member-photo-empty {
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf3f9;
+
+    color: #7188a4;
+
+    font-size: 21px;
+}
+
+
+/* =========================================================
+   NOM
+========================================================= */
+
+.member-name {
+    color: #09295c;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.1px;
+}
+
+
+/* =========================================================
+   PRENOM
+========================================================= */
+
+.member-firstname {
+    color: #354f70;
+
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   MATRICULE
+========================================================= */
+
+.member-matricule {
+    min-height: 32px;
+
+    padding: 6px 11px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    border: 1px solid #d8eaff;
+    border-radius: 7px;
+
+    background: #edf6ff;
+
+    color: #0872d8;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+}
+
+
+.member-matricule i {
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   AUCUN MEMBRE
+========================================================= */
+
+.members-empty {
+    min-height: 170px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: #8798ad;
+
+    text-align: center;
+}
+
+
+.members-empty i {
+    margin-bottom: 8px;
+
+    color: #a6b7c9;
+
+    font-size: 34px;
+}
+
+
+.members-empty strong {
+    color: #526b89;
+
+    font-size: 14px;
+}
+
+
+.members-empty span {
+    margin-top: 4px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .recent-members-header {
+        min-height: 72px;
+
+        padding: 13px 15px;
+    }
+
+
+    .recent-members-heading p {
+        display: none;
+    }
+
+
+    .recent-members-heading h3 {
+        font-size: 16px;
+    }
+
+
+    .recent-members-icon {
+        width: 38px;
+        height: 38px;
+
+        font-size: 18px;
+    }
+
+
+    .recent-members-table {
+        min-width: 750px;
+    }
+
+}

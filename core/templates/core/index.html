@@ -1,0 +1,348 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+
+{% block title %}
+Tableau de bord | Mutuelle
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'core/css/index.css' %}">
+
+      
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ========================= -->
+<!-- PAGE HEADER -->
+<!-- ========================= -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Tableau de bord</h1>
+
+        <h2>
+            Bienvenue, Administrateur 👋
+        </h2>
+
+        <p>
+            Voici la situation actuelle de la mutuelle en temps réel.
+        </p>
+
+    </div>
+
+
+    <div class="page-header-actions">
+
+        <div class="current-date">
+
+            <i class="bi bi-calendar3"></i>
+
+            <span>
+                Lundi 16 septembre 2026
+            </span>
+
+        </div>
+
+
+        <div class="vertical-line"></div>
+
+
+        <select class="form-select period-select">
+
+            <option>
+                Période : Cette année
+            </option>
+
+            <option>
+                Ce mois
+            </option>
+
+            <option>
+                Cette semaine
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======= KPI en chargement apres avec jschart -->
+
+<div class="kpi-grid">
+
+
+    <div class="kpi-card blue">
+
+        <i class="bi bi-people-fill kpi-icon"></i>
+
+        <div>
+
+            <strong>
+                {{total_membres}}
+            </strong>
+
+            <span>
+                Membres
+            </span>
+
+            <small>
+                ↗ +12 ce mois
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="kpi-card green">
+
+        <i class="bi bi-people-fill kpi-icon"></i>
+
+        <div>
+
+            <strong>
+                {{total_conjoints}}
+            </strong>
+
+            <span>
+                Conjoints
+            </span>
+
+            <small>
+                ↗ +8 ce mois
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="kpi-card orange">
+
+        <i class="bi bi-person-hearts kpi-icon"></i>
+
+        <div>
+
+            <strong>
+                {{total_enfants}}
+            </strong>
+
+            <span>
+                Enfants
+            </span>
+
+            <small>
+                ↗ +25 ce mois
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="kpi-card purple">
+
+        <i class="bi bi-credit-card-2-front-fill kpi-icon"></i>
+
+        <div>
+
+            <strong>
+                2 315
+            </strong>
+
+            <span>
+                Cartes produites
+            </span>
+
+            <small>
+                ↗ +40 ce mois
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="kpi-card red">
+
+        <i class="bi bi-exclamation-triangle-fill kpi-icon"></i>
+
+        <div>
+
+            <strong>
+                126
+            </strong>
+
+            <span>
+                Enfants âge dépassé
+            </span>
+
+            <small>
+                ↗ +6 ce mois
+            </small>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- reste du dashboard -->
+<div class="recent-members">
+
+    <div class="recent-members-header">
+
+        <div class="recent-members-heading">
+
+            <div class="recent-members-icon">
+                <i class="bi bi-people-fill"></i>
+            </div>
+
+            <div>
+                <h3>Derniers membres enrôlés</h3>
+                <p>Les 10 derniers membres ajoutés à la mutuelle</p>
+            </div>
+
+        </div>
+
+
+        <a href="#" class="recent-members-all">
+            Voir tous
+            <i class="bi bi-arrow-right"></i>
+        </a>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table recent-members-table">
+
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Matricule</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for membre in derniers_membres %}
+
+                <tr>
+
+                    <td>
+                        <span class="member-index">
+                            {{ forloop.counter|stringformat:"02d" }}
+                        </span>
+                    </td>
+
+
+                    <td>
+
+                        {% if membre.photo %}
+
+                            <img
+                                src="{{ membre.photo.url }}"
+                                class="member-photo"
+                                alt="{{ membre.nom }}"
+                            >
+
+                        {% else %}
+
+                            <div class="member-photo-empty">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        <span class="member-name">
+                            {{ membre.nom }}
+                        </span>
+                    </td>
+
+
+                    <td>
+                        <span class="member-firstname">
+                            {{ membre.prenom }}
+                        </span>
+                    </td>
+
+
+                    <td>
+
+                        <span class="member-matricule">
+
+                            {{ membre.matricule }}
+                        </span>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5">
+
+                        <div class="members-empty">
+
+                            <i class="bi bi-people"></i>
+
+                            <strong>Aucun membre</strong>
+
+                            <span>
+                                Aucun enrôlement n'a encore été enregistré.
+                            </span>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script src="{% static 'core/js/index.js' %}"></script>
+
+{% endblock %}

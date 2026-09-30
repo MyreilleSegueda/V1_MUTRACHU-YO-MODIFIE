@@ -1,0 +1,245 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Tableau de bord
+{% endblock %}
+
+{% block page_title %}
+TABLEAU DE BORD
+{% endblock %}
+
+{% block content %}
+
+<div class="space-y-6">
+
+    <!-- EN-TÊTE -->
+    <div>
+        <h1 class="text-2xl font-bold text-purple-500">
+            Tableau de bord
+        </h1>
+
+        <p class="mt-1 text-gray-600">
+            Bienvenue{% if user.is_authenticated %}, {{ user.get_full_name|default:user.username }}{% endif %} 👋
+        </p>
+
+        <p class="mt-1 text-sm text-gray-500">
+            Voici la situation actuelle en temps réel.
+        </p>
+    </div>
+
+
+    <!-- STATISTIQUES -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+
+        <!-- Membres -->
+        <div class="bg-blue-500 rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-white">Membres</p>
+            <h2 class="text-3xl font-bold text-white mt-2">
+                {{ total_membres }}
+            </h2>
+        </div>
+
+        <!-- Conjoints -->
+        <div class="bg-green-500 rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-white">Conjoints</p>
+            <h2 class="text-3xl font-bold text-white mt-2">
+                {{ total_conjoints }}
+            </h2>
+        </div>
+
+        <!-- Enfants -->
+        <div class="bg-orange-500 rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-white">Enfants</p>
+            <h2 class="text-3xl font-bold text-white mt-2">
+                {{ total_enfants }}
+            </h2>
+        </div>
+
+        <!-- Cartes à produire -->
+        <div class="bg-purple-500 rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-white">Cartes à produire</p>
+            <h2 class="text-3xl font-bold text-white mt-2">
+                --
+            </h2>
+        </div>
+
+        <!-- Enfants âge dépassé -->
+        <div class="bg-red-500 rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-white">Enfants âge dépassé</p>
+            <h2 class="text-3xl font-bold text-white mt-2">
+                --
+            </h2>
+        </div>
+
+    </div>
+
+
+    <!-- PARTIE BASSE -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- RÉPARTITION PAR SEXE -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-2">
+
+            <h3 class="text-lg font-bold text-purple-700">
+                Répartition des membres par sexe
+            </h3>
+
+            <div class="flex items-center justify-center gap-10 mt-6">
+
+                <!-- CERCLE -->
+                <div class="relative w-40 h-40">
+
+                    <svg
+                        viewBox="0 0 36 36"
+                        class="w-full h-full"
+                    >
+
+                        <circle
+                            cx="18"
+                            cy="18"
+                            r="15.9155"
+                            fill="none"
+                            stroke="#222f83"
+                            stroke-width="4"
+                        />
+
+                        <circle
+                            cx="18"
+                            cy="18"
+                            r="15.9155"
+                            fill="none"
+                            stroke="#8f2757"
+                            stroke-width="4"
+                            stroke-linecap="round"
+                            stroke-dasharray="{{ pourcentage_femmes }} 100"
+                            transform="rotate(-90 18 18)"
+                        />
+
+                    </svg>
+
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="text-xl font-bold text-purple-500">
+                            {{ total_membres }}
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <!-- LÉGENDE -->
+                <div class="space-y-4">
+
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            Femmes
+                        </p>
+
+                        <p class="text-xl font-bold text-gray-900">
+                            {{ membres_femmes }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            Hommes
+                        </p>
+
+                        <p class="text-xl font-bold text-gray-900">
+                            {{ membres_hommes }}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DERNIERS MEMBRES -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-2">
+
+            <div class="flex items-center justify-between mb-4">
+
+                <h3 class="text-lg font-bold text-purple-500">
+                    Derniers membres enrôlés
+                </h3>
+
+            </div>
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-sm">
+
+                    <thead>
+                        <tr class="border-b border-gray-100 text-left">
+
+                            <th class="py-3 text-gray-500 font-medium">
+                                N°
+                            </th>
+
+                            <th class="py-3 text-gray-500 font-medium">
+                                Nom
+                            </th>
+
+                            <th class="py-3 text-gray-500 font-medium">
+                                Prénom
+                            </th>
+
+                            <th class="py-3 text-gray-500 font-medium">
+                                Sexe
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for membre in derniers_membres %}
+
+                        <tr class="border-b border-gray-50">
+
+                            <td class="py-3">
+                                {{ membre.compteur|stringformat:"04d" }}
+                            </td>
+
+                            <td class="py-3 font-medium text-gray-900">
+                                {{ membre.nom|upper }}
+                            </td>
+
+                            <td class="py-3">
+                                {{ membre.prenom }}
+                            </td>
+
+                            <td class="py-3">
+                                {{ membre.sexe }}
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td
+                                colspan="4"
+                                class="py-6 text-center text-gray-500"
+                            >
+                                Aucun membre enrôlé.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

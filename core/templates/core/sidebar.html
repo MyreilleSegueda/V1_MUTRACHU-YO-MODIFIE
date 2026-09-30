@@ -1,0 +1,152 @@
+{% load static %}
+
+<aside class="sidebar">
+
+    <!-- =====================================================
+         IDENTITE
+    ====================================================== -->
+    <div class="sidebar-brand">
+
+        <div class="brand-icon">
+            <i class="bi bi-shield-check"></i>
+        </div>
+
+        <div class="brand-text">
+            <strong>MUTRA.CHU-YO</strong>
+            <span>Gestion de la mutuelle</span>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+    <nav class="sidebar-menu">
+
+
+        <!-- TABLEAU DE BORD -->
+
+        <div class="sidebar-section-label">
+            PRINCIPAL
+        </div>
+
+        <a href="{% url 'core_index' %}"
+           class="sidebar-link {% if request.resolver_match.url_name == 'core_index' %}active{% endif %}">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-grid-1x2-fill"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Tableau de bord
+            </span>
+
+        </a>
+
+
+        <!-- GESTION DES MEMBRES -->
+
+        <div class="sidebar-section-label">
+            GESTION DES MEMBRES
+        </div>
+
+
+        <a href="{% url 'liste_membres' %}"
+           class="sidebar-link {% if request.resolver_match.url_name == 'liste_membres' %}active{% endif %}">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-people-fill"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Membres
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'etape1' %}"
+           class="sidebar-link {% if request.resolver_match.url_name == 'etape1' %}active{% endif %}">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-person-plus-fill"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Nouvel enrôlement
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'liste_membres' %}"
+           class="sidebar-link">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-person-heart"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Conjoints
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'liste_membres' %}"
+           class="sidebar-link">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-people"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Enfants
+            </span>
+
+        </a>
+
+
+        <!-- CARTES -->
+
+        <div class="sidebar-section-label">
+            CARTES & IDENTIFICATION
+        </div>
+
+
+        <a href="{% url 'liste_cartes' %}"
+           class="sidebar-link {% if request.resolver_match.url_name == 'liste_cartes' %}active{% endif %}">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-credit-card-2-front-fill"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Cartes
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <!-- =====================================================
+         BAS SIDEBAR
+    ====================================================== -->
+
+    <div class="sidebar-footer">
+
+        <div class="sidebar-footer-icon">
+            <i class="bi bi-shield-check"></i>
+        </div>
+
+        <div>
+            <strong>MU.TRA.CHU.YO</strong>
+            <span>Gestion sécurisée</span>
+        </div>
+
+    </div>
+
+</aside>

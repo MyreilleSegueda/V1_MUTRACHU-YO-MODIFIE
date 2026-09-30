@@ -1,0 +1,633 @@
+
+
+.topbar {
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+    height: 72px;
+
+    flex-shrink: 0;
+
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #092b49 0%,
+            #0a3457 55%,
+            #0b3b61 100%
+        );
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 4px 18px rgba(5, 32, 55, 0.14);
+}
+
+
+/* =========================================================
+   PARTIE GAUCHE
+========================================================= */
+
+.topbar-left {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   BOUTON MENU
+========================================================= */
+
+.topbar-menu-btn {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #dcecff;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.topbar-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.10);
+
+    color: #ffffff;
+
+    transform: scale(1.04);
+}
+
+
+.topbar-menu-btn:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   BARRE DE RECHERCHE
+========================================================= */
+
+.topbar-search {
+    position: relative;
+
+    width: 100%;
+    max-width: 500px;
+    height: 42px;
+
+    padding: 0 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    background: rgba(255, 255, 255, 0.09);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 10px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* FOCUS RECHERCHE */
+
+.topbar-search:focus-within {
+    background: rgba(255, 255, 255, 0.13);
+
+    border-color:
+        rgba(80, 169, 255, 0.70);
+
+    box-shadow:
+        0 0 0 3px rgba(20, 135, 248, 0.12);
+}
+
+
+/* ICONE RECHERCHE */
+
+.topbar-search > i {
+    flex-shrink: 0;
+
+    color: #a8bfd2;
+
+    font-size: 16px;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.topbar-search:focus-within > i {
+    color: #5ab0ff;
+}
+
+
+/* INPUT RECHERCHE */
+
+.topbar-search input {
+    flex: 1;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+.topbar-search input::placeholder {
+    color: #a0b5c8;
+
+    font-weight: 400;
+}
+
+
+/* SUPPRESSION DU X NATIF */
+
+.topbar-search input::-webkit-search-cancel-button {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   RACCOURCI CTRL + K
+========================================================= */
+
+.search-shortcut {
+    flex-shrink: 0;
+
+    padding: 3px 7px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.13);
+
+    border-radius: 5px;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    color: #b9cad8;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PARTIE DROITE
+========================================================= */
+
+.topbar-actions {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+/* =========================================================
+   BOUTONS ACTION
+========================================================= */
+
+.topbar-action-btn {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #bfd0df;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.topbar-action-btn:hover {
+    background:
+        rgba(255, 255, 255, 0.09);
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+.topbar-action-btn:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification-btn {
+    position: relative;
+}
+
+
+.notification-dot {
+    position: absolute;
+
+    top: 2px;
+    right: 1px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #0a3457;
+
+    border-radius: 20px;
+
+    background: #ff435d;
+
+    color: #ffffff;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    line-height: 1;
+
+    box-shadow:
+        0 2px 7px rgba(255, 67, 93, 0.30);
+}
+
+
+/* =========================================================
+   SEPARATEUR
+========================================================= */
+
+.topbar-divider {
+    width: 1px;
+    height: 31px;
+
+    flex-shrink: 0;
+
+    margin: 0 9px;
+
+    background:
+        rgba(255, 255, 255, 0.14);
+}
+
+
+/* =========================================================
+   BLOC UTILISATEUR
+========================================================= */
+
+.topbar-user {
+    min-height: 48px;
+
+    padding:
+        4px
+        6px
+        4px
+        7px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.topbar-user:hover {
+    background:
+        rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.topbar-avatar {
+    width: 39px;
+    height: 39px;
+
+    flex: 0 0 39px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1688f8 0%,
+            #0871d7 100%
+        );
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    box-shadow:
+        0 4px 12px rgba(0, 83, 171, 0.25);
+}
+
+
+.topbar-avatar i {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   INFORMATIONS UTILISATEUR
+========================================================= */
+
+.topbar-user-info {
+    min-width: 110px;
+
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.2;
+}
+
+
+.topbar-user-info strong {
+    max-width: 150px;
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.topbar-user-info span {
+    margin-top: 3px;
+
+    color: #9fb4c8;
+
+    font-size: 10px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   FLECHE PROFIL
+========================================================= */
+
+.user-dropdown-btn {
+    width: 27px;
+    height: 27px;
+
+    flex: 0 0 27px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    color: #9eb4c8;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.topbar-user:hover .user-dropdown-btn {
+    color: #ffffff;
+
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE <= 1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .topbar-search {
+        max-width: 400px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE <= 992px
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .topbar {
+        padding: 0 16px;
+    }
+
+
+    .topbar-left {
+        gap: 12px;
+    }
+
+
+    .topbar-search {
+        max-width: 380px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE <= 768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .topbar {
+        gap: 10px;
+    }
+
+
+    .topbar-search {
+        max-width: 260px;
+    }
+
+
+    .search-shortcut {
+        display: none;
+    }
+
+
+    .topbar-user-info {
+        display: none;
+    }
+
+
+    .topbar-divider {
+        margin: 0 3px;
+    }
+
+
+    .topbar-user {
+        padding: 3px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE <= 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .topbar {
+        height: 64px;
+
+        padding: 0 12px;
+
+        gap: 5px;
+    }
+
+
+    .topbar-left {
+        flex: 0 0 auto;
+
+        gap: 5px;
+    }
+
+
+    /* RECHERCHE MASQUEE */
+
+    .topbar-search {
+        display: none;
+    }
+
+
+    /* BOUTON AIDE MASQUE */
+
+    .topbar-action-btn:first-child {
+        display: none;
+    }
+
+
+    .topbar-divider {
+        margin: 0 2px;
+    }
+
+
+    .topbar-user {
+        gap: 5px;
+    }
+
+
+    .topbar-avatar {
+        width: 36px;
+        height: 36px;
+
+        flex-basis: 36px;
+    }
+
+}

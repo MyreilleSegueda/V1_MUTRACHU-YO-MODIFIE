@@ -1,0 +1,113 @@
+{% load static %}
+
+<header class="topbar">
+
+    <!-- GAUCHE -->
+    <div class="topbar-left">
+
+        <button
+            type="button"
+            class="topbar-menu-btn"
+            id="sidebarToggle"
+            aria-label="Ouvrir le menu"
+        >
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- RECHERCHE -->
+        <div class="topbar-search">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="search"
+                placeholder="Rechercher un membre, un matricule..."
+                autocomplete="off"
+            >
+
+            <span class="search-shortcut">
+                Ctrl K
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- DROITE -->
+    <div class="topbar-actions">
+
+        <!-- AIDE -->
+        <button
+            type="button"
+            class="topbar-action-btn"
+            title="Aide"
+        >
+            <i class="bi bi-question-circle"></i>
+        </button>
+
+
+        <!-- NOTIFICATIONS -->
+        <button
+            type="button"
+            class="topbar-action-btn notification-btn"
+            title="Notifications"
+        >
+            <i class="bi bi-bell"></i>
+
+            <span class="notification-dot">
+                3
+            </span>
+        </button>
+
+
+        <div class="topbar-divider"></div>
+
+
+        <!-- UTILISATEUR -->
+        <div class="topbar-user">
+
+            <div class="topbar-avatar">
+
+                {% if request.user.is_authenticated %}
+
+                    {{ request.user.username|slice:":1"|upper }}
+
+                {% else %}
+
+                    <i class="bi bi-person-fill"></i>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="topbar-user-info">
+
+                <strong>
+                    {% if request.user.is_authenticated %}
+                        {{ request.user.get_full_name|default:request.user.username }}
+                    {% else %}
+                        Administrateur
+                    {% endif %}
+                </strong>
+
+                <span>
+                    Administrateur
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="user-dropdown-btn"
+            >
+                <i class="bi bi-chevron-down"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
