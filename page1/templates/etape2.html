@@ -1,0 +1,805 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}Nouvel enrôlement{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- EN-TÊTE -->
+    <div class="mb-8">
+
+        <h1 class="text-2xl font-bold text-gray-800">
+            Nouvel enrôlement
+        </h1>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Enregistrement d'un nouveau membre
+        </p>
+
+    </div>
+
+
+    <!-- ÉTAPES DE L'ENRÔLEMENT -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+
+        <div class="flex items-start justify-between">
+
+            <!-- 1 - IDENTITÉ -->
+            <div class="flex flex-col items-center min-w-[100px]">
+
+                <div class="w-10 h-10 rounded-full bg-blue-600 text-white
+                            flex items-center justify-center font-bold">
+                    1
+                </div>
+
+                <span class="mt-2 text-sm font-semibold text-blue-600">
+                    Identité
+                </span>
+
+            </div>
+
+            <div class="flex-1 h-0.5 bg-blue-600 mt-5 mx-2"></div>
+
+
+            <!-- 2 - CONJOINTS -->
+            <div class="flex flex-col items-center min-w-[100px]">
+
+                <div class="w-10 h-10 rounded-full bg-blue-600 text-white
+                            flex items-center justify-center font-bold">
+                    2
+                </div>
+
+                <span class="mt-2 text-sm font-semibold text-blue-600">
+                    Conjoints
+                </span>
+
+            </div>
+
+            <div class="flex-1 h-0.5 bg-gray-200 mt-5 mx-2"></div>
+
+
+            <!-- 3 - ENFANTS -->
+            <div class="flex flex-col items-center min-w-[100px]">
+
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500
+                            flex items-center justify-center font-bold">
+                    3
+                </div>
+
+                <span class="mt-2 text-sm text-gray-400">
+                    Enfants
+                </span>
+
+            </div>
+
+            <div class="flex-1 h-0.5 bg-gray-200 mt-5 mx-2"></div>
+
+
+            <!-- 4 - PHOTO -->
+            <div class="flex flex-col items-center min-w-[100px]">
+
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500
+                            flex items-center justify-center font-bold">
+                    4
+                </div>
+
+                <span class="mt-2 text-sm text-gray-400">
+                    Photo
+                </span>
+
+            </div>
+
+            <div class="flex-1 h-0.5 bg-gray-200 mt-5 mx-2"></div>
+
+
+            <!-- 5 - VALIDATION -->
+            <div class="flex flex-col items-center min-w-[100px]">
+
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500
+                            flex items-center justify-center font-bold">
+                    5
+                </div>
+
+                <span class="mt-2 text-sm text-gray-400">
+                    Validation
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENU + COLONNE DROITE -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+
+        <!-- FORMULAIRE -->
+        <div class="lg:col-span-2">
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+
+                <!-- EN-TÊTE DU FORMULAIRE -->
+                <div class="px-6 py-5 border-b border-gray-200">
+
+                    <h2 class="text-lg font-semibold text-gray-800">
+                        Informations familiales
+                    </h2>
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Renseignez les informations concernant le conjoint
+                        et les parents du membre.
+                    </p>
+
+                </div>
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <!-- IMPORTANT -->
+                    {{ conjoint_formset.management_form }}
+
+
+                    <div class="p-6">
+
+
+                        <!-- =========================
+                             CONJOINTS
+                        ========================== -->
+
+                        <div class="flex items-center justify-between mb-5">
+
+                            <div>
+
+                                <h3 class="text-base font-semibold text-gray-800">
+                                    Conjoint(e)
+                                </h3>
+
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Vous pouvez ajouter jusqu'à 4 conjoints.
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                id="add-conjoint"
+                                class="px-4 py-2 bg-blue-600 text-white
+                                       rounded-lg font-medium text-sm
+                                       hover:bg-blue-700 transition">
+
+                                + Ajouter
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- LISTE DES CONJOINTS -->
+                        <div id="conjoints-container">
+
+                            {% for form in conjoint_formset %}
+
+                                <div class="border border-gray-200 rounded-xl
+                                            p-5 mb-4 conjoint-form
+                                            relative bg-gray-50">
+
+                                    <!-- SUPPRIMER -->
+                                    <button
+                                        type="button"
+                                        class="absolute top-3 right-3
+                                               w-8 h-8 rounded-lg
+                                               bg-red-100 text-red-600
+                                               hover:bg-red-200
+                                               transition remove-conjoint">
+
+                                        ×
+
+                                    </button>
+
+
+                                    <!-- NOM -->
+                                    <div class="mb-5 pr-10">
+
+                                        <label class="block text-sm font-medium
+                                                      text-gray-700 mb-2">
+                                            Nom
+                                        </label>
+
+                                        {{ form.nom }}
+
+                                    </div>
+
+
+                                    <!-- PRÉNOM -->
+                                    <div class="mb-2 pr-10">
+
+                                        <label class="block text-sm font-medium
+                                                      text-gray-700 mb-2">
+                                            Prénom
+                                        </label>
+
+                                        {{ form.prenom }}
+
+                                    </div>
+
+
+                                    {% if form.DELETE %}
+                                        {{ form.DELETE.as_hidden }}
+                                    {% endif %}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- =========================
+                             TEMPLATE CACHÉ
+                        ========================== -->
+
+                        <div id="empty-form" style="display:none;">
+
+                            <div class="border border-gray-200 rounded-xl
+                                        p-5 mb-4 conjoint-form
+                                        relative bg-gray-50">
+
+                                <button
+                                    type="button"
+                                    class="absolute top-3 right-3
+                                           w-8 h-8 rounded-lg
+                                           bg-red-100 text-red-600
+                                           hover:bg-red-200
+                                           transition remove-conjoint">
+
+                                    ×
+
+                                </button>
+
+
+                                <!-- NOM -->
+                                <div class="mb-5 pr-10">
+
+                                    <label class="block text-sm font-medium
+                                                  text-gray-700 mb-2">
+                                        Nom
+                                    </label>
+
+                                    {{ conjoint_formset.empty_form.nom }}
+
+                                </div>
+
+
+                                <!-- PRÉNOM -->
+                                <div class="mb-2 pr-10">
+
+                                    <label class="block text-sm font-medium
+                                                  text-gray-700 mb-2">
+                                        Prénom
+                                    </label>
+
+                                    {{ conjoint_formset.empty_form.prenom }}
+
+                                </div>
+
+
+                                {% if conjoint_formset.empty_form.DELETE %}
+                                    {{ conjoint_formset.empty_form.DELETE.as_hidden }}
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SÉPARATION -->
+                        <div class="border-t border-gray-200 my-7"></div>
+
+
+                        <!-- =========================
+                             PÈRE
+                        ========================== -->
+
+                        <div class="mb-7">
+
+                            <h3 class="text-base font-semibold text-gray-800 mb-5">
+                                Père
+                            </h3>
+
+
+                            <!-- NOM -->
+                            <div class="mb-5">
+
+                                <label class="block text-sm font-medium
+                                              text-gray-700 mb-2">
+                                    Nom
+                                </label>
+
+                                {{ parent_pere_form.nom }}
+
+                            </div>
+
+
+                            <!-- PRÉNOM -->
+                            <div>
+
+                                <label class="block text-sm font-medium
+                                              text-gray-700 mb-2">
+                                    Prénom
+                                </label>
+
+                                {{ parent_pere_form.prenom }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SÉPARATION -->
+                        <div class="border-t border-gray-200 my-7"></div>
+
+
+                        <!-- =========================
+                             MÈRE
+                        ========================== -->
+
+                        <div>
+
+                            <h3 class="text-base font-semibold text-gray-800 mb-5">
+                                Mère
+                            </h3>
+
+
+                            <!-- NOM -->
+                            <div class="mb-5">
+
+                                <label class="block text-sm font-medium
+                                              text-gray-700 mb-2">
+                                    Nom
+                                </label>
+
+                                {{ parent_mere_form.nom }}
+
+                            </div>
+
+
+                            <!-- PRÉNOM -->
+                            <div>
+
+                                <label class="block text-sm font-medium
+                                              text-gray-700 mb-2">
+                                    Prénom
+                                </label>
+
+                                {{ parent_mere_form.prenom }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FOOTER FORMULAIRE -->
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200
+                                flex justify-between">
+
+                        <a
+                            href="{% url 'etape1' %}"
+                            class="px-6 py-2.5 bg-gray-200 text-gray-700
+                                   rounded-lg font-medium text-sm
+                                   hover:bg-gray-300 transition">
+
+                            ← Retour
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="px-6 py-2.5 bg-blue-600 text-white
+                                   rounded-lg font-medium text-sm
+                                   hover:bg-blue-700 transition">
+
+                            Suivant →
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             COLONNE DROITE
+        ========================== -->
+
+        <div>
+
+
+            <!-- BON À SAVOIR -->
+            <div class="bg-white rounded-xl shadow-sm border
+                        border-gray-200 p-6 mb-6">
+
+                <div class="flex items-center gap-3 mb-4">
+
+                    <div class="w-10 h-10 rounded-lg bg-yellow-100
+                                text-yellow-600 flex items-center
+                                justify-center">
+
+                        <i class="bi bi-lightbulb text-lg"></i>
+
+                    </div>
+
+                    <h3 class="text-base font-semibold text-gray-800">
+                        Bon à savoir
+                    </h3>
+
+                </div>
+
+
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    Renseignez les informations familiales avec soin.
+                    Vous pouvez ajouter jusqu'à quatre conjoints.
+                </p>
+
+            </div>
+
+
+            <!-- PROGRESSION -->
+            <div class="bg-white rounded-xl shadow-sm border
+                        border-gray-200 p-6 mb-6">
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-10 h-10 rounded-lg bg-blue-100
+                                text-blue-600 flex items-center
+                                justify-center">
+
+                        <i class="bi bi-bar-chart-line text-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-base font-semibold text-gray-800">
+                            Progression
+                        </h3>
+
+                        <p class="text-sm text-gray-500">
+                            Suivi de l'enrôlement
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- POURCENTAGE -->
+                <div class="mt-6">
+
+                    <div class="flex justify-between items-center mb-2">
+
+                        <span class="text-sm text-gray-600">
+                            Étape 2 sur 5
+                        </span>
+
+                        <span class="text-sm font-semibold text-blue-600">
+                            40%
+                        </span>
+
+                    </div>
+
+
+                    <!-- BARRE -->
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+
+                        <div
+                            class="bg-blue-600 h-2 rounded-full"
+                            style="width: 40%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LISTE DES ÉTAPES -->
+                <div class="mt-8 space-y-5">
+
+
+                    <!-- IDENTITÉ -->
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-8 h-8 rounded-full bg-green-100
+                                    text-green-600 flex items-center
+                                    justify-center text-sm font-bold">
+
+                            ✓
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-sm font-semibold text-gray-800">
+                                Identité
+                            </p>
+
+                            <p class="text-xs text-green-600">
+                                Terminé
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONJOINTS -->
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-8 h-8 rounded-full bg-blue-600
+                                    text-white flex items-center
+                                    justify-center text-sm font-bold">
+
+                            2
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-sm font-semibold text-blue-600">
+                                Conjoints
+                            </p>
+
+                            <p class="text-xs text-gray-400">
+                                En cours
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ENFANTS -->
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-8 h-8 rounded-full bg-gray-100
+                                    text-gray-500 flex items-center
+                                    justify-center text-sm font-bold">
+
+                            3
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-sm text-gray-500">
+                                Enfants
+                            </p>
+
+                            <p class="text-xs text-gray-400">
+                                À venir
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHOTO -->
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-8 h-8 rounded-full bg-gray-100
+                                    text-gray-500 flex items-center
+                                    justify-center text-sm font-bold">
+
+                            4
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-sm text-gray-500">
+                                Photo
+                            </p>
+
+                            <p class="text-xs text-gray-400">
+                                À venir
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- VALIDATION -->
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-8 h-8 rounded-full bg-gray-100
+                                    text-gray-500 flex items-center
+                                    justify-center text-sm font-bold">
+
+                            5
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-sm text-gray-500">
+                                Validation
+                            </p>
+
+                            <p class="text-xs text-gray-400">
+                                À venir
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- VALEUR DE L'ENRÔLEMENT -->
+            <div class="bg-white rounded-xl shadow-sm border
+                        border-gray-200 p-6">
+
+
+                <!-- MEMBRE -->
+                <div class="flex items-start gap-3 mb-5">
+
+                    <div class="w-10 h-10 rounded-lg bg-green-100
+                                text-green-600 flex items-center
+                                justify-center">
+
+                        <i class="bi bi-person-check text-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm font-semibold text-gray-800 mb-1">
+                            Un membre bien enrôlé
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            Des informations fiables et correctement
+                            enregistrées.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FAMILLE -->
+                <div class="flex items-start gap-3">
+
+                    <div class="w-10 h-10 rounded-lg bg-purple-100
+                                text-purple-600 flex items-center
+                                justify-center">
+
+                        <i class="bi bi-people text-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm font-semibold text-gray-800 mb-1">
+                            Une famille que nous protégeons
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            Un enrôlement complet pour mieux protéger
+                            la famille.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT DYNAMIQUE
+========================== -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const addBtn = document.getElementById('add-conjoint');
+
+    const container = document.getElementById('conjoints-container');
+
+    const totalForms =
+        document.getElementById('id_conjoint-TOTAL_FORMS');
+
+    const emptyForm =
+        document.getElementById('empty-form').innerHTML;
+
+    const MAX_CONJOINTS = 4;
+
+
+    // =========================
+    // AJOUTER UN CONJOINT
+    // =========================
+
+    addBtn.addEventListener('click', function () {
+
+        let formCount = parseInt(totalForms.value);
+
+        if (formCount >= MAX_CONJOINTS) {
+
+            alert("Maximum 4 conjoints.");
+
+            return;
+
+        }
+
+
+        let newForm =
+            emptyForm.replace(/__prefix__/g, formCount);
+
+
+        let div = document.createElement('div');
+
+        div.innerHTML = newForm;
+
+        container.appendChild(div);
+
+
+        totalForms.value = formCount + 1;
+
+    });
+
+
+    // =========================
+    // SUPPRIMER UN CONJOINT
+    // =========================
+
+    document.addEventListener('click', function(e) {
+
+        if (e.target.classList.contains('remove-conjoint')) {
+
+            const conjointForm =
+                e.target.closest('.conjoint-form');
+
+            conjointForm.remove();
+
+
+            let formCount =
+                parseInt(totalForms.value);
+
+            totalForms.value = formCount - 1;
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}
+```

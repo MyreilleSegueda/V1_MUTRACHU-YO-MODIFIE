@@ -1,0 +1,598 @@
+/*==================================================
+            MEMBRE LIST - MUTRA.CHU.YO
+==================================================*/
+
+:root{
+
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+
+    --success:#10b981;
+
+    --warning:#f59e0b;
+
+    --danger:#ef4444;
+
+    --light:#f8fafc;
+
+    --border:#e5e7eb;
+
+    --text:#1f2937;
+
+    --muted:#64748b;
+
+}
+
+/*==================================================
+PAGE
+==================================================*/
+
+body{
+
+    background:#f4f7fb;
+
+}
+
+.content{
+
+    padding:30px;
+
+}
+
+/*==================================================
+BREADCRUMB
+==================================================*/
+
+.custom-breadcrumb{
+
+    margin:0;
+
+}
+
+.custom-breadcrumb a{
+
+    text-decoration:none;
+
+    color:#64748b;
+
+    transition:.25s;
+
+}
+
+.custom-breadcrumb a:hover{
+
+    color:var(--primary);
+
+}
+
+/*==================================================
+TITLE
+==================================================*/
+
+.page-title{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--text);
+
+    margin-bottom:.4rem;
+
+}
+
+.page-subtitle{
+
+    color:var(--muted);
+
+    margin:0;
+
+}
+
+/*==================================================
+CARDS
+==================================================*/
+
+.search-card,
+.table-card{
+
+    border:none;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 10px 25px rgba(15,23,42,.05);
+
+}
+
+/*==================================================
+CARD BODY
+==================================================*/
+
+.search-card .card-body{
+
+    padding:28px;
+
+}
+
+/*==================================================
+LABEL
+==================================================*/
+
+.form-label{
+
+    font-weight:600;
+
+    color:#475569;
+
+    font-size:.9rem;
+
+}
+
+/*==================================================
+INPUT GROUP
+==================================================*/
+
+.input-group{
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+}
+
+.input-group-text{
+
+    background:#fff;
+
+    border-color:var(--border);
+
+    border-right:none;
+
+    color:#94a3b8;
+
+}
+
+.form-control{
+
+    border-color:var(--border);
+
+    border-left:none;
+
+    height:48px;
+
+    box-shadow:none;
+
+}
+
+.form-control:focus{
+
+    box-shadow:none;
+
+    border-color:var(--primary);
+
+}
+
+/*==================================================
+BUTTONS
+==================================================*/
+
+.btn-add-member{
+
+    height:48px;
+
+    border-radius:12px;
+
+    padding:0 22px;
+
+    font-weight:600;
+
+}
+
+.btn-filter{
+
+    height:48px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+.btn-reset{
+
+    width:48px;
+
+    height:48px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:12px;
+
+}
+
+/*==================================================
+TABLE
+==================================================*/
+
+.table{
+
+    margin:0;
+
+}
+
+.table thead{
+
+    background:#f8fafc;
+
+}
+
+.table thead th{
+
+    border:none;
+
+    padding:18px;
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+    color:#64748b;
+
+    text-transform:uppercase;
+
+    letter-spacing:.05em;
+
+}
+
+.table tbody td{
+
+    padding:18px;
+
+    border-top:1px solid #eef2f7;
+
+    vertical-align:middle;
+
+}
+
+.table-hover tbody tr{
+
+    transition:.25s;
+
+}
+
+.table-hover tbody tr:hover{
+
+    background:#f8fbff;
+
+}
+
+
+/*==================================================
+MEMBRE
+==================================================*/
+
+.member-photo{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid #e2e8f0;
+
+}
+
+.member-avatar{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+    font-weight:700;
+
+    font-size:15px;
+
+}
+
+/*==================================================
+NOM
+==================================================*/
+
+.table h6{
+
+    margin-bottom:3px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:#1e293b;
+
+}
+
+.table small{
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+}
+
+/*==================================================
+BADGE MATRICULE
+==================================================*/
+
+.matricule-badge{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    border-radius:10px;
+
+    padding:9px 14px;
+
+    font-weight:600;
+
+    font-size:13px;
+
+}
+
+/*==================================================
+BADGE SERVICE
+==================================================*/
+
+.service-badge{
+
+    background:#ecfdf5;
+
+    color:#059669;
+
+    border-radius:30px;
+
+    padding:9px 18px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/*==================================================
+ACTIONS
+==================================================*/
+
+.btn-action{
+
+    width:40px;
+
+    height:40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+    font-size:16px;
+
+}
+
+.btn-view{
+
+    background:#f1f5f9;
+
+    color:#2563eb;
+
+}
+
+.btn-view:hover{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+}
+
+.btn-edit{
+
+    background:#f8fafc;
+
+    color:#f59e0b;
+
+}
+
+.btn-edit:hover{
+
+    background:#fef3c7;
+
+    color:#d97706;
+
+}
+
+.btn-delete{
+
+    background:#f8fafc;
+
+    color:#ef4444;
+
+}
+
+.btn-delete:hover{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+/*==================================================
+EMPTY
+==================================================*/
+
+.table tbody tr td{
+
+    vertical-align:middle;
+
+}
+
+.table tbody tr{
+
+    transition:.2s ease;
+
+}
+
+.table tbody tr:hover{
+
+    transform:scale(1.003);
+
+}
+
+
+/*=========================
+FOOTER TABLE
+=========================*/
+
+.table-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 28px;
+
+    background:#fff;
+
+    border-top:1px solid #edf2f7;
+
+}
+
+/*=========================
+INFO
+=========================*/
+
+.table-footer-info{
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.table-footer-info strong{
+
+    color:#0f172a;
+
+}
+
+/*=========================
+TOTAL
+=========================*/
+
+.table-footer-total{
+
+    background:#f8fafc;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:12px;
+
+    padding:8px 18px;
+
+    font-size:14px;
+
+    color:#64748b;
+
+}
+
+.table-footer-total strong{
+
+    color:#2563eb;
+
+}
+
+/*=========================
+PAGINATION
+=========================*/
+
+.pagination-custom{
+
+    gap:8px;
+
+}
+
+.pagination-custom .page-link{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    border:1px solid #e2e8f0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#64748b;
+
+    background:#fff;
+
+    transition:.25s;
+
+    font-weight:600;
+
+}
+
+.pagination-custom .page-link:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    border-color:#2563eb;
+
+}
+
+.pagination-custom .active .page-link{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    border-color:#2563eb;
+
+    box-shadow:0 10px 20px rgba(37,99,235,.25);
+
+}

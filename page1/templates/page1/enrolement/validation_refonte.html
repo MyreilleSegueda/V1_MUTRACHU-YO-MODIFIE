@@ -1,0 +1,893 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Validation | Nouvel enrôlement{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'page1/css/enrolement.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="enrollment-page">
+
+    <!-- =====================================================
+         EN-TETE
+    ====================================================== -->
+
+    <div class="enrollment-header">
+
+        <div class="enrollment-title">
+            <h1>Nouvel enrôlement</h1>
+
+            <p>
+                Vérifiez les informations avant de valider
+                définitivement l'enrôlement
+            </p>
+        </div>
+
+        <div class="enrollment-breadcrumb">
+
+            <a href="{% url 'core_index' %}">
+                Accueil
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a href="{% url 'liste_membres' %}">
+                Membres
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>Validation</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="enrollment-layout">
+
+        <!-- =================================================
+             CONTENU PRINCIPAL
+        ================================================== -->
+
+        <div class="enrollment-main">
+
+
+            <!-- =================================================
+                 STEPPER
+            ================================================== -->
+
+            <div class="enrollment-stepper">
+
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-name">Identité</div>
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-name">Famille</div>
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-name">Enfants</div>
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-name">Photo</div>
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="step-name">Carte</div>
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <div class="step active">
+                    <div class="step-number">6</div>
+                    <div class="step-name">Validation</div>
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CARTE PRINCIPALE
+            ================================================== -->
+
+            <div class="enrollment-form-card validation-card">
+
+
+                <!-- HEADER -->
+
+                <div class="form-card-header">
+
+                    <div class="form-title">
+
+                        <div class="form-title-icon validation-title-icon">
+                            <i class="bi bi-clipboard-check-fill"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Étape 6 : Vérification finale
+                            </h2>
+
+                            <p>
+                                Contrôlez les informations enregistrées
+                                avant de terminer l'enrôlement.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="validation-ready-badge">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Prêt à valider
+
+                    </div>
+
+                </div>
+
+
+                <div class="validation-body">
+
+
+                    <!-- =================================================
+                         PROFIL MEMBRE
+                    ================================================== -->
+
+                    <div class="validation-profile">
+
+                        <div class="validation-profile-photo">
+
+                            {% if membre.photo %}
+
+                                <img
+                                    src="{{ membre.photo.url }}"
+                                    alt="Photo de {{ membre.nom }}"
+                                >
+
+                            {% else %}
+
+                                <div class="validation-no-photo">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="validation-profile-info">
+
+                            <span class="profile-label">
+                                MEMBRE À ENRÔLER
+                            </span>
+
+                            <h2>
+                                {{ membre.nom }}
+                                {{ membre.prenom }}
+                            </h2>
+
+                            <div class="profile-meta">
+
+                                <span>
+                                    <i class="bi bi-person-badge"></i>
+                                    {{ membre.matricule }}
+                                </span>
+
+                                <span>
+                                    <i class="bi bi-gender-ambiguous"></i>
+                                    {{ membre.sexe }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-validation-status">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <div>
+                                <strong>Dossier complet</strong>
+                                <span>Vérification finale</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         IDENTITE
+                    ================================================== -->
+
+                    <section class="validation-section">
+
+                        <div class="validation-section-header">
+
+                            <div class="validation-section-heading">
+
+                                <div class="validation-section-icon identity">
+                                    <i class="bi bi-person-vcard-fill"></i>
+                                </div>
+
+                                <div>
+                                    <h3>Informations d'identité</h3>
+                                    <p>
+                                        Informations principales du membre
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <a href="{% url 'etape1' %}"
+                               class="validation-edit-btn">
+
+                                <i class="bi bi-pencil-square"></i>
+                                Modifier
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="validation-info-grid">
+
+                            <div class="validation-info-item">
+                                <span>Nom</span>
+                                <strong>{{ membre.nom|default:"—" }}</strong>
+                            </div>
+
+                            <div class="validation-info-item">
+                                <span>Prénom</span>
+                                <strong>{{ membre.prenom|default:"—" }}</strong>
+                            </div>
+
+                            <div class="validation-info-item">
+                                <span>Matricule</span>
+                                <strong>{{ membre.matricule|default:"—" }}</strong>
+                            </div>
+
+                            <div class="validation-info-item">
+                                <span>Sexe</span>
+                                <strong>{{ membre.sexe|default:"—" }}</strong>
+                            </div>
+
+                            <div class="validation-info-item">
+                                <span>Emploi</span>
+                                <strong>{{ membre.emploi|default:"—" }}</strong>
+                            </div>
+
+                            <div class="validation-info-item">
+                                <span>Service</span>
+                                <strong>{{ membre.service|default:"—" }}</strong>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         FAMILLE
+                    ================================================== -->
+
+                    <section class="validation-section">
+
+                        <div class="validation-section-header">
+
+                            <div class="validation-section-heading">
+
+                                <div class="validation-section-icon family">
+                                    <i class="bi bi-person-heart"></i>
+                                </div>
+
+                                <div>
+                                    <h3>Informations familiales</h3>
+                                    <p>
+                                        Conjoint(s) et parents enregistrés
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <a href="{% url 'etape2' %}"
+                               class="validation-edit-btn">
+
+                                <i class="bi bi-pencil-square"></i>
+                                Modifier
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="validation-family-summary">
+
+                            <div class="validation-summary-item">
+
+                                <div class="summary-icon spouse">
+                                    <i class="bi bi-person-heart"></i>
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        {{ conjoints|length }}
+                                    </strong>
+
+                                    <span>
+                                        Conjoint(s)
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="validation-family-message">
+
+                                <i class="bi bi-check-circle-fill"></i>
+
+                                <span>
+                                    Informations familiales enregistrées
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        {% if conjoints %}
+
+                        <div class="validation-person-list">
+
+                            {% for conjoint in conjoints %}
+
+                                <div class="validation-person-row">
+
+                                    <div class="person-mini-avatar">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            Conjoint {{ forloop.counter }}
+                                        </span>
+
+                                        <strong>
+                                            {{ conjoint.nom }}
+                                            {{ conjoint.prenom }}
+                                        </strong>
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% endif %}
+
+                    </section>
+
+
+                    <!-- =================================================
+                         ENFANTS
+                    ================================================== -->
+
+                    <section class="validation-section">
+
+                        <div class="validation-section-header">
+
+                            <div class="validation-section-heading">
+
+                                <div class="validation-section-icon children">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+
+                                <div>
+                                    <h3>Enfants à charge</h3>
+
+                                    <p>
+                                        Enfants enregistrés pour ce membre
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <a href="{% url 'etape3' %}"
+                               class="validation-edit-btn">
+
+                                <i class="bi bi-pencil-square"></i>
+                                Modifier
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="validation-family-summary">
+
+                            <div class="validation-summary-item">
+
+                                <div class="summary-icon children">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        {{ enfants|length }}
+                                    </strong>
+
+                                    <span>
+                                        Enfant(s)
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {% if enfants %}
+
+                        <div class="validation-person-list">
+
+                            {% for enfant in enfants %}
+
+                                <div class="validation-person-row">
+
+                                    <div class="person-mini-avatar child">
+                                        {{ forloop.counter }}
+                                    </div>
+
+                                    <div>
+
+                                        <span>
+                                            Enfant {{ forloop.counter }}
+                                        </span>
+
+                                        <strong>
+                                            {{ enfant.nom }}
+                                            {{ enfant.prenom }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="person-extra-info">
+
+                                        <span>
+                                            Date de naissance
+                                        </span>
+
+                                        <strong>
+                                            {{ enfant.date_naissance|date:"d/m/Y" }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% else %}
+
+                            <div class="validation-empty">
+
+                                <i class="bi bi-info-circle"></i>
+
+                                Aucun enfant enregistré.
+
+                            </div>
+
+                        {% endif %}
+
+                    </section>
+
+
+                    <!-- =================================================
+                         PHOTO + CARTE
+                    ================================================== -->
+
+                    <div class="validation-two-columns">
+
+
+                        <!-- PHOTO -->
+
+                        <section class="validation-section compact">
+
+                            <div class="validation-section-header">
+
+                                <div class="validation-section-heading">
+
+                                    <div class="validation-section-icon photo">
+                                        <i class="bi bi-camera-fill"></i>
+                                    </div>
+
+                                    <div>
+                                        <h3>Photo</h3>
+                                        <p>Photo d'identification</p>
+                                    </div>
+
+                                </div>
+
+
+                                <a href="{% url 'etape4' %}"
+                                   class="validation-edit-btn">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+                            </div>
+
+
+                            {% if membre.photo %}
+
+                                <div class="validation-photo-result">
+
+                                    <img
+                                        src="{{ membre.photo.url }}"
+                                        alt="Photo du membre"
+                                    >
+
+                                    <div>
+
+                                        <strong>
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            Photo enregistrée
+                                        </strong>
+
+                                        <span>
+                                            Photo disponible pour la carte
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            {% else %}
+
+                                <div class="validation-warning">
+
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+
+                                    Aucune photo enregistrée.
+
+                                </div>
+
+                            {% endif %}
+
+                        </section>
+
+
+                        <!-- CARTE -->
+
+                        <section class="validation-section compact">
+
+                            <div class="validation-section-header">
+
+                                <div class="validation-section-heading">
+
+                                    <div class="validation-section-icon card">
+                                        <i class="bi bi-credit-card-2-front-fill"></i>
+                                    </div>
+
+                                    <div>
+                                        <h3>Carte membre</h3>
+                                        <p>Informations de production</p>
+                                    </div>
+
+                                </div>
+
+
+                                <a href="{% url 'validation' %}"
+                                   class="validation-edit-btn">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+                            </div>
+
+
+                            <div class="validation-card-result">
+
+                                <div class="card-result-icon">
+                                    <i class="bi bi-credit-card-2-front-fill"></i>
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Informations enregistrées
+                                    </strong>
+
+                                    <span>
+                                        Carte prête pour la prochaine phase
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CONFIRMATION
+                    ================================================== -->
+
+                    <div class="final-validation-message">
+
+                        <div class="final-validation-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Vérification avant validation
+                            </strong>
+
+                            <p>
+                                Assurez-vous que toutes les informations
+                                affichées sont correctes. Après validation,
+                                le membre sera définitivement enregistré
+                                dans la mutuelle.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     FOOTER
+                ================================================== -->
+
+                <div class="form-footer validation-footer">
+
+                    <a href="{% url 'validation' %}"
+                       class="cancel-btn">
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Retour
+
+                    </a>
+
+
+                    <form method="POST"
+                          class="validation-submit-form">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="final-validation-btn">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Valider l'enrôlement
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="enrollment-sidebar">
+
+
+            <!-- 100% -->
+
+            <div class="validation-complete-card">
+
+                <div class="validation-complete-icon">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+
+                <strong>
+                    Dossier complété
+                </strong>
+
+                <span>
+                    Toutes les étapes ont été renseignées
+                </span>
+
+            </div>
+
+
+            <!-- PROGRESSION -->
+
+            <div class="progress-card">
+
+                <div class="progress-title">
+
+                    <div class="progress-icon">
+                        <i class="bi bi-list-task"></i>
+                    </div>
+
+                    <div>
+                        <h3>Progression</h3>
+                        <p>Étape 6 sur 6</p>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-row">
+
+                    <div class="progress-bar-container">
+
+                        <div class="progress-bar-value complete"
+                             style="width:100%;">
+                        </div>
+
+                    </div>
+
+                    <strong class="progress-complete-text">
+                        100%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- LISTE DES ETAPES -->
+
+            <div class="steps-sidebar">
+
+                <div class="sidebar-step completed">
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div>
+                        <strong>Identité</strong>
+                        <span>Terminé</span>
+                    </div>
+                </div>
+
+
+                <div class="sidebar-step completed">
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div>
+                        <strong>Famille</strong>
+                        <span>Terminé</span>
+                    </div>
+                </div>
+
+
+                <div class="sidebar-step completed">
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div>
+                        <strong>Enfants</strong>
+                        <span>Terminé</span>
+                    </div>
+                </div>
+
+
+                <div class="sidebar-step completed">
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div>
+                        <strong>Photo</strong>
+                        <span>Terminé</span>
+                    </div>
+                </div>
+
+
+                <div class="sidebar-step completed">
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div>
+                        <strong>Carte</strong>
+                        <span>Terminé</span>
+                    </div>
+                </div>
+
+
+                <div class="sidebar-step active">
+
+                    <div class="sidebar-step-marker">
+                        6
+                    </div>
+
+                    <div>
+                        <strong>Validation</strong>
+                        <span>Vérification finale</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- INFORMATION -->
+
+            <div class="validation-help-card">
+
+                <div class="validation-help-icon">
+                    <i class="bi bi-info-lg"></i>
+                </div>
+
+                <h3>Dernière étape</h3>
+
+                <p>
+                    Prenez quelques instants pour vérifier
+                    les informations avant de valider
+                    définitivement l'enrôlement.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

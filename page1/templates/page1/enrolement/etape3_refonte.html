@@ -1,0 +1,1109 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Enfants | Nouvel enrôlement{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'page1/css/enrolement.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="enrollment-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="enrollment-header">
+
+        <div class="enrollment-title">
+
+            <h1>Nouvel enrôlement</h1>
+
+            <p>
+                Enregistrez un nouveau membre dans la mutuelle
+            </p>
+
+        </div>
+
+
+        <div class="enrollment-breadcrumb">
+
+            <a href="{% url 'core_index' %}">
+                Accueil
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a href="{% url 'liste_membres' %}">
+                Membres
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>Nouvel enrôlement</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LAYOUT GENERAL
+    ====================================================== -->
+
+    <div class="enrollment-layout">
+
+
+        <!-- =================================================
+             COLONNE PRINCIPALE
+        ================================================== -->
+
+        <div class="enrollment-main">
+
+
+            <!-- =============================================
+                 STEPPER 6 ETAPES
+            ============================================== -->
+
+            <div class="enrollment-stepper">
+
+
+                <!-- ETAPE 1 -->
+
+                <div class="step completed">
+
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div class="step-name">
+                        Identité
+                    </div>
+
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <!-- ETAPE 2 -->
+
+                <div class="step completed">
+
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div class="step-name">
+                        Famille
+                    </div>
+
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <!-- ETAPE 3 -->
+
+                <div class="step active">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-name">
+                        Enfants
+                    </div>
+
+                </div>
+
+                <div class="step-line"></div>
+
+
+                <!-- ETAPE 4 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-name">
+                        Photo
+                    </div>
+
+                </div>
+
+                <div class="step-line"></div>
+
+
+                <!-- ETAPE 5 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <div class="step-name">
+                        Carte
+                    </div>
+
+                </div>
+
+                <div class="step-line"></div>
+
+
+                <!-- ETAPE 6 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        6
+                    </div>
+
+                    <div class="step-name">
+                        Validation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CARTE PRINCIPALE
+            ================================================== -->
+
+            <div class="enrollment-form-card">
+
+
+                <!-- HEADER -->
+
+                <div class="form-card-header">
+
+                    <div class="form-title">
+
+                        <div class="form-title-icon children-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Étape 3 : Enfants à charge
+                            </h2>
+
+                            <p>
+                                Renseignez les informations concernant
+                                les enfants du membre.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="required-message">
+
+                        Étape
+                        <strong>3 sur 6</strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     FORMULAIRE
+                ================================================== -->
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    {{ formset.management_form }}
+
+
+                    <div class="children-form-body">
+
+
+                        <!-- =========================================
+                             HEADER SECTION
+                        ========================================== -->
+
+                        <div class="children-section-header">
+
+                            <div class="children-section-title">
+
+                                <div class="children-section-icon">
+                                    <i class="bi bi-person-hearts"></i>
+                                </div>
+
+
+                                <div>
+
+                                    <h3>
+                                        Liste des enfants
+                                    </h3>
+
+                                    <p>
+                                        Vous pouvez enregistrer jusqu'à
+                                        9 enfants à charge.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                id="add-enfant"
+                                class="add-child-btn"
+                            >
+
+                                <i class="bi bi-plus-lg"></i>
+
+                                Ajouter un enfant
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- =========================================
+                             COMPTEUR / INFORMATION
+                        ========================================== -->
+
+                        <div class="children-summary">
+
+                            <div class="children-summary-icon">
+                                <i class="bi bi-info-circle"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Informations des enfants
+                                </strong>
+
+                                <span>
+                                    Nom, prénom et date de naissance
+                                    sont nécessaires pour chaque enfant.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =========================================
+                             LISTE DES ENFANTS
+                        ========================================== -->
+
+                        <div id="enfants-container"
+                             class="children-list">
+
+
+                            {% for form in formset %}
+
+                            <div class="enfant-form child-card">
+
+                                <!-- ID DJANGO -->
+
+                                {{ form.id }}
+
+
+                                <!-- HEADER ENFANT -->
+
+                                <div class="child-card-header">
+
+                                    <div class="child-title">
+
+                                        <div class="child-number">
+                                            {{ forloop.counter }}
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Enfant {{ forloop.counter }}
+                                            </strong>
+
+                                            <span>
+                                                Informations personnelles
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <button
+                                        type="button"
+                                        class="remove-enfant"
+                                        title="Retirer cet enfant"
+                                    >
+
+                                        <i class="bi bi-trash3"></i>
+
+                                    </button>
+
+                                </div>
+
+
+                                <!-- CHAMPS -->
+
+                                <div class="child-fields-grid">
+
+
+                                    <!-- NOM -->
+
+                                    <div class="form-group">
+
+                                        <label>
+                                            Nom
+                                        </label>
+
+                                        {{ form.nom }}
+
+                                        {% if form.nom.errors %}
+
+                                            <div class="field-error">
+                                                {{ form.nom.errors }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <!-- PRENOM -->
+
+                                    <div class="form-group">
+
+                                        <label>
+                                            Prénom
+                                        </label>
+
+                                        {{ form.prenom }}
+
+                                        {% if form.prenom.errors %}
+
+                                            <div class="field-error">
+                                                {{ form.prenom.errors }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <!-- DATE DE NAISSANCE -->
+
+                                    <div class="form-group child-birthdate">
+
+                                        <label>
+                                            Date de naissance
+                                        </label>
+
+                                        <div class="date-field-wrapper">
+
+                                            {{ form.date_naissance }}
+
+                                            <i class="bi bi-calendar3"></i>
+
+                                        </div>
+
+                                        {% if form.date_naissance.errors %}
+
+                                            <div class="field-error">
+                                                {{ form.date_naissance.errors }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <!-- DELETE DJANGO -->
+
+                                {% if form.DELETE %}
+
+                                    <div class="delete-field">
+                                        {{ form.DELETE.as_hidden }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% empty %}
+
+                                <div
+                                    id="children-empty-state"
+                                    class="children-empty-state"
+                                >
+
+                                    <div class="empty-children-icon">
+                                        <i class="bi bi-person-plus"></i>
+                                    </div>
+
+                                    <strong>
+                                        Aucun enfant ajouté
+                                    </strong>
+
+                                    <p>
+                                        Cliquez sur « Ajouter un enfant »
+                                        pour renseigner un enfant à charge.
+                                    </p>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- =========================================
+                             FORMULAIRE VIDE POUR JS
+                        ========================================== -->
+
+                        <div id="empty-form"
+                             style="display:none;">
+
+                            <div class="enfant-form child-card">
+
+
+                                <div class="child-card-header">
+
+                                    <div class="child-title">
+
+                                        <div class="child-number">
+                                            #
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Nouvel enfant
+                                            </strong>
+
+                                            <span>
+                                                Informations personnelles
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <button
+                                        type="button"
+                                        class="remove-enfant"
+                                        title="Retirer cet enfant"
+                                    >
+
+                                        <i class="bi bi-trash3"></i>
+
+                                    </button>
+
+                                </div>
+
+
+                                <div class="child-fields-grid">
+
+
+                                    <!-- NOM -->
+
+                                    <div class="form-group">
+
+                                        <label>
+                                            Nom
+                                        </label>
+
+                                        {{ formset.empty_form.nom }}
+
+                                    </div>
+
+
+                                    <!-- PRENOM -->
+
+                                    <div class="form-group">
+
+                                        <label>
+                                            Prénom
+                                        </label>
+
+                                        {{ formset.empty_form.prenom }}
+
+                                    </div>
+
+
+                                    <!-- DATE NAISSANCE -->
+
+                                    <div class="form-group child-birthdate">
+
+                                        <label>
+                                            Date de naissance
+                                        </label>
+
+                                        <div class="date-field-wrapper">
+
+                                            {{ formset.empty_form.date_naissance }}
+
+                                            <i class="bi bi-calendar3"></i>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                {% if formset.empty_form.DELETE %}
+
+                                    <div class="delete-field">
+
+                                        {{ formset.empty_form.DELETE.as_hidden }}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FOOTER
+                    ================================================== -->
+
+                    <div class="form-footer">
+
+                        <a
+                            href="{% url 'etape2' %}"
+                            class="cancel-btn"
+                        >
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Retour
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="next-btn"
+                        >
+
+                            Suivant
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="enrollment-sidebar">
+
+
+            <!-- =============================================
+                 BON A SAVOIR
+            ============================================== -->
+
+            <div class="info-card">
+
+                <div class="info-icon blue">
+
+                    <i class="bi bi-info-lg"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Bon à savoir
+                    </h3>
+
+                    <p>
+                        Vous pouvez enregistrer jusqu'à neuf enfants.
+                        Vérifiez particulièrement leur nom, prénom
+                        et date de naissance.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 PROGRESSION
+            ============================================== -->
+
+            <div class="progress-card">
+
+                <div class="progress-title">
+
+                    <div class="progress-icon">
+
+                        <i class="bi bi-list-task"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Progression
+                        </h3>
+
+                        <p>
+                            Étape 3 sur 6
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-row">
+
+                    <div class="progress-bar-container">
+
+                        <div
+                            class="progress-bar-value"
+                            style="width: 50%;">
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        50%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 ETAPES SIDEBAR
+            ============================================== -->
+
+            <div class="steps-sidebar">
+
+
+                <!-- 1 -->
+
+                <div class="sidebar-step completed">
+
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Identité
+                        </strong>
+
+                        <span>
+                            Terminé
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 2 -->
+
+                <div class="sidebar-step completed">
+
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Famille
+                        </strong>
+
+                        <span>
+                            Terminé
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 3 -->
+
+                <div class="sidebar-step active">
+
+                    <div class="sidebar-step-marker">
+                        3
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Enfants
+                        </strong>
+
+                        <span>
+                            Enfants à charge
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 4 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        4
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Photo
+                        </strong>
+
+                        <span>
+                            Photo d'identité
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 5 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        5
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Carte
+                        </strong>
+
+                        <span>
+                            Préparation de la carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 6 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        6
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Validation
+                        </strong>
+
+                        <span>
+                            Vérification finale
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 MESSAGE
+            ============================================== -->
+
+            <div class="family-card">
+
+                <div class="family-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+
+                <p>
+                    Un membre bien enrôlé,<br>
+                    une famille mieux protégée !
+                </p>
+
+                <div class="family-line"></div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT FORMSET ENFANTS
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const addButton =
+        document.getElementById("add-enfant");
+
+    const container =
+        document.getElementById("enfants-container");
+
+    const totalForms =
+        document.getElementById("id_enfant-TOTAL_FORMS");
+
+    const emptyFormContainer =
+        document.getElementById("empty-form");
+
+    const MAX_ENFANTS = 9;
+
+
+    if (
+        !addButton ||
+        !container ||
+        !totalForms ||
+        !emptyFormContainer
+    ) {
+        return;
+    }
+
+
+    const emptyFormHTML =
+        emptyFormContainer.innerHTML;
+
+
+    /* =====================================================
+       NUMEROTATION
+    ====================================================== */
+
+    function updateNumbers() {
+
+        const forms =
+            container.querySelectorAll(
+                ".enfant-form:not([style*='display: none'])"
+            );
+
+
+        forms.forEach(function (form, index) {
+
+            const number =
+                form.querySelector(".child-number");
+
+            const title =
+                form.querySelector(
+                    ".child-title strong"
+                );
+
+
+            if (number) {
+                number.textContent =
+                    index + 1;
+            }
+
+
+            if (title) {
+                title.textContent =
+                    "Enfant " + (index + 1);
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       AJOUT
+    ====================================================== */
+
+    addButton.addEventListener(
+        "click",
+        function () {
+
+            const visibleForms =
+                container.querySelectorAll(
+                    ".enfant-form:not([style*='display: none'])"
+                );
+
+
+            if (
+                visibleForms.length >=
+                MAX_ENFANTS
+            ) {
+
+                alert(
+                    "Vous pouvez enregistrer au maximum 9 enfants."
+                );
+
+                return;
+            }
+
+
+            const formIndex =
+                parseInt(totalForms.value);
+
+
+            const html =
+                emptyFormHTML.replace(
+                    /__prefix__/g,
+                    formIndex
+                );
+
+
+            const wrapper =
+                document.createElement("div");
+
+
+            wrapper.innerHTML =
+                html.trim();
+
+
+            const newForm =
+                wrapper.firstElementChild;
+
+
+            /*
+             * Retirer l'état vide
+             */
+
+            const emptyState =
+                document.getElementById(
+                    "children-empty-state"
+                );
+
+
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+
+            container.appendChild(
+                newForm
+            );
+
+
+            totalForms.value =
+                formIndex + 1;
+
+
+            updateNumbers();
+
+        }
+    );
+
+
+    /* =====================================================
+       SUPPRESSION
+    ====================================================== */
+
+    container.addEventListener(
+        "click",
+        function (event) {
+
+            const button =
+                event.target.closest(
+                    ".remove-enfant"
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            const childForm =
+                button.closest(
+                    ".enfant-form"
+                );
+
+
+            if (!childForm) {
+                return;
+            }
+
+
+            const deleteInput =
+                childForm.querySelector(
+                    'input[name$="-DELETE"]'
+                );
+
+
+            /*
+             * Formulaire Django existant :
+             * on marque DELETE.
+             */
+
+            if (deleteInput) {
+
+                deleteInput.value = "on";
+
+                childForm.style.display =
+                    "none";
+
+            } else {
+
+                childForm.remove();
+
+            }
+
+
+            updateNumbers();
+
+        }
+    );
+
+
+    updateNumbers();
+
+});
+
+</script>
+
+{% endblock %}

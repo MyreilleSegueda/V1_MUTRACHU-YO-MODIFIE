@@ -1,0 +1,649 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Nouvel enrôlement | MU.TRA.CHU-YO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'page1/css/enrolement.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="enrollment-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="enrollment-header">
+
+        <div class="enrollment-title">
+
+            <h1>Nouvel enrôlement</h1>
+
+            <p>
+                Enregistrez un nouveau membre dans la mutuelle
+            </p>
+
+        </div>
+
+
+        <div class="enrollment-breadcrumb">
+
+            <a href="{% url 'core_index' %}">
+                Accueil
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a href="{% url 'liste_membres' %}">
+                Membres
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>
+                Nouvel enrôlement
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LAYOUT GENERAL
+    ====================================================== -->
+
+    <div class="enrollment-layout">
+
+
+        <!-- =================================================
+             COLONNE PRINCIPALE
+        ================================================== -->
+
+        <div class="enrollment-main">
+
+
+            <!-- =============================================
+                 STEPPER 6 ETAPES
+            ============================================== -->
+
+            <div class="enrollment-stepper">
+
+                <!-- 1 -->
+                <div class="step active">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div class="step-name">
+                        Identité
+                    </div>
+
+                </div>
+
+
+                <div class="step-line active"></div>
+
+
+                <!-- 2 -->
+                <div class="step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-name">
+                        Contact
+                    </div>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <!-- 3 -->
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-name">
+                        Conjoint
+                    </div>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <!-- 4 -->
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-name">
+                        Enfants
+                    </div>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <!-- 5 -->
+                <div class="step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <div class="step-name">
+                        Photo
+                    </div>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <!-- 6 -->
+                <div class="step">
+
+                    <div class="step-number">
+                        6
+                    </div>
+
+                    <div class="step-name">
+                        Validation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 FORMULAIRE
+            ============================================== -->
+
+            <div class="enrollment-form-card">
+
+
+                <!-- HEADER FORMULAIRE -->
+
+                <div class="form-card-header">
+
+                    <div class="form-title">
+
+                        <div class="form-title-icon">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Étape 1 : Informations d'identité
+                            </h2>
+
+                            <p>
+                                Renseignez les informations personnelles du membre
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="required-message">
+
+                        Les champs marqués d'un
+                        <span>*</span>
+                        sont obligatoires
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORMULAIRE -->
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    {% csrf_token %}
+
+
+                    <div class="form-grid">
+
+
+                        <!-- NOM -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.nom.id_for_label }}">
+                                Nom
+                                <span>*</span>
+                            </label>
+
+                            {{ form.nom }}
+
+                            {% if form.nom.errors %}
+                                <div class="field-error">
+                                    {{ form.nom.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- PRENOM -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.prenom.id_for_label }}">
+                                Prénom
+                                <span>*</span>
+                            </label>
+
+                            {{ form.prenom }}
+
+                            {% if form.prenom.errors %}
+                                <div class="field-error">
+                                    {{ form.prenom.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- SEXE -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.sexe.id_for_label }}">
+                                Sexe
+                                <span>*</span>
+                            </label>
+
+                            {{ form.sexe }}
+
+                            {% if form.sexe.errors %}
+                                <div class="field-error">
+                                    {{ form.sexe.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- MATRICULE -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.matricule.id_for_label }}">
+                                Matricule
+                                <span>*</span>
+                            </label>
+
+                            {{ form.matricule }}
+
+                            {% if form.matricule.errors %}
+                                <div class="field-error">
+                                    {{ form.matricule.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- EMPLOI -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.emploi.id_for_label }}">
+                                Emploi
+                            </label>
+
+                            {{ form.emploi }}
+
+                            {% if form.emploi.errors %}
+                                <div class="field-error">
+                                    {{ form.emploi.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- SERVICE -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.service.id_for_label }}">
+                                Service
+                            </label>
+
+                            {{ form.service }}
+
+                            {% if form.service.errors %}
+                                <div class="field-error">
+                                    {{ form.service.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =====================================
+                         FOOTER FORMULAIRE
+                    ====================================== -->
+
+                    <div class="form-footer">
+
+                        <a
+                            href="{% url 'liste_membres' %}"
+                            class="cancel-btn"
+                        >
+
+                            <i class="bi bi-x-lg"></i>
+
+                            Annuler
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="next-btn"
+                        >
+
+                            Suivant
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             COLONNE DROITE
+        ================================================== -->
+
+        <aside class="enrollment-sidebar">
+
+
+            <!-- =============================================
+                 BON A SAVOIR
+            ============================================== -->
+
+            <div class="info-card">
+
+                <div class="info-icon blue">
+
+                    <i class="bi bi-info-lg"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Bon à savoir
+                    </h3>
+
+                    <p>
+                        Assurez-vous de la véracité des informations
+                        avant de passer à l'étape suivante.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 PROGRESSION
+            ============================================== -->
+
+            <div class="progress-card">
+
+                <div class="progress-title">
+
+                    <div class="progress-icon">
+
+                        <i class="bi bi-list-task"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Progression
+                        </h3>
+
+                        <p>
+                            Étape 1 sur 6
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-row">
+
+                    <div class="progress-bar-container">
+
+                        <div
+                            class="progress-bar-value"
+                            style="width: 17%;">
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        17%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 LISTE DES ETAPES
+            ============================================== -->
+
+            <div class="steps-sidebar">
+
+
+                <!-- ETAPE 1 -->
+
+                <div class="sidebar-step active">
+
+                    <div class="sidebar-step-marker">
+                        1
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Identité
+                        </strong>
+
+                        <span>
+                            Informations personnelles
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ETAPE 2 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        2
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Contact
+                        </strong>
+
+                        <span>
+                            Coordonnées du membre
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ETAPE 3 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        3
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Conjoint
+                        </strong>
+
+                        <span>
+                            Informations sur le conjoint
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ETAPE 4 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        4
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Enfants
+                        </strong>
+
+                        <span>
+                            Ajout des enfants à charge
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ETAPE 5 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        5
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Photo
+                        </strong>
+
+                        <span>
+                            Photo d'identité
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ETAPE 6 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        6
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Validation
+                        </strong>
+
+                        <span>
+                            Vérification et enregistrement
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =============================================
+                 MESSAGE FINAL
+            ============================================== -->
+
+            <div class="family-card">
+
+                <div class="family-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+
+                <p>
+                    Un membre bien enrôlé,<br>
+                    une famille mieux protégée !
+                </p>
+
+                <div class="family-line"></div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

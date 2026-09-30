@@ -1,0 +1,1366 @@
+
+
+
+/* =========================================================
+   1. PAGE
+========================================================= */
+
+.members-page {
+    width: 100%;
+    min-height: 100%;
+
+    color: #123667;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   2. HEADER DE LA PAGE
+========================================================= */
+
+.members-header {
+    width: 100%;
+    min-height: 90px;
+
+    margin-bottom: 16px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+
+.members-heading {
+    min-width: 0;
+}
+
+
+.members-heading h1 {
+    margin: 0;
+
+    color: #082b60;
+
+    font-size: 35px;
+    font-weight: 800;
+
+    line-height: 1.1;
+
+    letter-spacing: -0.4px;
+}
+
+
+.members-heading p {
+    margin: 7px 0 0;
+
+    color: #315a8e;
+
+    font-size: 17px;
+    font-weight: 400;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   3. PARTIE DROITE HEADER
+========================================================= */
+
+.members-header-right {
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   4. FIL D'ARIANE
+========================================================= */
+
+.members-breadcrumb {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #355986;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+.members-breadcrumb a {
+    color: #355986;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.members-breadcrumb a:hover {
+    color: #087cf0;
+}
+
+
+.members-breadcrumb i {
+    color: #7f98b5;
+
+    font-size: 11px;
+}
+
+
+.members-breadcrumb strong {
+    color: #0873df;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   5. BOUTON NOUVEAU MEMBRE
+========================================================= */
+
+.new-member-btn {
+    min-width: 210px;
+    height: 46px;
+
+    padding: 0 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    border: 1px solid #087cf0;
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #087ff2,
+            #0571df
+        );
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 4px 10px rgba(0, 104, 214, 0.16);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.new-member-btn i {
+    font-size: 20px;
+}
+
+
+.new-member-btn:hover {
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 17px rgba(0, 104, 214, 0.23);
+}
+
+
+/* =========================================================
+   6. CARTES STATISTIQUES
+========================================================= */
+
+.members-stats {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.member-stat-card {
+    min-width: 0;
+    height: 90px;
+
+    padding: 14px 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 17px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+
+.member-stat-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 23px rgba(19, 54, 90, 0.11);
+}
+
+
+/* =========================================================
+   7. ICONES KPI
+========================================================= */
+
+.member-stat-icon {
+    width: 52px;
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 29px;
+}
+
+
+.member-stat-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.member-stat-content strong {
+    margin-bottom: 5px;
+
+    font-size: 27px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+.member-stat-content span {
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   8. KPI TOTAL
+========================================================= */
+
+.stat-total {
+    background:
+        linear-gradient(
+            135deg,
+            #e9f5ff,
+            #dcefff
+        );
+
+    border-color: #d9ebfa;
+}
+
+
+.stat-total .member-stat-icon,
+.stat-total .member-stat-content strong {
+    color: #0879e9;
+}
+
+
+.stat-total .member-stat-content span {
+    color: #174d82;
+}
+
+
+/* =========================================================
+   9. KPI ACTIFS
+========================================================= */
+
+.stat-active {
+    background:
+        linear-gradient(
+            135deg,
+            #eaf9f0,
+            #dff5e8
+        );
+
+    border-color: #daf0e2;
+}
+
+
+.stat-active .member-stat-icon {
+    border-radius: 50%;
+
+    background: #079e59;
+
+    color: #ffffff;
+}
+
+
+.stat-active .member-stat-content strong {
+    color: #087c48;
+}
+
+
+.stat-active .member-stat-content span {
+    color: #245d47;
+}
+
+
+/* =========================================================
+   10. KPI SUSPENDUS
+========================================================= */
+
+.stat-suspended {
+    background:
+        linear-gradient(
+            135deg,
+            #fff4e9,
+            #ffeadb
+        );
+
+    border-color: #f9e7d8;
+}
+
+
+.stat-suspended .member-stat-icon {
+    border-radius: 50%;
+
+    background: #ff7315;
+
+    color: #ffffff;
+}
+
+
+.stat-suspended .member-stat-content strong {
+    color: #f36713;
+}
+
+
+.stat-suspended .member-stat-content span {
+    color: #a44a1f;
+}
+
+
+/* =========================================================
+   11. KPI RADIES
+========================================================= */
+
+.stat-radie {
+    background:
+        linear-gradient(
+            135deg,
+            #fff0f3,
+            #ffe4e9
+        );
+
+    border-color: #f7dfe4;
+}
+
+
+.stat-radie .member-stat-icon,
+.stat-radie .member-stat-content strong {
+    color: #db2148;
+}
+
+
+.stat-radie .member-stat-content span {
+    color: #b12b48;
+}
+
+
+/* =========================================================
+   12. BARRE DES FILTRES
+========================================================= */
+
+.members-filter-bar {
+    width: 100%;
+
+    min-height: 66px;
+
+    margin-bottom: 16px;
+
+    padding: 11px 12px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1.4fr)
+        minmax(150px, 0.8fr)
+        minmax(165px, 0.9fr)
+        minmax(155px, 0.85fr)
+        125px
+        135px;
+
+    gap: 10px;
+
+    align-items: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e2ebf4;
+    border-radius: 8px;
+
+    box-shadow:
+        0 3px 12px rgba(18, 53, 90, 0.045);
+}
+
+
+/* =========================================================
+   13. RECHERCHE
+========================================================= */
+
+.members-search-box {
+    height: 43px;
+
+    padding: 0 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid #cadbea;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.members-search-box:focus-within {
+    border-color: #66acf1;
+
+    box-shadow:
+        0 0 0 3px rgba(8, 124, 240, 0.08);
+}
+
+
+.members-search-box i {
+    color: #365f91;
+
+    font-size: 17px;
+}
+
+
+.members-search-box input {
+    width: 100%;
+    min-width: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #173e70;
+
+    font-size: 14px;
+}
+
+
+.members-search-box input::placeholder {
+    color: #617d9e;
+}
+
+
+/* =========================================================
+   14. SELECTS
+========================================================= */
+
+.members-select-wrapper {
+    position: relative;
+
+    height: 43px;
+}
+
+
+.members-select-wrapper select {
+    width: 100%;
+    height: 100%;
+
+    padding: 0 35px 0 13px;
+
+    border: 1px solid #cadbea;
+    border-radius: 6px;
+
+    outline: none;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: #ffffff;
+
+    color: #163e70;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+.members-select-wrapper select:focus {
+    border-color: #66acf1;
+
+    box-shadow:
+        0 0 0 3px rgba(8, 124, 240, 0.08);
+}
+
+
+.members-select-wrapper > i {
+    position: absolute;
+
+    top: 50%;
+    right: 13px;
+
+    transform: translateY(-50%);
+
+    color: #315f91;
+
+    font-size: 11px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   15. BOUTON RECHERCHE
+========================================================= */
+
+.members-search-btn {
+    height: 43px;
+
+    border: none;
+    border-radius: 6px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #087ff2,
+            #0571dd
+        );
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.members-search-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(8, 124, 240, 0.20);
+}
+
+
+/* =========================================================
+   16. RESET
+========================================================= */
+
+.members-reset-btn {
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 1px solid #087cf0;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #0874df;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+}
+
+
+.members-reset-btn i {
+    font-size: 16px;
+}
+
+
+.members-reset-btn:hover {
+    background: #edf6ff;
+
+    color: #0566c7;
+}
+
+
+/* =========================================================
+   17. CONTENEUR TABLEAU
+   TABLEAU PLUS PETIT ET CENTRE
+========================================================= */
+
+.members-table-container {
+    width: 92%;
+    max-width: 1250px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #dce7f1;
+    border-radius: 9px;
+
+    box-shadow:
+        0 5px 18px rgba(19, 52, 87, 0.06);
+}
+
+
+.members-table-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   18. TABLEAU
+========================================================= */
+
+.members-table {
+    width: 100%;
+
+    margin: 0;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+
+    color: #153d70;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   19. ENTETE DU TABLEAU
+========================================================= */
+
+.members-table thead th {
+    height: 46px;
+
+    padding: 7px 10px;
+
+    vertical-align: middle;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f1f7fc,
+            #e8f1f9
+        );
+
+    border-right: 1px solid #dce7f0;
+    border-bottom: 1px solid #d5e1ec;
+
+    color: #102f5d;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.members-table thead th:last-child {
+    border-right: none;
+}
+
+
+/* =========================================================
+   20. LARGEUR DES COLONNES
+========================================================= */
+
+/* N° */
+.column-number {
+    width: 6%;
+
+    text-align: center;
+}
+
+
+/* PHOTO */
+.column-photo {
+    width: 8%;
+
+    text-align: center;
+}
+
+
+/* NOM */
+.column-name {
+    width: 17%;
+}
+
+
+/* PRENOMS */
+.column-firstname {
+    width: 20%;
+}
+
+
+/* MATRICULE */
+.column-matricule {
+    width: 17%;
+}
+
+
+/* STATUT */
+.column-status {
+    width: 14%;
+
+    text-align: center;
+}
+
+
+/* ACTIONS */
+.column-actions {
+    width: 18%;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   21. CELLULES
+========================================================= */
+
+.members-table tbody td {
+    height: 56px;
+
+    padding: 6px 10px;
+
+    vertical-align: middle;
+
+    border-right: 1px solid #e0e9f2;
+    border-bottom: 1px solid #e0e9f2;
+
+    background: #ffffff;
+
+    color: #173f70;
+
+    font-size: 14px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.members-table tbody td:last-child {
+    border-right: none;
+}
+
+
+.members-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+.members-table tbody tr:nth-child(even) td {
+    background: #fbfdff;
+}
+
+
+.members-table tbody tr:hover td {
+    background: #f1f7ff;
+}
+
+
+/* =========================================================
+   22. NUMERO
+========================================================= */
+
+.table-number {
+    text-align: center;
+
+    color: #647e9c !important;
+
+    font-size: 14px !important;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   23. PHOTO
+========================================================= */
+
+.table-photo-cell {
+    text-align: center;
+}
+
+
+.member-table-photo {
+    width: 40px;
+    height: 40px;
+
+    display: block;
+
+    margin: auto;
+
+    border: 1px solid #d3dfe9;
+    border-radius: 7px;
+
+    object-fit: cover;
+
+    box-shadow:
+        0 2px 6px rgba(16, 47, 82, 0.10);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.member-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf2f9;
+
+    color: #748ca5;
+
+    font-size: 20px;
+}
+
+
+.members-table tbody tr:hover .member-table-photo {
+    transform: scale(1.06);
+
+    box-shadow:
+        0 5px 10px rgba(16, 47, 82, 0.14);
+}
+
+
+/* =========================================================
+   24. NOM
+========================================================= */
+
+.member-name {
+    color: #103c72 !important;
+
+    font-size: 14px !important;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   25. PRENOMS
+========================================================= */
+
+.member-firstname {
+    color: #244d79 !important;
+
+    font-size: 14px !important;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   26. MATRICULE
+========================================================= */
+
+.member-matricule {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 29px;
+
+    padding: 4px 9px;
+
+    border-radius: 6px;
+
+    background: #edf6ff;
+
+    color: #0870d7;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   27. STATUT
+========================================================= */
+
+.member-status {
+    min-width: 82px;
+    height: 29px;
+
+    padding: 0 11px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.members-table tbody td:nth-child(6) {
+    text-align: center;
+}
+
+
+/* ACTIF */
+
+.status-active {
+    background:
+        linear-gradient(
+            135deg,
+            #17b96a,
+            #049b52
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 7px rgba(4, 155, 82, 0.13);
+}
+
+
+/* SUSPENDU */
+
+.status-suspended {
+    background: #ffd873;
+
+    color: #875000;
+}
+
+
+/* RADIE */
+
+.status-radie {
+    background:
+        linear-gradient(
+            135deg,
+            #ff4563,
+            #ef294a
+        );
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   28. ACTIONS
+========================================================= */
+
+.members-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+}
+
+
+.member-action {
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+
+    font-size: 17px;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+/* VOIR */
+
+.action-view {
+    color: #087cf0;
+}
+
+
+.action-view:hover {
+    background: #e9f4ff;
+
+    color: #0568cb;
+
+    transform: translateY(-2px);
+}
+
+
+/* MODIFIER */
+
+.action-edit {
+    color: #087cf0;
+}
+
+
+.action-edit:hover {
+    background: #e9f4ff;
+
+    color: #0568cb;
+
+    transform: translateY(-2px);
+}
+
+
+/* SUPPRIMER */
+
+.action-delete {
+    color: #ef294a;
+}
+
+
+.action-delete:hover {
+    background: #ffebef;
+
+    color: #d71838;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   29. FOOTER DU TABLEAU
+========================================================= */
+
+.members-table-footer {
+    min-height: 64px;
+
+    padding: 11px 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-top: 1px solid #e0e9f2;
+
+    background: #ffffff;
+}
+
+
+.members-result-info {
+    color: #315985;
+
+    font-size: 14px;
+}
+
+
+.members-result-info strong {
+    color: #173f70;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   30. PAGINATION
+========================================================= */
+
+.members-pagination {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.pagination-btn {
+    min-width: 35px;
+    height: 35px;
+
+    padding: 0 9px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #cfdeec;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #204a7a;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.pagination-btn:hover:not(.active):not(:disabled) {
+    border-color: #79b8f5;
+
+    background: #eef7ff;
+
+    color: #0875df;
+
+    transform: translateY(-1px);
+}
+
+
+.pagination-btn.active {
+    border-color: #087cf0;
+
+    background: #087cf0;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(8, 124, 240, 0.18);
+}
+
+
+.pagination-btn:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+
+.pagination-dots {
+    min-width: 34px;
+
+    color: #53708f;
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   31. ETAT VIDE
+========================================================= */
+
+.members-empty {
+    min-height: 190px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: #8296ab;
+}
+
+
+.members-empty > i {
+    margin-bottom: 10px;
+
+    color: #91a9bf;
+
+    font-size: 38px;
+}
+
+
+.members-empty strong {
+    color: #416180;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+.members-empty span {
+    margin-top: 5px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   32. RESPONSIVE
+========================================================= */
+
+@media (max-width: 1400px) {
+
+    .members-table-container {
+        width: 96%;
+    }
+
+}
+
+
+@media (max-width: 1150px) {
+
+    .members-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .members-filter-bar {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .members-table-container {
+        width: 100%;
+    }
+
+
+    .members-table {
+        min-width: 850px;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .members-header {
+        min-height: auto;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+
+    .members-header-right {
+        width: 100%;
+
+        align-items: flex-start;
+    }
+
+
+    .members-heading h1 {
+        font-size: 29px;
+    }
+
+
+    .members-heading p {
+        font-size: 15px;
+    }
+
+
+    .members-stats {
+        grid-template-columns: 1fr;
+    }
+
+
+    .members-filter-bar {
+        grid-template-columns: 1fr;
+    }
+
+
+    .new-member-btn {
+        width: 100%;
+    }
+
+
+    .members-table-footer {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .members-pagination {
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .members-breadcrumb {
+        display: none;
+    }
+
+
+    .members-heading h1 {
+        font-size: 26px;
+    }
+
+
+    .members-page {
+        font-size: 14px;
+    }
+
+}

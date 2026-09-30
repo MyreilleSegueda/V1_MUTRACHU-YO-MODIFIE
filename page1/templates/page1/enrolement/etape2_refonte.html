@@ -1,0 +1,1121 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Famille | Nouvel enrôlement{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'page1/css/enrolement.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="enrollment-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="enrollment-header">
+
+        <div class="enrollment-title">
+
+            <h1>Nouvel enrôlement</h1>
+
+            <p>
+                Enregistrez un nouveau membre dans la mutuelle
+            </p>
+
+        </div>
+
+
+        <div class="enrollment-breadcrumb">
+
+            <a href="{% url 'core_index' %}">
+                Accueil
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a href="{% url 'liste_membres' %}">
+                Membres
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>Nouvel enrôlement</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LAYOUT
+    ====================================================== -->
+
+    <div class="enrollment-layout">
+
+
+        <!-- =================================================
+             COLONNE PRINCIPALE
+        ================================================== -->
+
+        <div class="enrollment-main">
+
+
+            <!-- =============================================
+                 STEPPER
+            ============================================== -->
+
+            <div class="enrollment-stepper">
+
+
+                <!-- ETAPE 1 TERMINEE -->
+
+                <div class="step completed">
+
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div class="step-name">
+                        Identité
+                    </div>
+
+                </div>
+
+
+                <div class="step-line completed"></div>
+
+
+                <!-- ETAPE 2 ACTIVE -->
+
+                <div class="step active">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-name">
+                        Famille
+                    </div>
+
+                </div>
+
+
+                <div class="step-line active"></div>
+
+
+                <!-- ETAPE 3 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-name">
+                        Enfants
+                    </div>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <!-- ETAPE 4 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-name">
+                        Photo
+                    </div>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <!-- ETAPE 5 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <div class="step-name">
+                        Carte
+                    </div>
+
+                </div>
+
+
+                <div class="step-line"></div>
+
+
+                <!-- ETAPE 6 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        6
+                    </div>
+
+                    <div class="step-name">
+                        Validation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORMULAIRE
+            ================================================== -->
+
+            <div class="enrollment-form-card">
+
+
+                <!-- HEADER -->
+
+                <div class="form-card-header">
+
+                    <div class="form-title">
+
+                        <div class="form-title-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Étape 2 : Informations familiales
+                            </h2>
+
+                            <p>
+                                Renseignez les informations concernant
+                                le conjoint et les parents du membre.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="required-message">
+
+                        Étape
+                        <strong>2 sur 6</strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     FORM
+                ================================================== -->
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    {{ conjoint_formset.management_form }}
+
+
+                    <div class="family-form-body">
+
+
+                        <!-- =================================================
+                             CONJOINTS
+                        ================================================== -->
+
+                        <section class="family-section">
+
+
+                            <div class="family-section-header">
+
+                                <div class="family-section-title">
+
+                                    <div class="family-section-icon spouse">
+                                        <i class="bi bi-person-heart"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <h3>
+                                            Conjoint(e)
+                                        </h3>
+
+                                        <p>
+                                            Vous pouvez enregistrer jusqu'à
+                                            4 conjoints.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    id="add-conjoint"
+                                    class="add-family-btn"
+                                >
+
+                                    <i class="bi bi-plus-lg"></i>
+
+                                    Ajouter un conjoint
+
+                                </button>
+
+                            </div>
+
+
+                            <!-- =============================================
+                                 LISTE CONJOINTS
+                            ============================================== -->
+
+                            <div id="conjoints-container">
+
+
+                                {% for form in conjoint_formset %}
+
+                                <div class="conjoint-form family-person-card">
+
+
+                                    <div class="person-card-header">
+
+                                        <div class="person-number">
+
+                                            <i class="bi bi-person"></i>
+
+                                        </div>
+
+
+                                        <strong>
+                                            Conjoint {{ forloop.counter }}
+                                        </strong>
+
+
+                                        <button
+                                            type="button"
+                                            class="remove-conjoint"
+                                            title="Supprimer ce conjoint"
+                                        >
+
+                                            <i class="bi bi-trash3"></i>
+
+                                        </button>
+
+                                    </div>
+
+
+                                    <div class="family-fields-grid">
+
+
+                                        <!-- NOM -->
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Nom
+                                            </label>
+
+                                            {{ form.nom }}
+
+                                            {% if form.nom.errors %}
+                                                <div class="field-error">
+                                                    {{ form.nom.errors }}
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <!-- PRENOM -->
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Prénom
+                                            </label>
+
+                                            {{ form.prenom }}
+
+                                            {% if form.prenom.errors %}
+                                                <div class="field-error">
+                                                    {{ form.prenom.errors }}
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                    {% if form.DELETE %}
+                                        <div class="delete-field">
+                                            {{ form.DELETE.as_hidden }}
+                                        </div>
+                                    {% endif %}
+
+
+                                </div>
+
+                                {% endfor %}
+
+
+                            </div>
+
+
+                            <!-- =============================================
+                                 EMPTY FORM
+                            ============================================== -->
+
+                            <div id="empty-form" style="display:none;">
+
+                                <div class="conjoint-form family-person-card">
+
+
+                                    <div class="person-card-header">
+
+                                        <div class="person-number">
+
+                                            <i class="bi bi-person"></i>
+
+                                        </div>
+
+
+                                        <strong>
+                                            Nouveau conjoint
+                                        </strong>
+
+
+                                        <button
+                                            type="button"
+                                            class="remove-conjoint"
+                                            title="Supprimer"
+                                        >
+
+                                            <i class="bi bi-trash3"></i>
+
+                                        </button>
+
+                                    </div>
+
+
+                                    <div class="family-fields-grid">
+
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Nom
+                                            </label>
+
+                                            {{ conjoint_formset.empty_form.nom }}
+
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Prénom
+                                            </label>
+
+                                            {{ conjoint_formset.empty_form.prenom }}
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                    {% if conjoint_formset.empty_form.DELETE %}
+
+                                        <div class="delete-field">
+
+                                            {{ conjoint_formset.empty_form.DELETE.as_hidden }}
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                </div>
+
+                            </div>
+
+
+                        </section>
+
+
+                        <!-- =================================================
+                             PARENTS
+                        ================================================== -->
+
+                        <section class="family-section parents-section">
+
+
+                            <div class="family-section-header">
+
+                                <div class="family-section-title">
+
+                                    <div class="family-section-icon parents">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <h3>
+                                            Parents
+                                        </h3>
+
+                                        <p>
+                                            Informations sur le père et la mère
+                                            du membre.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =============================================
+                                 PERE + MERE
+                            ============================================== -->
+
+                            <div class="parents-grid">
+
+
+                                <!-- =========================================
+                                     PERE
+                                ========================================== -->
+
+                                <div class="parent-card">
+
+
+                                    <div class="parent-card-title">
+
+                                        <div class="parent-icon father">
+
+                                            <i class="bi bi-person-fill"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Père
+                                            </strong>
+
+                                            <span>
+                                                Informations du père
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="parent-fields">
+
+
+                                        <!-- NOM -->
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Nom
+                                            </label>
+
+                                            {{ parent_pere_form.nom }}
+
+                                            {% if parent_pere_form.nom.errors %}
+
+                                                <div class="field-error">
+                                                    {{ parent_pere_form.nom.errors }}
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <!-- PRENOM -->
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Prénom
+                                            </label>
+
+                                            {{ parent_pere_form.prenom }}
+
+                                            {% if parent_pere_form.prenom.errors %}
+
+                                                <div class="field-error">
+                                                    {{ parent_pere_form.prenom.errors }}
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- =========================================
+                                     MERE
+                                ========================================== -->
+
+                                <div class="parent-card">
+
+
+                                    <div class="parent-card-title">
+
+                                        <div class="parent-icon mother">
+
+                                            <i class="bi bi-person-fill"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Mère
+                                            </strong>
+
+                                            <span>
+                                                Informations de la mère
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="parent-fields">
+
+
+                                        <!-- NOM -->
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Nom
+                                            </label>
+
+                                            {{ parent_mere_form.nom }}
+
+                                            {% if parent_mere_form.nom.errors %}
+
+                                                <div class="field-error">
+                                                    {{ parent_mere_form.nom.errors }}
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <!-- PRENOM -->
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Prénom
+                                            </label>
+
+                                            {{ parent_mere_form.prenom }}
+
+                                            {% if parent_mere_form.prenom.errors %}
+
+                                                <div class="field-error">
+                                                    {{ parent_mere_form.prenom.errors }}
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FOOTER
+                    ================================================== -->
+
+                    <div class="form-footer">
+
+                        <a
+                            href="{% url 'etape1' %}"
+                            class="cancel-btn"
+                        >
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Retour
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="next-btn"
+                        >
+
+                            Suivant
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SIDEBAR DROITE
+        ================================================== -->
+
+        <aside class="enrollment-sidebar">
+
+
+            <!-- BON A SAVOIR -->
+
+            <div class="info-card">
+
+                <div class="info-icon blue">
+
+                    <i class="bi bi-info-lg"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Bon à savoir
+                    </h3>
+
+                    <p>
+                        Renseignez les informations familiales avec soin.
+                        Vous pouvez ajouter jusqu'à quatre conjoints.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROGRESSION
+            ================================================== -->
+
+            <div class="progress-card">
+
+                <div class="progress-title">
+
+                    <div class="progress-icon">
+
+                        <i class="bi bi-list-task"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Progression
+                        </h3>
+
+                        <p>
+                            Étape 2 sur 6
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-row">
+
+                    <div class="progress-bar-container">
+
+                        <div
+                            class="progress-bar-value"
+                            style="width:33%;">
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        33%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ETAPES
+            ================================================== -->
+
+            <div class="steps-sidebar">
+
+
+                <!-- 1 -->
+
+                <div class="sidebar-step completed">
+
+                    <div class="sidebar-step-marker">
+
+                        <i class="bi bi-check-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Identité
+                        </strong>
+
+                        <span>
+                            Terminé
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 2 -->
+
+                <div class="sidebar-step active">
+
+                    <div class="sidebar-step-marker">
+                        2
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Famille
+                        </strong>
+
+                        <span>
+                            Conjoint et parents
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 3 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        3
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Enfants
+                        </strong>
+
+                        <span>
+                            Enfants à charge
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 4 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        4
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Photo
+                        </strong>
+
+                        <span>
+                            Photo d'identité
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 5 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        5
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Carte
+                        </strong>
+
+                        <span>
+                            Préparation de la carte
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 6 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        6
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Validation
+                        </strong>
+
+                        <span>
+                            Vérification finale
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 MESSAGE
+            ================================================== -->
+
+            <div class="family-card">
+
+                <div class="family-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+
+                <p>
+                    Un membre bien enrôlé,<br>
+                    une famille mieux protégée !
+                </p>
+
+                <div class="family-line"></div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT FORMSET
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const addBtn =
+        document.getElementById("add-conjoint");
+
+    const container =
+        document.getElementById("conjoints-container");
+
+    const totalForms =
+        document.getElementById("id_conjoint-TOTAL_FORMS");
+
+    const emptyFormElement =
+        document.getElementById("empty-form");
+
+
+    if (
+        !addBtn ||
+        !container ||
+        !totalForms ||
+        !emptyFormElement
+    ) {
+        return;
+    }
+
+
+    const emptyForm =
+        emptyFormElement.innerHTML;
+
+
+    const MAX_CONJOINTS = 4;
+
+
+    /* =====================================================
+       AJOUT
+    ====================================================== */
+
+    addBtn.addEventListener("click", function () {
+
+        let formCount =
+            parseInt(totalForms.value);
+
+
+        if (formCount >= MAX_CONJOINTS) {
+
+            alert(
+                "Vous pouvez ajouter au maximum 4 conjoints."
+            );
+
+            return;
+        }
+
+
+        const newForm =
+            emptyForm.replace(
+                /__prefix__/g,
+                formCount
+            );
+
+
+        const wrapper =
+            document.createElement("div");
+
+
+        wrapper.innerHTML =
+            newForm.trim();
+
+
+        const formElement =
+            wrapper.firstElementChild;
+
+
+        container.appendChild(
+            formElement
+        );
+
+
+        totalForms.value =
+            formCount + 1;
+
+    });
+
+
+    /* =====================================================
+       SUPPRESSION
+    ====================================================== */
+
+    container.addEventListener(
+        "click",
+        function (event) {
+
+            const deleteButton =
+                event.target.closest(
+                    ".remove-conjoint"
+                );
+
+
+            if (!deleteButton) {
+                return;
+            }
+
+
+            const conjointForm =
+                deleteButton.closest(
+                    ".conjoint-form"
+                );
+
+
+            if (!conjointForm) {
+                return;
+            }
+
+
+            const deleteInput =
+                conjointForm.querySelector(
+                    'input[name$="-DELETE"]'
+                );
+
+
+            /*
+             * Formulaire déjà connu par Django :
+             * on utilise DELETE au lieu de casser
+             * la structure du formset.
+             */
+
+            if (deleteInput) {
+
+                deleteInput.value = "on";
+
+                conjointForm.style.display =
+                    "none";
+
+            } else {
+
+                conjointForm.remove();
+
+            }
+
+        }
+    );
+
+});
+
+</script>
+
+{% endblock %}

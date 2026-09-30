@@ -1,0 +1,723 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}Nouvel enrôlement{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- ===================================== -->
+    <!-- HEADER -->
+    <!-- ===================================== -->
+
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-800">
+            Nouvel enrôlement
+        </h1>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Enregistrement d'un nouveau membre
+        </p>
+    </div>
+
+
+    <!-- ===================================== -->
+    <!-- ÉTAPES -->
+    <!-- ===================================== -->
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+
+        <div class="flex items-start justify-between">
+
+            <!-- ÉTAPE 1 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+
+                <span class="mt-2 text-sm font-semibold text-green-600">
+                    Identité
+                </span>
+            </div>
+
+
+            <!-- CONNECTEUR -->
+            <div class="flex-1 h-0.5 bg-blue-600 mt-5 mx-2"></div>
+
+
+            <!-- ÉTAPE 2 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+
+                <span class="mt-2 text-sm font-semibold text-green-600">
+                    Conjoints
+                </span>
+            </div>
+
+
+            <!-- CONNECTEUR -->
+            <div class="flex-1 h-0.5 bg-blue-600 mt-5 mx-2"></div>
+
+
+            <!-- ÉTAPE 3 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
+                    3
+                </div>
+
+                <span class="mt-2 text-sm font-semibold text-blue-600">
+                    Enfants
+                </span>
+            </div>
+
+
+            <!-- CONNECTEUR -->
+            <div class="flex-1 h-0.5 bg-gray-200 mt-5 mx-2"></div>
+
+
+            <!-- ÉTAPE 4 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center font-bold">
+                    4
+                </div>
+
+                <span class="mt-2 text-sm text-gray-500">
+                    Photo
+                </span>
+            </div>
+
+
+            <!-- CONNECTEUR -->
+            <div class="flex-1 h-0.5 bg-gray-200 mt-5 mx-2"></div>
+
+
+            <!-- ÉTAPE 5 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center font-bold">
+                    5
+                </div>
+
+                <span class="mt-2 text-sm text-gray-500">
+                    Validation
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================== -->
+    <!-- CONTENU PRINCIPAL -->
+    <!-- ===================================== -->
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- ===================================== -->
+        <!-- FORMULAIRE -->
+        <!-- ===================================== -->
+
+        <div class="lg:col-span-2">
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+
+                <!-- HEADER FORMULAIRE -->
+
+                <div class="px-6 py-5 border-b border-gray-200">
+
+                    <h2 class="text-lg font-semibold text-gray-800">
+                        Enfants
+                    </h2>
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Renseignez les informations concernant les enfants du membre.
+                    </p>
+
+                </div>
+
+
+                <!-- CORPS -->
+
+                <div class="p-6">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        {{ formset.management_form }}
+
+
+                        <!-- ===================================== -->
+                        <!-- BOUTON AJOUT -->
+                        <!-- ===================================== -->
+
+                        <div class="flex justify-between items-center mb-5">
+
+                            <div>
+
+                                <h3 class="text-base font-semibold text-gray-800">
+                                    <i class="bi bi-people-fill mr-1"></i>
+                                    Enfants
+                                </h3>
+
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Maximum 9 enfants
+                                </p>
+
+                            </div>
+
+
+                            <button type="button"
+                                    id="add-enfant"
+                                    class="px-4 py-2.5 border border-blue-600 text-blue-600 rounded-lg font-medium text-sm hover:bg-blue-50 transition">
+
+                                <i class="bi bi-plus-lg mr-1"></i>
+                                Ajouter un enfant
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- ===================================== -->
+                        <!-- LISTE DES ENFANTS -->
+                        <!-- ===================================== -->
+
+                        <div id="enfants-container">
+
+                            {% for form in formset %}
+
+                                <div class="border border-gray-200 rounded-xl p-5 mb-4 enfant-form relative bg-gray-50">
+
+                                    {{ form.id }}
+
+
+                                    <!-- BOUTON RETIRER -->
+
+                                    <button type="button"
+                                            class="absolute top-3 right-3 w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition remove-enfant">
+
+                                        ×
+
+                                    </button>
+
+
+                                    <!-- NOM -->
+
+                                    <div class="mb-4">
+
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Nom
+                                        </label>
+
+                                        {{ form.nom }}
+
+                                    </div>
+
+
+                                    <!-- PRÉNOM -->
+
+                                    <div class="mb-4">
+
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Prénom
+                                        </label>
+
+                                        {{ form.prenom }}
+
+                                    </div>
+
+
+                                    <!-- DATE DE NAISSANCE -->
+
+                                    <div>
+
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Date de naissance
+                                        </label>
+
+                                        {{ form.date_naissance }}
+
+                                    </div>
+
+
+                                    <!-- DELETE DJANGO -->
+
+                                    {% if form.DELETE %}
+
+                                        {{ form.DELETE.as_hidden }}
+
+                                    {% endif %}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- ===================================== -->
+                        <!-- TEMPLATE CACHÉ -->
+                        <!-- ===================================== -->
+
+                        <div id="empty-form" style="display:none;">
+
+                            <div class="border border-gray-200 rounded-xl p-5 mb-4 enfant-form relative bg-gray-50">
+
+                                <!-- BOUTON RETIRER -->
+
+                                <button type="button"
+                                        class="absolute top-3 right-3 w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition remove-enfant">
+
+                                    ×
+
+                                </button>
+
+
+                                <!-- NOM -->
+
+                                <div class="mb-4">
+
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Nom
+                                    </label>
+
+                                    {{ formset.empty_form.nom }}
+
+                                </div>
+
+
+                                <!-- PRÉNOM -->
+
+                                <div class="mb-4">
+
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Prénom
+                                    </label>
+
+                                    {{ formset.empty_form.prenom }}
+
+                                </div>
+
+
+                                <!-- DATE DE NAISSANCE -->
+
+                                <div>
+
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Date de naissance
+                                    </label>
+
+                                    {{ formset.empty_form.date_naissance }}
+
+                                </div>
+
+
+                                {% if formset.empty_form.DELETE %}
+
+                                    {{ formset.empty_form.DELETE.as_hidden }}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ===================================== -->
+                        <!-- ACTIONS -->
+                        <!-- ===================================== -->
+
+                        <div class="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
+
+                            <a href="{% url 'etape2' %}"
+                               class="px-6 py-2.5 bg-gray-200 text-gray-700 rounded-lg font-medium text-sm hover:bg-gray-300 transition">
+
+                                ← Retour
+
+                            </a>
+
+
+                            <button type="submit"
+                                    class="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition">
+
+                                Suivant →
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===================================== -->
+        <!-- SIDEBAR -->
+        <!-- ===================================== -->
+
+        <div>
+
+
+            <!-- ===================================== -->
+            <!-- BON À SAVOIR -->
+            <!-- ===================================== -->
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+
+                <div class="flex items-center gap-3 mb-4">
+
+                    <div class="w-10 h-10 rounded-lg bg-yellow-100 text-yellow-600 flex items-center justify-center">
+
+                        <i class="bi bi-lightbulb text-lg"></i>
+
+                    </div>
+
+                    <h3 class="text-base font-semibold text-gray-800">
+                        Bon à savoir
+                    </h3>
+
+                </div>
+
+
+                <p class="text-sm text-gray-500 leading-relaxed">
+
+                    Vous pouvez enregistrer jusqu'à neuf enfants.
+                    Renseignez leurs informations avec soin afin de conserver
+                    un dossier familial complet.
+
+                </p>
+
+            </div>
+
+
+            <!-- ===================================== -->
+            <!-- PROGRESSION -->
+            <!-- ===================================== -->
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+
+                <div class="flex items-center gap-3 mb-5">
+
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+
+                        <i class="bi bi-bar-chart-line text-lg"></i>
+
+                    </div>
+
+                    <h3 class="text-base font-semibold text-gray-800">
+                        Progression
+                    </h3>
+
+                </div>
+
+
+                <div class="flex items-center justify-between mb-2">
+
+                    <span class="text-sm text-gray-500">
+                        Étape 3 sur 5
+                    </span>
+
+                    <span class="text-sm font-semibold text-blue-600">
+                        60%
+                    </span>
+
+                </div>
+
+
+                <div class="w-full h-2 bg-gray-200 rounded-full mb-6">
+
+                    <div class="h-2 bg-blue-600 rounded-full"
+                         style="width: 60%;">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ÉTAPE 1 -->
+
+                <div class="flex items-center gap-3 mb-4">
+
+                    <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm">
+
+                        <i class="bi bi-check-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-800">
+                            Identité
+                        </p>
+
+                        <p class="text-xs text-green-600">
+                            Terminé
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ÉTAPE 2 -->
+
+                <div class="flex items-center gap-3 mb-4">
+
+                    <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm">
+
+                        <i class="bi bi-check-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-800">
+                            Conjoints
+                        </p>
+
+                        <p class="text-xs text-green-600">
+                            Terminé
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ÉTAPE 3 -->
+
+                <div class="flex items-center gap-3 mb-4">
+
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold">
+                        3
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-800">
+                            Enfants
+                        </p>
+
+                        <p class="text-xs text-blue-600">
+                            En cours
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ÉTAPE 4 -->
+
+                <div class="flex items-center gap-3 mb-4">
+
+                    <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-sm">
+                        4
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-800">
+                            Photo
+                        </p>
+
+                        <p class="text-xs text-gray-400">
+                            À venir
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ÉTAPE 5 -->
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-sm">
+                        5
+                    </div>
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-800">
+                            Validation
+                        </p>
+
+                        <p class="text-xs text-gray-400">
+                            À venir
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================================== -->
+            <!-- VALEUR 1 -->
+            <!-- ===================================== -->
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+
+                <div class="flex items-start gap-3">
+
+                    <div class="w-10 h-10 rounded-lg bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+
+                        <i class="bi bi-person-check text-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-sm font-semibold text-gray-800 mb-1">
+                            Un membre bien enrôlé
+                        </h3>
+
+                        <p class="text-sm text-gray-500 leading-relaxed">
+                            Des informations fiables et correctement enregistrées.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================================== -->
+            <!-- VALEUR 2 -->
+            <!-- ===================================== -->
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+
+                <div class="flex items-start gap-3">
+
+                    <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
+
+                        <i class="bi bi-people text-lg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-sm font-semibold text-gray-800 mb-1">
+                            Une famille que nous protégeons
+                        </h3>
+
+                        <p class="text-sm text-gray-500 leading-relaxed">
+                            Un enrôlement complet pour mieux protéger la famille.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================== -->
+<!-- JS DYNAMIQUE — LOGIQUE CONSERVÉE -->
+<!-- ===================================== -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const addBtn = document.getElementById('add-enfant');
+
+    const container = document.getElementById(
+        'enfants-container'
+    );
+
+    const totalForms = document.getElementById(
+        'id_enfant-TOTAL_FORMS'
+    );
+
+    const emptyForm = document.getElementById(
+        'empty-form'
+    ).innerHTML;
+
+    // 🔥 MAXIMUM
+    const MAX_ENFANTS = 9;
+
+
+    // =====================================
+    // AJOUT ENFANT
+    // =====================================
+
+    addBtn.addEventListener('click', function () {
+
+        let formCount = parseInt(totalForms.value);
+
+        // 🔥 LIMITATION
+        if (formCount >= MAX_ENFANTS) {
+
+            alert("Maximum 9 enfants.");
+
+            return;
+        }
+
+        let newForm = emptyForm.replace(
+            /__prefix__/g,
+            formCount
+        );
+
+        let div = document.createElement('div');
+
+        div.innerHTML = newForm;
+
+        container.appendChild(div);
+
+        totalForms.value = formCount + 1;
+
+    });
+
+
+    // =====================================
+    // RETIRER ENFANT
+    // =====================================
+
+    document.addEventListener('click', function(e){
+
+        if(
+            e.target.classList.contains(
+                'remove-enfant'
+            )
+        ){
+
+            const enfantForm = e.target.closest(
+                '.enfant-form'
+            );
+
+            enfantForm.remove();
+
+            let formCount = parseInt(
+                totalForms.value
+            );
+
+            totalForms.value = formCount - 1;
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

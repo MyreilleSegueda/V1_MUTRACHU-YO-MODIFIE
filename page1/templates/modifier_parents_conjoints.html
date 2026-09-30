@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Parents & Conjoints
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="form-card">
+
+            <!-- ===================================== -->
+            <!-- HEADER -->
+            <!-- ===================================== -->
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        Parents & Conjoints
+                    </h5>
+
+                    <small class="text-muted">
+                        Étape 2 sur 3 : Informations familiales
+                    </small>
+
+                </div>
+
+                <a href="{% url 'liste_membres' %}"
+                   class="btn btn-primary btn-sm">
+
+                    ← Retour
+
+                </a>
+
+            </div>
+
+
+            <!-- ===================================== -->
+            <!-- PROGRESS -->
+            <!-- ===================================== -->
+
+            <div class="mb-4">
+
+                <div class="progress"
+                     style="height:7px; border-radius:20px;">
+
+                    <div class="progress-bar bg-primary"
+                         style="width:66%">
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between mt-2">
+
+                    <small class="text-muted">
+                        Profil
+                    </small>
+
+                    <small class="fw-bold text-primary">
+                        Parents & Conjoints
+                    </small>
+
+                    <small class="text-muted">
+                        Enfants
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================================== -->
+            <!-- FORM -->
+            <!-- ===================================== -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- ===================================== -->
+                <!-- PARENTS -->
+                <!-- ===================================== -->
+
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <div>
+
+                                <h5 class="fw-bold mb-1">
+                                    👨 Parents
+                                </h5>
+
+                                <small class="text-muted">
+                                    Père et mère du membre
+                                </small>
+
+                            </div>
+
+                            <span class="badge bg-light text-dark">
+                                Maximum 2
+                            </span>
+                            <button type="button"class="btn btn-primary btn-sm" id="add-parent">
+
+                             + Ajouter
+
+                            </button>
+
+                        </div>
+                        
+
+
+                        {{ parent_formset.management_form }}
+
+                        {% for form in parent_formset %}
+
+                            <div class="border rounded p-3 mb-3 bg-light">
+
+                                {{ form.id }}
+
+                                <div class="row">
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Type parent
+                                        </label>
+
+                                        {{ form.type_parent }}
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Nom
+                                        </label>
+
+                                        {{ form.nom }}
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label fw-semibold">
+                                            Prénom
+                                        </label>
+
+                                        {{ form.prenom }}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-check">
+
+                                    {{ form.DELETE }}
+
+                                    <label class="form-check-label text-danger">
+                                        Supprimer ce parent
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ===================================== -->
+                <!-- CONJOINTS -->
+                <!-- ===================================== -->
+
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-body">
+
+                        <!-- TITLE -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <div>
+
+                                <h5 class="fw-bold mb-1">
+                                    ❤️ Conjoints
+                                </h5>
+
+                                <small class="text-muted">
+                                    Informations des conjoints
+                                </small>
+
+                            </div>
+
+                            <!-- AJOUT -->
+                            <button type="button"
+                                    class="btn btn-primary btn-sm"
+                                    id="add-conjoint">
+
+                                + Ajouter
+
+                            </button>
+
+                        </div>
+
+
+                        {{ conjoint_formset.management_form }}
+
+
+                        <!-- CONTAINER -->
+                        <div id="conjoint-container">
+
+                            {% for form in conjoint_formset %}
+
+                                <div class="border rounded p-3 mb-3 bg-light conjoint-form">
+
+                                    {{ form.id }}
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label fw-semibold">
+                                                Nom
+                                            </label>
+
+                                            {{ form.nom }}
+
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+
+                                            <label class="form-label fw-semibold">
+                                                Prénom
+                                            </label>
+
+                                            {{ form.prenom }}
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-check">
+
+                                        {{ form.DELETE }}
+
+                                        <label class="form-check-label text-danger">
+                                            Supprimer ce conjoint
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ===================================== -->
+                <!-- ACTIONS -->
+                <!-- ===================================== -->
+
+                <div class="d-flex justify-content-between mt-4">
+
+                    <a href="{% url 'modifier_membre' membre.id %}"
+                       class="btn btn-secondary">
+
+                        ← Retour
+
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        Suivant →
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- EMPTY FORM -->
+<!-- ===================================== -->
+
+<div id="empty-form" class="d-none">
+
+    <div class="border rounded p-3 mb-3 bg-light conjoint-form">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label fw-semibold">
+                    Nom
+                </label>
+
+                {{ conjoint_formset.empty_form.nom }}
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label fw-semibold">
+                    Prénom
+                </label>
+
+                {{ conjoint_formset.empty_form.prenom }}
+
+            </div>
+
+        </div>
+
+        <!-- REMOVE -->
+        <div class="text-end">
+
+            <button type="button"
+                    class="btn btn-sm btn-outline-danger remove-conjoint">
+
+                ✖ Retirer
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- SCRIPT -->
+<!-- ===================================== -->
+<script>
+    const addParentBtn = document.getElementById("add-parent");
+    const parentContainer = document.getElementById("parent-container");
+    const totalParentForms = document.getElementById("id_parents-TOTAL_FORMS");
+
+    addParentBtn.addEventListener("click", function () {
+
+        let total = parseInt(totalParentForms.value);
+
+        // Limite à 2 parents
+        if (total >= 2) {
+            alert("Un membre ne peut avoir que deux parents.");
+            return;
+        }
+
+        let template = document
+            .getElementById("parent-empty-form")
+            .innerHTML
+            .replace(/__prefix__/g, total);
+
+        parentContainer.insertAdjacentHTML("beforeend", template);
+
+        totalParentForms.value = total + 1;
+
+    });
+</script>
+<script>
+
+    // =====================================
+    // AJOUT CONJOINT
+    // =====================================
+
+    const addButton = document.getElementById('add-conjoint');
+
+    const container = document.getElementById(
+        'conjoint-container'
+    );
+
+    const totalForms = document.getElementById(
+        'id_conjoints-TOTAL_FORMS'
+    );
+
+    addButton.addEventListener('click', function () {
+
+        let formNum = parseInt(totalForms.value);
+
+        // MAXIMUM 4
+        if (formNum >= 4) {
+
+            alert("Maximum 4 conjoints");
+
+            return;
+        }
+
+        let newForm = document
+            .getElementById('empty-form')
+            .innerHTML
+            .replace(/__prefix__/g, formNum);
+
+        container.insertAdjacentHTML(
+            'beforeend',
+            newForm
+        );
+
+        totalForms.value = formNum + 1;
+
+    });
+
+
+
+    // =====================================
+    // RETIRER CONJOINT
+    // =====================================
+
+    document.addEventListener('click', function(e) {
+
+        if (
+            e.target.classList.contains('remove-conjoint')
+        ) {
+
+            e.target
+                .closest('.conjoint-form')
+                .remove();
+        }
+
+    });
+
+</script>
+
+{% endblock %}

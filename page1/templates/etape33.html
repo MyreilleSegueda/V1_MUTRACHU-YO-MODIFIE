@@ -1,0 +1,188 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}Informations familiales{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-7">
+
+        <div class="form-card">
+
+            <h5 class="mb-2 fw-bold">Informations familiales</h5>
+            <p class="text-muted">Étape 2 sur 3</p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- 🔹 CONJOINTS -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <h6 class="fw-bold mb-0">
+                        Conjoint(e)s
+                    </h6>
+
+                    <button type="button"
+                            class="btn btn-outline-primary"
+                            id="add-conjoint">
+                        + Ajouter un conjoint
+                    </button>
+
+                </div>
+
+                <!-- 🔹 Liste des conjoints -->
+                <div id="conjoints-container">
+
+                    <!-- 🔥 Premier conjoint -->
+                    <div class="border rounded p-3 mb-3 conjoint-form position-relative">
+
+                        <!-- 🔥 Supprimer -->
+                        <button type="button"
+                                class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 remove-conjoint">
+                            ×
+                        </button>
+
+                        <div class="mb-2">
+                            <label class="form-label">Nom</label>
+
+                            <input type="text"
+                                   name="conjoint_nom[]"
+                                   class="form-control">
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Prénom</label>
+
+                            <input type="text"
+                                   name="conjoint_prenom[]"
+                                   class="form-control">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <!-- 🔹 PÈRE -->
+                <h6 class="fw-bold mb-3">Père</h6>
+
+                <div class="mb-3">
+                    <label class="form-label">Nom</label>
+                    {{ parent_pere_form.nom }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Prénom</label>
+                    {{ parent_pere_form.prenom }}
+                </div>
+
+                <hr>
+
+                <!-- 🔹 MÈRE -->
+                <h6 class="fw-bold mb-3">Mère</h6>
+
+                <div class="mb-3">
+                    <label class="form-label">Nom</label>
+                    {{ parent_mere_form.nom }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Prénom</label>
+                    {{ parent_mere_form.prenom }}
+                </div>
+
+                <!-- 🔹 Boutons -->
+                <div class="d-flex justify-content-between mt-4">
+
+                    <a href="{% url 'etape1' %}" class="btn btn-secondary">
+                        ← Retour
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        Suivant →
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 🔥 JS dynamique -->
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const addBtn = document.getElementById('add-conjoint');
+
+    const container = document.getElementById('conjoints-container');
+
+    const MAX_CONJOINTS = 4;
+
+    // 🔹 Ajouter un conjoint
+    addBtn.addEventListener('click', function () {
+
+        let count = document.querySelectorAll('.conjoint-form').length;
+
+        if (count >= MAX_CONJOINTS) {
+
+            alert("Maximum 4 conjoints.");
+
+            return;
+        }
+
+        const html = `
+            <div class="border rounded p-3 mb-3 conjoint-form position-relative">
+
+                <button type="button"
+                        class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 remove-conjoint">
+                    ×
+                </button>
+
+                <div class="mb-2">
+                    <label class="form-label">Nom</label>
+
+                    <input type="text"
+                           name="conjoint_nom[]"
+                           class="form-control">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Prénom</label>
+
+                    <input type="text"
+                           name="conjoint_prenom[]"
+                           class="form-control">
+                </div>
+
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', html);
+
+    });
+
+    // 🔹 Supprimer un conjoint
+    document.addEventListener('click', function(e){
+
+        if(e.target.classList.contains('remove-conjoint')){
+
+            const conjointForm = e.target.closest('.conjoint-form');
+
+            conjointForm.remove();
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

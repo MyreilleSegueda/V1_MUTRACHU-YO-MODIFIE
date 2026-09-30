@@ -1,0 +1,258 @@
+
+body {
+            font-family: 'Inter', Tahoma, sans-serif;
+            margin: 0;
+            background: #f6f7fb;
+        }
+        .card-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .navbar-custom {
+            background: linear-gradient(135deg, #007bff, #00a2ff);
+        }
+        .navbar-custom .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+        }
+        .btn-custom {
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            opacity: 0.85;
+        }
+
+
+
+
+
+
+
+
+
+/* GLOBAL */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #0f172a;
+    color: white;
+    padding: 20px;
+    position: fixed;
+}
+
+/* LOGO */
+.logo {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* NAV */
+.nav-link {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    background: #1e293b;
+    color: white;
+}
+
+/* MAIN */
+.main {
+    margin-left: 240px;
+}
+
+/* TOPBAR */
+.topbar {
+    background: white;
+    padding: 15px 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* CONTENT */
+.content {
+    padding: 25px;
+}
+
+
+/*SS (TRÈS IMPORTANT POUR MATCHER TON IMAGE)*/
+
+
+
+/* TABLE CARD (comme ton image) */
+.table-card {
+    background: white;
+    border-radius: 12px;
+    padding: 10px 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* TABLE HEADER */
+.table thead th {
+    color: #6b7280;
+    font-weight: 600;
+    padding: 15px;
+}
+
+/* ROW STYLE */
+.table tbody tr {
+    border-top: 1px solid #e5e7eb;
+}
+
+/* CELL */
+.table td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+/* AVATAR */
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* BUTTON STYLE (plus proche du rendu) */
+.btn-sm {
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* ESPACE ENTRE BOUTONS */
+td .btn {
+    margin-left: 5px;
+}
+
+
+
+/* Ajout hover*/
+
+.table tbody tr:hover {
+    background: #f9fafb;
+}
+
+
+
+
+/* FORM CARD */
+.form-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+/* INPUT STYLE */
+.form-control, select {
+    border-radius: 8px;
+    height: 45px;
+}
+
+/* LABEL */
+.form-label {
+    font-weight: 500;
+}
+
+
+/* FORM CARD */
+.form-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* IMAGE PREVIEW */
+.preview-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e5e7eb;
+}
+
+/* INPUT */
+.form-control, select {
+    border-radius: 8px;
+    height: 45px;
+}
+
+
+/* =========================
+   DELETE PAGE
+========================= */
+.delete-card {
+    background: white;
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* ICON */
+.delete-card i {
+    color: #ef4444;
+}
+
+/* TEXTE */
+.delete-card p {
+    font-size: 15px;
+}
+
+/* BOUTONS */
+.delete-card .btn {
+    min-width: 140px;
+    border-radius: 8px;
+}
+
+
+/* =========================
+   DETAIL PAGE
+========================= */
+.detail-card {
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* IMAGE */
+.detail-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid #e5e7eb;
+}
+
+/* INFO */
+.info-item {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #e5e7eb;
+    padding-bottom: 5px;
+}
+
+/* LABEL */
+.label {
+    font-weight: 600;
+    color: #6b7280;
+}

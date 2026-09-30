@@ -1,0 +1,339 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}Validation{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- En-tête -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">
+            Nouvel enrôlement
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Vérification des informations avant validation
+        </p>
+    </div>
+
+    <!-- Étapes -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+
+        <div class="flex items-center justify-between">
+
+            <!-- Étape 1 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                <span class="text-xs font-medium text-gray-600 mt-2">
+                    Identité
+                </span>
+            </div>
+
+            <div class="flex-1 h-1 bg-green-500 mx-2"></div>
+
+            <!-- Étape 2 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                <span class="text-xs font-medium text-gray-600 mt-2">
+                    Conjoints
+                </span>
+            </div>
+
+            <div class="flex-1 h-1 bg-green-500 mx-2"></div>
+
+            <!-- Étape 3 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                <span class="text-xs font-medium text-gray-600 mt-2">
+                    Enfants
+                </span>
+            </div>
+
+            <div class="flex-1 h-1 bg-green-500 mx-2"></div>
+
+            <!-- Étape 4 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                <span class="text-xs font-medium text-gray-600 mt-2">
+                    Photo
+                </span>
+            </div>
+
+            <div class="flex-1 h-1 bg-blue-500 mx-2"></div>
+
+            <!-- Étape 5 -->
+            <div class="flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
+                    5
+                </div>
+                <span class="text-xs font-semibold text-blue-600 mt-2">
+                    Validation
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- CONTENU PRINCIPAL -->
+        <div class="lg:col-span-2">
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <i class="bi bi-check-circle text-xl"></i>
+                    </div>
+
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900">
+                            Vérification finale
+                        </h2>
+
+                        <p class="text-sm text-gray-500">
+                            Vérifiez les informations avant de terminer.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Identité -->
+                <div class="border border-gray-200 rounded-xl p-5 mb-5">
+
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold text-gray-900">
+                            <i class="bi bi-person mr-2"></i>
+                            Identité
+                        </h3>
+
+                        <a href="{% url 'etape1' %}"
+                           class="text-sm text-blue-600 hover:text-blue-800">
+                            Modifier
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <div>
+                            <p class="text-xs text-gray-500">Nom</p>
+                            <p class="font-medium text-gray-900">
+                                {{ membre.nom }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500">Prénom</p>
+                            <p class="font-medium text-gray-900">
+                                {{ membre.prenom }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500">Matricule</p>
+                            <p class="font-medium text-gray-900">
+                                {{ membre.matricule }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500">Sexe</p>
+                            <p class="font-medium text-gray-900">
+                                {{ membre.sexe }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500">Emploi</p>
+                            <p class="font-medium text-gray-900">
+                                {{ membre.emploi }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500">Service</p>
+                            <p class="font-medium text-gray-900">
+                                {{ membre.service }}
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Photo -->
+                <div class="border border-gray-200 rounded-xl p-5 mb-5">
+
+                    <div class="flex items-center justify-between mb-4">
+
+                        <h3 class="font-semibold text-gray-900">
+                            <i class="bi bi-camera mr-2"></i>
+                            Photo
+                        </h3>
+
+                        <a href="{% url 'etape4' %}"
+                           class="text-sm text-blue-600 hover:text-blue-800">
+                            Modifier
+                        </a>
+
+                    </div>
+
+                    {% if membre.photo %}
+
+                        <div class="flex items-center gap-4">
+
+                            <img src="{{ membre.photo.url }}"
+                                 alt="Photo du membre"
+                                 class="w-24 h-24 object-cover rounded-lg border">
+
+                            <div>
+                                <p class="font-medium text-green-600">
+                                    <i class="bi bi-check-circle mr-1"></i>
+                                    Photo enregistrée
+                                </p>
+
+                                <p class="text-sm text-gray-500 mt-1">
+                                    La photo a été traitée avec succès.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        <p class="text-red-500">
+                            Aucune photo enregistrée.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- Famille -->
+                <div class="border border-gray-200 rounded-xl p-5 mb-6">
+
+                    <h3 class="font-semibold text-gray-900 mb-4">
+                        <i class="bi bi-people mr-2"></i>
+                        Informations familiales
+                    </h3>
+
+                    <p class="text-sm text-gray-600">
+                        Les informations concernant les conjoints et les
+                        enfants ont été enregistrées aux étapes précédentes.
+                    </p>
+
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+
+                    <a href="{% url 'etape4' %}"
+                       class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">
+                        ← Retour
+                    </a>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="px-6 py-2.5 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700">
+                           Valider l'enrôlement ✓
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="space-y-6">
+
+            <!-- Progression -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-900">
+                        Progression
+                    </h3>
+
+                    <span class="text-sm font-semibold text-green-600">
+                        100%
+                    </span>
+                </div>
+
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-5">
+                    <div class="bg-green-500 h-2 rounded-full"
+                         style="width: 100%">
+                    </div>
+                </div>
+
+                <div class="space-y-3 text-sm">
+
+                    <div class="flex items-center gap-2 text-green-600">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Identité
+                    </div>
+
+                    <div class="flex items-center gap-2 text-green-600">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Conjoints
+                    </div>
+
+                    <div class="flex items-center gap-2 text-green-600">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Enfants
+                    </div>
+
+                    <div class="flex items-center gap-2 text-green-600">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Photo
+                    </div>
+
+                    <div class="flex items-center gap-2 text-blue-600 font-medium">
+                        <i class="bi bi-circle-fill text-xs"></i>
+                        Validation
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Information -->
+            <div class="bg-blue-50 rounded-xl border border-blue-100 p-6">
+
+                <div class="flex gap-3">
+
+                    <i class="bi bi-info-circle text-blue-600 text-xl"></i>
+
+                    <div>
+                        <h3 class="font-semibold text-blue-900 mb-1">
+                            Dernière étape
+                        </h3>
+
+                        <p class="text-sm text-blue-800">
+                            Vérifiez attentivement les informations avant
+                            de valider définitivement l'enrôlement.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

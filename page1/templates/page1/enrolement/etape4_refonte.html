@@ -1,0 +1,805 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Photo | Nouvel enrôlement{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'page1/css/enrolement.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="enrollment-page">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="enrollment-header">
+
+        <div class="enrollment-title">
+            <h1>Nouvel enrôlement</h1>
+
+            <p>
+                Enregistrez un nouveau membre dans la mutuelle
+            </p>
+        </div>
+
+
+        <div class="enrollment-breadcrumb">
+
+            <a href="{% url 'core_index' %}">
+                Accueil
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a href="{% url 'liste_membres' %}">
+                Membres
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>Nouvel enrôlement</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LAYOUT
+    ====================================================== -->
+
+    <div class="enrollment-layout">
+
+
+        <!-- =================================================
+             PARTIE PRINCIPALE
+        ================================================== -->
+
+        <div class="enrollment-main">
+
+
+            <!-- =============================================
+                 STEPPER
+            ============================================== -->
+
+            <div class="enrollment-stepper">
+
+                <!-- 1 -->
+
+                <div class="step completed">
+
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div class="step-name">
+                        Identité
+                    </div>
+
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <!-- 2 -->
+
+                <div class="step completed">
+
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div class="step-name">
+                        Famille
+                    </div>
+
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <!-- 3 -->
+
+                <div class="step completed">
+
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div class="step-name">
+                        Enfants
+                    </div>
+
+                </div>
+
+                <div class="step-line completed"></div>
+
+
+                <!-- 4 -->
+
+                <div class="step active">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-name">
+                        Photo
+                    </div>
+
+                </div>
+
+                <div class="step-line"></div>
+
+
+                <!-- 5 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <div class="step-name">
+                        Carte
+                    </div>
+
+                </div>
+
+                <div class="step-line"></div>
+
+
+                <!-- 6 -->
+
+                <div class="step">
+
+                    <div class="step-number">
+                        6
+                    </div>
+
+                    <div class="step-name">
+                        Validation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 CARTE FORMULAIRE
+            ============================================== -->
+
+            <div class="enrollment-form-card">
+
+
+                <!-- HEADER FORMULAIRE -->
+
+                <div class="form-card-header">
+
+                    <div class="form-title">
+
+                        <div class="form-title-icon">
+                            <i class="bi bi-camera-fill"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Étape 4 : Photo du membre
+                            </h2>
+
+                            <p>
+                                Ajoutez une photo claire et récente
+                                pour l'identification du membre.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="required-message">
+
+                        Étape
+                        <strong>4 sur 6</strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     FORMULAIRE
+                ============================================== -->
+
+                <form method="POST"
+                      enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+
+                    <div class="photo-form-body">
+
+
+                        <!-- =====================================
+                             ZONE PHOTO
+                        ====================================== -->
+
+                        <div class="photo-enrollment-layout">
+
+
+                            <!-- APERCU -->
+
+                            <div class="photo-preview-section">
+
+                                <div class="photo-preview"
+                                     id="photo-preview">
+
+                                    <div class="photo-placeholder"
+                                         id="photo-placeholder">
+
+                                        <div class="photo-placeholder-icon">
+                                            <i class="bi bi-person-fill"></i>
+                                        </div>
+
+                                        <strong>
+                                            Photo du membre
+                                        </strong>
+
+                                        <span>
+                                            Aucun fichier sélectionné
+                                        </span>
+
+                                    </div>
+
+
+                                    <img
+                                        src=""
+                                        id="preview-image"
+                                        alt="Aperçu de la photo"
+                                        style="display:none;"
+                                    >
+
+                                </div>
+
+
+                                <div class="photo-status"
+                                     id="photo-status">
+
+                                    <i class="bi bi-info-circle"></i>
+
+                                    <span>
+                                        En attente d'une photo
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================
+                                 IMPORTATION
+                            ================================== -->
+
+                            <div class="photo-upload-section">
+
+
+                                <div class="photo-upload-heading">
+
+                                    <div class="photo-upload-icon">
+                                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <h3>
+                                            Ajouter la photo
+                                        </h3>
+
+                                        <p>
+                                            Sélectionnez une photo récente
+                                            du membre depuis votre appareil.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- CHAMP DJANGO -->
+
+                                <div class="photo-field-wrapper">
+
+                                    <label>
+                                        Photo du membre
+                                        <span>*</span>
+                                    </label>
+
+
+                                    <div class="photo-input-container">
+
+                                        {{ form.photo }}
+
+                                    </div>
+
+
+                                    {% if form.photo.errors %}
+
+                                        <div class="field-error">
+                                            {{ form.photo.errors }}
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- CONSEILS -->
+
+                                <div class="photo-requirements">
+
+                                    <div class="photo-requirement">
+
+                                        <i class="bi bi-check-circle-fill"></i>
+
+                                        <span>
+                                            Visage clairement visible
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="photo-requirement">
+
+                                        <i class="bi bi-check-circle-fill"></i>
+
+                                        <span>
+                                            Photo nette et bien éclairée
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="photo-requirement">
+
+                                        <i class="bi bi-check-circle-fill"></i>
+
+                                        <span>
+                                            Cadrage centré sur le visage
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="photo-requirement">
+
+                                        <i class="bi bi-check-circle-fill"></i>
+
+                                        <span>
+                                            Image récente du membre
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="photo-security-info">
+
+                                    <i class="bi bi-shield-check"></i>
+
+                                    <p>
+                                        Cette photo sera associée au dossier
+                                        du membre et utilisée pour son
+                                        identification.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         ACTIONS
+                    ========================================== -->
+
+                    <div class="form-footer">
+
+                        <a href="{% url 'etape3' %}"
+                           class="cancel-btn">
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Retour
+
+                        </a>
+
+
+                        <button type="submit"
+                                class="next-btn">
+
+                            Suivant
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SIDEBAR DROITE
+        ================================================== -->
+
+        <aside class="enrollment-sidebar">
+
+
+            <!-- =============================================
+                 BON A SAVOIR
+            ============================================== -->
+
+            <div class="info-card">
+
+                <div class="info-icon blue">
+                    <i class="bi bi-info-lg"></i>
+                </div>
+
+                <div>
+
+                    <h3>
+                        Bon à savoir
+                    </h3>
+
+                    <p>
+                        La photo sera utilisée pour identifier
+                        le membre et pour la préparation de sa
+                        carte d'adhérent.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 PROGRESSION
+            ============================================== -->
+
+            <div class="progress-card">
+
+                <div class="progress-title">
+
+                    <div class="progress-icon">
+                        <i class="bi bi-list-task"></i>
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Progression
+                        </h3>
+
+                        <p>
+                            Étape 4 sur 6
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-row">
+
+                    <div class="progress-bar-container">
+
+                        <div class="progress-bar-value"
+                             style="width: 67%;">
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        67%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 LISTE ETAPES
+            ============================================== -->
+
+            <div class="steps-sidebar">
+
+
+                <!-- 1 -->
+
+                <div class="sidebar-step completed">
+
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div>
+                        <strong>Identité</strong>
+                        <span>Terminé</span>
+                    </div>
+
+                </div>
+
+
+                <!-- 2 -->
+
+                <div class="sidebar-step completed">
+
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div>
+                        <strong>Famille</strong>
+                        <span>Terminé</span>
+                    </div>
+
+                </div>
+
+
+                <!-- 3 -->
+
+                <div class="sidebar-step completed">
+
+                    <div class="sidebar-step-marker">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
+                    <div>
+                        <strong>Enfants</strong>
+                        <span>Terminé</span>
+                    </div>
+
+                </div>
+
+
+                <!-- 4 -->
+
+                <div class="sidebar-step active">
+
+                    <div class="sidebar-step-marker">
+                        4
+                    </div>
+
+                    <div>
+                        <strong>Photo</strong>
+                        <span>Photo d'identité</span>
+                    </div>
+
+                </div>
+
+
+                <!-- 5 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        5
+                    </div>
+
+                    <div>
+                        <strong>Carte</strong>
+                        <span>Préparation de la carte</span>
+                    </div>
+
+                </div>
+
+
+                <!-- 6 -->
+
+                <div class="sidebar-step">
+
+                    <div class="sidebar-step-marker">
+                        6
+                    </div>
+
+                    <div>
+                        <strong>Validation</strong>
+                        <span>Vérification finale</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 MESSAGE
+            ============================================== -->
+
+            <div class="photo-side-card">
+
+                <div class="photo-side-icon">
+                    <i class="bi bi-person-badge-fill"></i>
+                </div>
+
+                <strong>
+                    Une photo de qualité
+                </strong>
+
+                <p>
+                    Une bonne photo facilite l'identification
+                    du membre sur sa carte.
+                </p>
+
+                <div class="family-line"></div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PREVISUALISATION PHOTO
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /*
+     * On récupère directement le champ généré
+     * par Django.
+     */
+
+    const photoInput =
+        document.querySelector(
+            'input[type="file"][name="photo"]'
+        );
+
+
+    const previewImage =
+        document.getElementById(
+            "preview-image"
+        );
+
+
+    const placeholder =
+        document.getElementById(
+            "photo-placeholder"
+        );
+
+
+    const status =
+        document.getElementById(
+            "photo-status"
+        );
+
+
+    if (
+        !photoInput ||
+        !previewImage ||
+        !placeholder
+    ) {
+        return;
+    }
+
+
+    photoInput.addEventListener(
+        "change",
+        function () {
+
+            const file =
+                this.files[0];
+
+
+            if (!file) {
+
+                previewImage.src = "";
+
+                previewImage.style.display =
+                    "none";
+
+                placeholder.style.display =
+                    "flex";
+
+
+                if (status) {
+
+                    status.innerHTML = `
+                        <i class="bi bi-info-circle"></i>
+                        <span>
+                            En attente d'une photo
+                        </span>
+                    `;
+
+                }
+
+                return;
+            }
+
+
+            /*
+             * Vérification image
+             */
+
+            if (
+                !file.type.startsWith("image/")
+            ) {
+
+                alert(
+                    "Veuillez sélectionner un fichier image."
+                );
+
+                this.value = "";
+
+                return;
+            }
+
+
+            /*
+             * APERCU
+             */
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (event) {
+
+                    previewImage.src =
+                        event.target.result;
+
+                    previewImage.style.display =
+                        "block";
+
+                    placeholder.style.display =
+                        "none";
+
+
+                    if (status) {
+
+                        status.innerHTML = `
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>
+                                Photo sélectionnée
+                            </span>
+                        `;
+
+                        status.classList.add(
+                            "photo-selected"
+                        );
+
+                    }
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,497 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}
+Membres | MUTRA.CHU.YO
+{% endblock %}
+
+{% block page_title %}
+Membres
+{% endblock %}
+
+{% block content %}
+
+<div class="w-full px-6 lg:px-4 py-0">
+
+    <!-- ================= HEADER ================= -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-1">
+                Gestion des membres
+            </h2>
+
+            <p class="text-sm text-gray-500">
+                Consultez et gérez l'ensemble des membres enregistrés.
+            </p>
+        </div>
+
+        <div class="mt-4 lg:mt-0">
+            <a
+                href="{% url 'etape1' %}"
+                class="inline-flex items-center px-5 py-2.5 bg-blue-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition"
+            >
+                <i class="bi bi-plus-lg mr-2"></i>
+                Nouveau membre
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATISTIQUES ================= -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+
+        <!-- TOTAL -->
+        <div class="bg-blue-300 rounded-xl border border-gray-100 shadow-sm p-4">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Total des membres
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-blue-900">
+                        0
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                    <i class="bi bi-people text-xl text-blue-700"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ACTIFS -->
+        <div class="bg-green-300 rounded-xl border border-gray-100 shadow-sm p-4">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Membres actifs
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-green-900">
+                        0
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                    <i class="bi bi-person-check text-xl text-green-700"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- SUSPENDUS -->
+        <div class="bg-orange-300 rounded-xl border border-gray-100 shadow-sm p-4">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Membres suspendus
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-orange-900">
+                        0
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                    <i class="bi bi-person-dash text-xl text-orange-700"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- RADIES -->
+        <div class="bg-red-300 rounded-xl border border-gray-100 shadow-sm p-4">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Membres radiés
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-red-900">
+                        0
+                    </h3>
+                </div>
+
+                <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                    <i class="bi bi-person-x text-xl text-red-700"></i>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    
+
+
+            <!-- ================= RECHERCHE ================= -->
+            <form method="GET" class="mb-6">
+
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-end">
+
+                    <!-- RECHERCHE -->
+                    <div class="lg:col-span-2">
+
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Rechercher un membre
+                        </label>
+
+                        <div class="relative">
+
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <i class="bi bi-search text-gray-400"></i>
+                            </div>
+
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ search }}"
+                                placeholder="Nom, prénom ou matricule"
+                                class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUT -->
+                    <div>
+
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Statut
+                        </label>
+
+                        <select
+                            name="statut"
+                            class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-400"
+                        >
+
+                            <option value="">
+                                Tous les statuts
+                            </option>
+
+                            <option value="actif">
+                                Actif
+                            </option>
+
+                            <option value="suspendu">
+                                Suspendu
+                            </option>
+
+                            <option value="radie">
+                                Radié
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- BOUTONS -->
+                    <div class="lg:col-span-2">
+
+                        <div class="flex flex-col sm:flex-row gap-2">
+
+                            <button
+                                type="submit"
+                                class="inline-flex items-center justify-center px-5 py-2.5 bg-blue-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition"
+                            >
+                                <i class="bi bi-search mr-2"></i>
+                                Rechercher
+                            </button>
+
+                            <a
+                                href="{% url 'liste_membres' %}"
+                                class="inline-flex items-center justify-center px-5 py-2.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
+                            >
+                                <i class="bi bi-arrow-counterclockwise mr-2"></i>
+                                Réinitialiser
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+            <!-- ================= TABLEAU ================= -->
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-left">
+
+                    <thead>
+                        <tr class="border-b border-gray-100 bg-blue-50">
+
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                                N° d'ordre
+                            </th>
+
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                                Photo
+                            </th>
+
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                                Matricule
+                            </th>
+
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                                Nom
+                            </th>
+
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                                Prénom
+                            </th>
+
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide text-right">
+                                Actions
+                            </th>
+
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for membre in membres %}
+
+                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+
+                            <!-- NUMERO D'ORDRE -->
+                            <td class="px-4 py-1 text-sm font-semibold text-gray-700">
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <!-- PHOTO -->
+                            <td class="px-4 py-1">
+
+                                {% if membre.photo %}
+
+                                    <img
+                                        src="{{ membre.photo.url }}"
+                                        class="w-11 h-11 rounded-full object-cover border border-gray-200"
+                                        alt="Photo de {{ membre.nom }}"
+                                    >
+
+                                {% else %}
+
+                                    <img
+                                        src="https://via.placeholder.com/45"
+                                        class="w-11 h-11 rounded-full object-cover border border-gray-200"
+                                        alt="Photo"
+                                    >
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- MATRICULE -->
+                            <td class="px-4 py-1 text-sm text-gray-600">
+                                {{ membre.matricule }}
+                            </td>
+
+
+                            <!-- NOM -->
+                            <td class="px-4 py-1 text-sm font-semibold text-gray-900">
+                                {{ membre.nom }}
+                            </td>
+
+
+                            <!-- PRENOM -->
+                            <td class="px-4 py-1 text-sm text-gray-600">
+                                {{ membre.prenom }}
+                            </td>
+
+
+                            <!-- ACTIONS -->
+                            <td class="px-4 py-1">
+
+                                <div class="flex justify-end gap-2">
+
+                                    <a
+                                        href="{% url 'detail_membre' membre.id %}"
+                                        class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white text-blue-600 hover:bg-gray-50 hover:text-gray-900 transition"
+                                        title="Détails"
+                                    >
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+
+                                    <a
+                                        href="{% url 'modifier_membre' membre.id %}"
+                                        class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white text-blue-600 hover:bg-gray-50 hover:text-gray-900 transition"
+                                        title="Modifier"
+                                    >
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <a
+                                        href="{% url 'supprimer_membre' membre.id %}"
+                                        class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-200 bg-blue-500 text-red-500 hover:bg-red-50 transition"
+                                        title="Supprimer"
+                                    >
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="6" class="px-4 py-12 text-center">
+
+                                <div class="text-gray-400">
+
+                                    <i class="bi bi-people text-4xl block mb-3"></i>
+
+                                    <p class="text-sm">
+                                        Aucun membre enregistré.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- ================= FOOTER ================= -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mt-6 pt-4 border-t border-gray-100">
+
+                <!-- AFFICHAGE -->
+                <div class="text-sm text-gray-500 mb-4 md:mb-0">
+
+                    Affichage de
+
+                    <strong class="font-semibold text-gray-700">
+                        {{ membres.start_index|default:"1" }}
+                    </strong>
+
+                    à
+
+                    <strong class="font-semibold text-gray-700">
+                        {{ membres.end_index|default:membres|length }}
+                    </strong>
+
+                    sur
+
+                    <strong class="font-semibold text-gray-700">
+                        {{ membres.paginator.count|default:membres|length }}
+                    </strong>
+
+                    membres
+
+                </div>
+
+
+                <!-- PAGINATION -->
+                {% if membres.has_other_pages %}
+
+                <nav>
+
+                    <ul class="flex items-center gap-1">
+
+                        {% if membres.has_previous %}
+
+                        <li>
+
+                            <a
+                                class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition"
+                                href="?page={{ membres.previous_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+                            >
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+
+                        </li>
+
+                        {% endif %}
+
+
+                        {% for page in membres.paginator.page_range %}
+
+                            {% if page == membres.number %}
+
+                            <li>
+
+                                <span class="w-9 h-9 inline-flex items-center justify-center rounded-lg bg-gray-900 text-white text-sm font-medium">
+                                    {{ page }}
+                                </span>
+
+                            </li>
+
+                            {% elif page >= membres.number|add:"-2" and page <= membres.number|add:"2" %}
+
+                            <li>
+
+                                <a
+                                    class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition text-sm"
+                                    href="?page={{ page }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+                                >
+                                    {{ page }}
+                                </a>
+
+                            </li>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        {% if membres.has_next %}
+
+                        <li>
+
+                            <a
+                                class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition"
+                                href="?page={{ membres.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+                            >
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+
+                        </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </nav>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

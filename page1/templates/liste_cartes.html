@@ -1,0 +1,672 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Gestion des cartes{% endblock %}
+
+{% block content %}
+
+<div class="w-full min-w-0 flex-1">
+
+    <!-- En-tête -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">Gestion des cartes</h2>
+
+            <p class="text-muted mb-0">
+                Production et suivi des cartes de membre
+            </p>
+        </div>
+
+        <button class="btn btn-dark">
+            <i class="bi bi-printer"></i>
+            Imprimer en masse
+        </button>
+
+    </div>
+<!-- Statistiques des cartes -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+
+    <!-- À produire -->
+    <div class="bg-blue-500 rounded-xl shadow-sm p-4 border border-gray-100">
+        <p class="text-sm text-white mb-1">À produire</p>
+        <h3 class="text-2xl font-bold text-white">0</h3>
+    </div>
+
+    <!-- À réimprimer -->
+    <div class="bg-green-500 rounded-xl shadow-sm p-4 border border-gray-100">
+        <p class="text-sm text-white mb-1">À réimprimer</p>
+        <h3 class="text-2xl font-bold text-white">0</h3>
+    </div>
+
+    <!-- Cartes produites -->
+    <div class="bg-orange-500 rounded-xl shadow-sm p-4 border border-gray-100">
+        <p class="text-sm text-white mb-1">Cartes produites</p>
+        <h3 class="text-2xl font-bold text-white">0</h3>
+    </div>
+
+    <!-- Cartes remises -->
+    <div class="bg-purple-500 rounded-xl shadow-sm p-4 border border-gray-100">
+        <p class="text-sm text-white mb-1">Cartes remises</p>
+        <h3 class="text-2xl font-bold text-white">0</h3>
+    </div>
+
+</div>
+<!-- Catégories, recherche et filtre -->
+<div class="bg-white-300 rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
+
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+        <!-- Catégories -->
+        <div class="flex flex-wrap gap-2">
+
+            <button class="px-4 py-2 rounded-lg bg-gray-900 text-white text-sm font-medium">
+                Toutes les cartes
+            </button>
+
+            <button class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200">
+                À produire
+            </button>
+
+            <button class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200">
+                Produites
+            </button>
+
+            <button class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200">
+                Réimpression
+            </button>
+
+        </div>
+
+
+        <!-- Recherche + filtre -->
+        <div class="flex flex-col sm:flex-row gap-2">
+
+            <!-- Recherche -->
+            <div class="relative">
+
+                <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+                <form method="GET" class="relative">
+
+                   <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+                  <input
+                     type="text"
+                     name="recherche"
+                     value="{{ recherche }}"
+                     placeholder="Rechercher..."
+                     class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
+                 >
+
+                </form>
+
+            </div>
+
+
+            <!-- Filtre -->
+            <button class="px-4 py-2 rounded-lg border border-gray-200 bg-white text-gray-700 text-sm font-medium hover:bg-gray-50">
+               <i class="bi bi-funnel"></i>
+                Filtrer
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Zone principale -->
+<div class="w-full grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- ========================================= -->
+    <!-- COLONNE GAUCHE : LISTE DES CARTES -->
+    <!-- ========================================= -->
+    <div class="lg:col-span-2 min-w-0">
+
+        <div class="bg-white-500 rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+
+            
+
+
+            <!-- Tableau -->
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-sm text-left">
+
+                    <!-- En-tête du tableau -->
+                    <thead class="bg-gray-50 text-gray-600">
+
+                        <tr>
+
+                            <th class="px-5 py-3 font-medium">
+                                N° d'ordre
+                            </th>
+
+                            <th class="px-5 py-3 font-medium">
+                                Photo
+                            </th>
+
+                            <th class="px-5 py-3 font-medium">
+                                Membre
+                            </th>
+
+                            <th class="px-5 py-3 font-medium">
+                                N° carte
+                            </th>
+
+                            
+
+                            <th class="px-5 py-3 font-medium">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <!-- Corps du tableau -->
+                    <tbody class="divide-y divide-gray-100">
+
+                        {% for membre in membres %}
+
+                        <tr
+                           class="hover:bg-gray-50 cursor-pointer"
+                           onclick="selectionnerMembre(
+                               '{{ membre.id }}',
+                               '{{ membre.nom|escapejs }}',
+                               '{{ membre.prenom|escapejs }}',
+                               '{{ membre.compteur|stringformat:"04d" }}',
+                               '{{ membre.sexe|escapejs }}',
+                               '{{ membre.matricule|escapejs }}',
+                               '{{ membre.emploi|escapejs }}',
+                               '{% if membre.photo %}{{ membre.photo.url }}{% endif %}',
+                               '{% url 'generer_carte' membre.id %}'
+                           )"
+                       >
+
+                            <!-- N° d'ordre -->
+                            <td class="px-5 py-1">
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <!-- Photo -->
+                            <td class="px-5 py-1">
+
+                                {% if membre.photo %}
+
+                                    <img
+                                        src="{{ membre.photo.url }}"
+                                        alt="Photo"
+                                        class="w-10 h-10 rounded-lg object-cover"
+                                    >
+
+                                {% else %}
+
+                                    <span class="text-gray-400 text-xs">
+                                        Pas de photo
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Membre -->
+                            <td class="px-5 py-1">
+
+                                <span class="font-medium text-gray-800">
+                                    {{ membre.nom }} {{ membre.prenom }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- N° carte -->
+                            <td class="px-5 py-1">
+
+                                {{ membre.compteur|stringformat:"04d" }}
+
+                            </td>
+
+
+                            
+
+
+                            <!-- Actions -->
+                            <td class="px-5 py-1 min-w-[130px] whitespace-nowrap">
+
+                                <div class="flex items-center gap-3">
+
+                                    <!-- Aperçu -->
+                                    <a
+                                       href="{% url 'apercu_carte' membre.id %}"
+                                       class="w-10 h-10 rounded-lg bg-gray-100 text-blue-600 hover:bg-gray-200 flex items-center justify-center shrink-0"
+                                       title="Aperçu"
+                                   >
+                                       <i class="bi bi-eye text-base"></i>
+                                    </a>
+
+                                    <!-- Imprimer -->
+                                    <a
+                                        href="{% url 'generer_carte' membre.id %}"
+                                        target="_blank"
+                                        class="w-10 h-10 rounded-lg bg-white-900 text-blue-600 hover:bg-blue-800 flex items-center justify-center shrink-0"
+                                        title="Imprimer"
+                                    >
+                                        <i class="bi bi-printer text-base"></i>
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="px-5 py-8 text-center text-gray-500"
+                            >
+                                Aucun membre enregistré.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+<!-- Barre d'actions et pagination -->
+<div class="border-t border-gray-100 px-5 py-4">
+
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+        <!-- Actions -->
+        <div class="flex items-center gap-2">
+
+            
+
+            <a
+              href="{% url 'exporter_cartes_excel' %}"
+              class="px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+            >
+              <i class="bi bi-file-earmark-excel"></i>
+               Exporter en Excel
+            </a>
+
+        </div>
+
+        <!-- Pagination / numéros d'ordre -->
+        <div class="flex items-center gap-1">
+
+            {% if page_obj.has_previous %}
+         <a
+            href="?page={{ page_obj.previous_page_number }}{% if recherche %}&recherche={{ recherche|urlencode }}{% endif %}"
+            class="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 flex items-center justify-center"
+        >
+            <i class="bi bi-chevron-left"></i>
+         </a>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+
+          {% if num == page_obj.number %}
+
+            <span
+                class="w-9 h-9 rounded-lg bg-gray-900 text-white text-sm font-medium flex items-center justify-center"
+            >
+                {{ num }}
+            </span>
+
+          {% else %}
+
+            <a
+                href="?page={{ num }}{% if recherche %}&recherche={{ recherche|urlencode }}{% endif %}"
+                class="w-9 h-9 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 flex items-center justify-center"
+            >
+                {{ num }}
+            </a>
+
+          {% endif %}
+
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+         <a
+            href="?page={{ page_obj.next_page_number }}{% if recherche %}&recherche={{ recherche|urlencode }}{% endif %}"
+            class="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 flex items-center justify-center"
+         >
+            <i class="bi bi-chevron-right"></i>
+         </a>
+         {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+    <!-- ========================================= -->
+    <!-- COLONNE DROITE : APERÇU -->
+    <!-- ========================================= -->
+    <div>
+        <div class="min-w-0">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+
+            <!-- En-tête -->
+            <div class="p-5 border-b border-gray-100">
+
+                <h3 class="text-lg font-semibold text-gray-800">
+                    Aperçu de la carte
+                </h3>
+
+                <p class="text-sm text-blue-500 mt-1">
+                    Informations et actions de la carte
+                </p>
+
+            </div>
+
+
+            <!-- Contenu -->
+            <div class="p-5">
+                <div id="membre-selectionne" class="mb-4 hidden">
+
+                     <p class="text-sm text-gray-500 mb-1">
+                         Membre sélectionné
+                     </p>
+
+                     <h4 id="nom-membre-selectionne" class="font-semibold text-gray-800">
+                     </h4>
+
+                     <p id="numero-carte-selectionnee" class="text-sm text-gray-500 mt-1">
+                     </p>
+
+                </div>
+
+                <!-- Aperçu visuel -->
+                <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-5">
+
+    <!-- ===================== CARTE RECTO ===================== -->
+    <div
+        id="carte-recto-apercu"
+        class="relative w-full"
+    >
+
+        <!-- MAQUETTE -->
+        <img
+            src="{% static 'images/Maquette.jpg' %}"
+            alt="Aperçu de la carte"
+            class="w-full rounded-lg border border-gray-200"
+        >
+
+        <!-- INFORMATIONS -->
+        <div class="absolute inset-0 text-black">
+
+            <!-- NUMÉRO -->
+            <div
+                id="apercu-numero"
+                class="absolute top-[8%] right-[8%] text-[9px] font-bold"
+            >
+                N : ----
+            </div>
+
+            <!-- NOM -->
+            <div
+                id="apercu-nom"
+                class="absolute top-[23%] left-[7%] text-[9px] font-bold"
+            >
+                NOM
+            </div>
+
+            <!-- PRÉNOM -->
+            <div
+                id="apercu-prenom"
+                class="absolute top-[31%] left-[7%] text-[9px] font-bold"
+            >
+                Prénom
+            </div>
+
+            <!-- SEXE -->
+            <div
+                id="apercu-sexe"
+                class="absolute top-[39%] left-[7%] text-[9px] font-bold"
+            >
+                -
+            </div>
+
+            <!-- MATRICULE -->
+            <div
+                id="apercu-matricule"
+                class="absolute top-[47%] left-[7%] text-[9px] font-bold"
+            >
+                -
+            </div>
+
+            <!-- EMPLOI -->
+            <div
+                id="apercu-emploi"
+                class="absolute top-[55%] left-[7%] text-[9px] font-bold"
+            >
+                -
+            </div>
+
+            <!-- PHOTO -->
+            <img
+                id="apercu-photo"
+                src=""
+                alt="Photo du membre"
+                class="absolute top-[28%] right-[6%] w-[24%] aspect-square object-cover hidden"
+            >
+
+            <!-- QR CODE -->
+            <div
+                id="apercu-qr"
+                class="absolute bottom-[4%] left-[4%] w-[18%] aspect-square bg-white"
+            >
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+</div>
+
+
+                <!-- Actions -->
+                <div class="space-y-2">
+
+                    <!-- Produire -->
+                    <button
+                        id="btn-produire-carte"
+                        type="button"
+                        class="w-full px-4 py-2.5 rounded-lg bg-blue-900 text-white text-sm font-medium hover:bg-white-800"
+                        disabled
+                   >
+                        <i class="bi bi-credit-card me-2"></i>
+                        Produire la carte
+                    </button>
+
+
+                    <!-- Réimprimer -->
+                    <button
+                        id="btn-reimprimer-carte"
+                        type="button"
+                        class="w-full px-4 py-2.5 rounded-lg bg-white-100 text-blue-700 text-sm font-medium hover:bg-gray-200"
+                        disabled
+                   >
+                        <i class="bi bi-arrow-repeat me-2"></i>
+                         Réimprimer la carte
+                    </button>
+
+
+                    <!-- Télécharger PDF -->
+                    <button
+                        id="btn-telecharger-pdf"
+                        type="button"
+                        class="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-white text-blue-700 text-sm font-medium hover:bg-gray-50"
+                        disabled
+                   >
+                        <i class="bi bi-file-earmark-pdf me-2"></i>
+                        Télécharger en PDF
+                    </button>
+
+                </div>
+
+
+                <!-- Conseils -->
+                <div class="mt-5 p-4 rounded-lg bg-blue-50 border border-blue-100">
+
+                    <div class="flex gap-3">
+
+                        <i class="bi bi-info-circle text-blue-600 mt-0.5"></i>
+
+                        <div>
+
+                            <h4 class="text-sm font-semibold text-gray-800">
+                                Conseils
+                            </h4>
+
+                            <p class="text-xs text-gray-600 mt-1">
+                                Sélectionnez un membre dans la liste pour
+                                afficher l'aperçu de sa carte et accéder aux actions.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+let urlCarteSelectionnee = null;
+let numeroCarteSelectionnee = null;
+
+function selectionnerMembre(
+    id,
+    nom,
+    prenom,
+    numeroCarte,
+    sexe,
+    matricule,
+    emploi,
+    photo,
+    urlCarte
+) {
+    // Éléments de sélection
+    const bloc = document.getElementById("membre-selectionne");
+    const nomMembre = document.getElementById("nom-membre-selectionne");
+    const numeroCarteMembre = document.getElementById("numero-carte-selectionnee");
+
+    // Boutons
+    const boutonProduire = document.getElementById("btn-produire-carte");
+    const boutonReimprimer = document.getElementById("btn-reimprimer-carte");
+    const boutonTelecharger = document.getElementById("btn-telecharger-pdf");
+
+    // Aperçu de la carte
+    const apercuNumero = document.getElementById("apercu-numero");
+    const apercuNom = document.getElementById("apercu-nom");
+    const apercuPrenom = document.getElementById("apercu-prenom");
+    const apercuSexe = document.getElementById("apercu-sexe");
+    const apercuMatricule = document.getElementById("apercu-matricule");
+    const apercuEmploi = document.getElementById("apercu-emploi");
+    const apercuPhoto = document.getElementById("apercu-photo");
+
+    // Afficher le membre sélectionné
+    bloc.classList.remove("hidden");
+
+    nomMembre.textContent = nom + " " + prenom;
+    numeroCarteMembre.textContent = "N° carte : " + numeroCarte;
+
+    // Remplir l'aperçu de la carte
+    apercuNumero.textContent = "N : " + numeroCarte;
+    apercuNom.textContent = nom.toUpperCase();
+    apercuPrenom.textContent = prenom;
+    apercuSexe.textContent = sexe;
+    apercuMatricule.textContent = matricule;
+    apercuEmploi.textContent = emploi;
+
+    // Photo
+    if (photo) {
+        apercuPhoto.src = photo;
+        apercuPhoto.classList.remove("hidden");
+    } else {
+        apercuPhoto.src = "";
+        apercuPhoto.classList.add("hidden");
+    }
+
+    // Mémoriser l'URL de la carte
+    urlCarteSelectionnee = urlCarte;
+    numeroCarteSelectionnee = numeroCarte;
+
+    // Activer les boutons
+    boutonProduire.disabled = false;
+    boutonReimprimer.disabled = false;
+    boutonTelecharger.disabled = false;
+
+    // Produire la carte
+    boutonProduire.onclick = function() {
+        window.open(urlCarteSelectionnee, "_blank");
+    };
+
+    // Réimprimer la carte
+    boutonReimprimer.onclick = function() {
+        window.open(urlCarteSelectionnee, "_blank");
+    };
+
+    // Télécharger le PDF
+    boutonTelecharger.onclick = function() {
+
+        fetch(urlCarteSelectionnee)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur HTTP : " + response.status);
+                }
+
+                return response.blob();
+            })
+            .then(blob => {
+
+                const url = window.URL.createObjectURL(blob);
+
+                const lien = document.createElement("a");
+                lien.href = url;
+                lien.download = "carte-" + numeroCarteSelectionnee + ".pdf";
+
+                document.body.appendChild(lien);
+                lien.click();
+                lien.remove();
+
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Erreur lors du téléchargement du PDF.");
+            });
+    };
+}
+</script>
+
+{% endblock %}

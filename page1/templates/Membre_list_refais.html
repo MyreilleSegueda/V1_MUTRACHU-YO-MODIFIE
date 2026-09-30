@@ -1,0 +1,517 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Membres | MU.TRA.CHU-YO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{% static 'page1/css/membre_liste_refais.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="members-page">
+
+    <!-- =====================================================
+         EN-TETE
+    ====================================================== -->
+
+    <div class="members-header">
+
+        <div class="members-heading">
+            <h1>Membres</h1>
+            <p>Liste des adhérents de la mutuelle</p>
+        </div>
+
+        <div class="members-header-right">
+
+            <div class="members-breadcrumb">
+                <a href="{% url 'core_index' %}">
+                    Accueil
+                </a>
+
+                <i class="bi bi-chevron-right"></i>
+
+                <span>Membres</span>
+
+                <i class="bi bi-chevron-right"></i>
+
+                <strong>Liste</strong>
+            </div>
+
+            <a href="{% url 'etape1' %}"
+               class="new-member-btn">
+
+                <i class="bi bi-plus-lg"></i>
+
+                <span>Nouveau membre</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATISTIQUES
+    ====================================================== -->
+
+    <div class="members-stats">
+
+        <!-- TOTAL -->
+        <div class="member-stat-card stat-total">
+
+            <div class="member-stat-icon">
+                <i class="bi bi-people-fill"></i>
+            </div>
+
+            <div class="member-stat-content">
+
+                <strong>
+                    {{ total_membres|default:"2548" }}
+                </strong>
+
+                <span>
+                    Total des membres
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIFS -->
+        <div class="member-stat-card stat-active">
+
+            <div class="member-stat-icon">
+                <i class="bi bi-check-lg"></i>
+            </div>
+
+            <div class="member-stat-content">
+
+                <strong>
+                    {{ membres_actifs|default:"2315" }}
+                </strong>
+
+                <span>
+                    Membres actifs
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUSPENDUS -->
+        <div class="member-stat-card stat-suspended">
+
+            <div class="member-stat-icon">
+                <i class="bi bi-pause-fill"></i>
+            </div>
+
+            <div class="member-stat-content">
+
+                <strong>
+                    {{ membres_suspendus|default:"143" }}
+                </strong>
+
+                <span>
+                    Membres suspendus
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- RADIES -->
+        <div class="member-stat-card stat-radie">
+
+            <div class="member-stat-icon">
+                <i class="bi bi-person-x-fill"></i>
+            </div>
+
+            <div class="member-stat-content">
+
+                <strong>
+                    {{ membres_radies|default:"90" }}
+                </strong>
+
+                <span>
+                    Membres radiés
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         RECHERCHE ET FILTRES
+    ====================================================== -->
+
+    <form method="GET"
+          class="members-filter-bar">
+
+        <!-- RECHERCHE -->
+        <div class="members-search-box">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="search"
+                name="q"
+                value="{{ request.GET.q }}"
+                placeholder="Rechercher un membre..."
+            >
+
+        </div>
+
+
+        <!-- STATUT -->
+        <div class="members-select-wrapper">
+
+            <select name="statut">
+
+                <option value="">
+                    Tous les statuts
+                </option>
+
+                <option value="actif">
+                    Actif
+                </option>
+
+                <option value="suspendu">
+                    Suspendu
+                </option>
+
+                <option value="radie">
+                    Radié
+                </option>
+
+            </select>
+
+            <i class="bi bi-chevron-down"></i>
+
+        </div>
+
+
+        <!-- AGENCE -->
+        <div class="members-select-wrapper">
+
+            <select name="agence">
+
+                <option value="">
+                    Toutes les agences
+                </option>
+
+                {% for agence in agences %}
+
+                <option value="{{ agence.id }}">
+                    {{ agence }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <i class="bi bi-chevron-down"></i>
+
+        </div>
+
+
+        <!-- DATE -->
+        <div class="members-select-wrapper">
+
+            <select name="date">
+
+                <option value="">
+                    Date d'adhésion
+                </option>
+
+                <option value="recent">
+                    Plus récents
+                </option>
+
+                <option value="ancien">
+                    Plus anciens
+                </option>
+
+            </select>
+
+            <i class="bi bi-chevron-down"></i>
+
+        </div>
+
+
+        <!-- RECHERCHER -->
+        <button type="submit"
+                class="members-search-btn">
+
+            Rechercher
+
+        </button>
+
+
+        <!-- RESET -->
+        <a href="{% url 'liste_membres' %}"
+           class="members-reset-btn">
+
+            <i class="bi bi-funnel-fill"></i>
+
+            <span>Réinitialiser</span>
+
+        </a>
+
+    </form>
+
+
+    <!-- =====================================================
+         TABLEAU
+    ====================================================== -->
+
+   <!-- =====================================================
+     TABLEAU DES MEMBRES
+====================================================== -->
+
+    <div class="members-table-container">
+
+        <div class="members-table-scroll">
+
+            <table class="members-table">
+
+                <thead>
+                    <tr>
+                        <th class="column-number">N°</th>
+                        <th class="column-photo">Photo</th>
+                        <th class="column-name">Nom</th>
+                        <th class="column-firstname">Prénoms</th>
+                        <th class="column-matricule">Matricule</th>
+                        <th class="column-status">Statut</th>
+                        <th class="column-actions">Actions</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for membre in membres %}
+
+                    <tr>
+
+                        <!-- NUMERO D'AFFICHAGE -->
+                        <td class="table-number">
+                            {{ forloop.counter }}
+                        </td>
+
+
+                        <!-- PHOTO -->
+                        <td class="table-photo-cell">
+
+                            {% if membre.photo %}
+
+                                <img
+                                    src="{{ membre.photo.url }}"
+                                    class="member-table-photo"
+                                    alt="{{ membre.nom }}"
+                                >
+
+                            {% else %}
+
+                                <div class="member-table-photo member-photo-placeholder">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- NOM -->
+                        <td class="member-name">
+                            {{ membre.nom }}
+                        </td>
+
+
+                        <!-- PRENOMS -->
+                        <td class="member-firstname">
+                            {{ membre.prenom }}
+                        </td>
+
+
+                        <!-- MATRICULE -->
+                        <td>
+                            <span class="member-matricule">
+                                {{ membre.matricule }}
+                            </span>
+                        </td>
+
+
+                        <!-- STATUT -->
+                        <td>
+
+                            {% if membre.statut == "suspendu" %}
+
+                                <span class="member-status status-suspended">
+                                    Suspendu
+                                </span>
+
+                            {% elif membre.statut == "radie" %}
+
+                                <span class="member-status status-radie">
+                                    Radié
+                                </span>
+
+                            {% else %}
+
+                                <span class="member-status status-active">
+                                    Actif
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+                        <td>
+
+                            <div class="members-actions">
+
+                                <a href="#"
+                                class="member-action action-view"
+                                title="Voir le membre">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <a href="#"
+                                class="member-action action-edit"
+                                title="Modifier le membre">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                <button
+                                    type="button"
+                                    class="member-action action-delete"
+                                    title="Supprimer le membre">
+
+                                    <i class="bi bi-trash3"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            <div class="members-empty">
+
+                                <i class="bi bi-people"></i>
+
+                                <strong>
+                                    Aucun membre trouvé
+                                </strong>
+
+                                <span>
+                                    Aucun membre ne correspond à votre recherche.
+                                </span>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =================================================
+            PAGINATION
+        ================================================== -->
+
+        <div class="members-table-footer">
+
+            <div class="members-result-info">
+
+                Affichage de
+
+                <strong>1</strong>
+
+                à
+
+                <strong>{{ membres|length }}</strong>
+
+                sur
+
+                <strong>{{ total_membres }}</strong>
+
+                membres
+
+            </div>
+
+
+            <div class="members-pagination">
+
+                <button class="pagination-btn" disabled>
+                    <i class="bi bi-chevron-double-left"></i>
+                </button>
+
+                <button class="pagination-btn active">
+                    1
+                </button>
+
+                <button class="pagination-btn">
+                    2
+                </button>
+
+                <button class="pagination-btn">
+                    3
+                </button>
+
+                <button class="pagination-btn">
+                    4
+                </button>
+
+                <button class="pagination-btn">
+                    5
+                </button>
+
+                <span class="pagination-dots">
+                    ...
+                </span>
+
+                <button class="pagination-btn">
+                    255
+                </button>
+
+                <button class="pagination-btn">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

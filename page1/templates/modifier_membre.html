@@ -1,0 +1,208 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}
+Modifier membre
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-6">
+
+        <div class="form-card">
+
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        Modifier le membre
+                    </h5>
+
+                    <small class="text-muted">
+                        Étape 1 sur 3 : Informations du membre
+                    </small>
+
+                </div>
+
+                <a href="{% url 'liste_membres' %}"
+                   class="btn btn-primary btn-sm">
+
+                    ← Retour
+
+                </a>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+            <div class="mb-4">
+
+                <div class="progress"
+                     style="height:7px; border-radius:20px;">
+
+                    <div class="progress-bar bg-primary"
+                         style="width:33%">
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between mt-2">
+
+                    <small class="fw-bold text-primary">
+                        Profil
+                    </small>
+
+                    <small class="text-muted">
+                        Parents & Conjoints
+                    </small>
+
+                    <small class="text-muted">
+                        Enfants
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO -->
+            <div class="text-center mb-4">
+
+                {% if membre.photo %}
+
+                    <img src="{{ membre.photo.url }}"
+                         class="preview-img shadow-sm">
+
+                {% else %}
+
+                    <img src="https://via.placeholder.com/100"
+                         class="preview-img shadow-sm">
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- FORM -->
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Nom
+                        </label>
+
+                        {{ form.nom }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Prénom
+                        </label>
+
+                        {{ form.prenom }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Sexe
+                        </label>
+
+                        {{ form.sexe }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Matricule
+                        </label>
+
+                        {{ form.matricule }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Emploi
+                        </label>
+
+                        {{ form.emploi }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Service
+                        </label>
+
+                        {{ form.service }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Changer la photo
+                    </label>
+
+                    {{ form.photo }}
+
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="d-flex justify-content-between mt-4">
+
+                    <a href="{% url 'liste_membres' %}"
+                       class="btn btn-secondary">
+
+                        Annuler
+
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        Suivant →
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

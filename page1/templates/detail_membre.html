@@ -1,0 +1,815 @@
+
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block page_title %}
+Détail membre
+{% endblock %}
+
+{% block content %}
+
+<div class="w-full px-6 lg:px-8 py-6">
+
+    <!-- ================= HEADER ================= -->
+    <div class="flex items-center justify-between gap-6 mb-8 w-full">
+
+        <div>
+            <h1 class="text-2xl font-bold text-blue-700">
+                Fiche membre
+            </h1>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Détail et informations complète
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+
+            <a
+                href="{% url 'liste_membres' %}"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Retour à la liste
+            </a>
+
+            <a
+                href="{% url 'modifier_membre' membre.id %}"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-900 text-white text-sm font-medium hover:bg-gray-800"
+            >
+                <i class="bi bi-pencil"></i>
+                Modifier
+            </a>
+
+            <a
+                href="{% url 'generer_carte' membre.id %}"
+                target="_blank"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-green-700 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+                <i class="bi bi-credit-card"></i>
+                Produire la carte
+            </a>
+
+            <a
+                href="{% url 'generer_carte' membre.id %}"
+                target="_blank"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+                <i class="bi bi-printer"></i>
+                Imprimer
+            </a>
+
+        </div>
+    </div>
+
+
+    <!-- ================= CARTE RESUME DU MEMBRE ================= -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-0">
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-center">
+
+            <!-- PHOTO -->
+            <div class="lg:col-span-1 flex justify-center lg:justify-start">
+
+                {% if membre.photo %}
+                    <img
+                        src="{{ membre.photo.url }}"
+                        alt="Photo de {{ membre.prenom }} {{ membre.nom }}"
+                        class="w-40 h-48 object-cover rounded-xl border border-gray-200 shadow-sm"
+                    >
+                {% elif membre.sexe == 'M' %}
+                    <img
+                        src="{% static 'images/avatar_m.png' %}"
+                        alt="Avatar masculin"
+                        class="w-40 h-48 object-cover rounded-xl border border-gray-200 shadow-sm"
+                    >
+                {% else %}
+                    <img
+                        src="{% static 'images/avatar_f.png' %}"
+                        alt="Avatar féminin"
+                        class="w-40 h-48 object-cover rounded-xl border border-gray-200 shadow-sm"
+                    >
+                {% endif %}
+
+            </div>
+
+
+            <!-- INFORMATIONS PRINCIPALES -->
+            <div class="lg:col-span-3">
+
+                <div class="mb-6">
+
+                    <h2 class="text-xl font-bold text-blue-900">
+                        {{ membre.nom }} {{ membre.prenom }}
+                    </h2>
+
+                    <p class="text-sm text-blue-500 mt-1">
+                        Matricule : {{ membre.matricule }}
+                    </p>
+
+                </div>
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+
+                    <div>
+                        <p class="text-xs font-medium text-blue-400 uppercase">
+                            Nom
+                        </p>
+                        <p class="text-sm font-medium text-blue-800 mt-1">
+                            {{ membre.nom }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-blue-400 uppercase">
+                            Prénom
+                        </p>
+                        <p class="text-sm font-medium text-blue-800 mt-1">
+                            {{ membre.prenom }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-blue-400 uppercase">
+                            Matricule
+                        </p>
+                        <p class="text-sm font-medium text-blue-800 mt-1">
+                            {{ membre.matricule }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-blue-400 uppercase">
+                            Sexe
+                        </p>
+                        <p class="text-sm font-medium text-blue-800 mt-1">
+                            {{ membre.get_sexe_display }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-blue-400 uppercase">
+                            Emploi
+                        </p>
+                        <p class="text-sm font-medium text-blue-800 mt-1">
+                            {{ membre.emploi }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-blue-400 uppercase">
+                            Service
+                        </p>
+                        <p class="text-sm font-medium text-blue-800 mt-1">
+                            {{ membre.service }}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= NAVIGATION ================= -->
+        <div class="border-t border-gray-100 mt-8 pt-4">
+
+            <div class="flex flex-wrap gap-2">
+
+                <button
+                    type="button"
+                    onclick="afficherOnglet('informations')"
+                    id="btn-informations"
+                    class="onglet-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white-900 text-blue-300 text-sm font-medium"
+                >
+                    <i class="bi bi-person"></i>
+                    Informations
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="afficherOnglet('conjoints')"
+                    id="btn-conjoints"
+                    class="onglet-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-blue-600 hover:bg-white-50 text-sm font-medium"
+                >
+                    <i class="bi bi-people"></i>
+                    Conjoints
+
+                    <span class="px-2 py-0.5 rounded-full bg-white-100 text-xs">
+                        {{ membre.conjoints.all|length }}
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="afficherOnglet('enfants')"
+                    id="btn-enfants"
+                    class="onglet-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-blue-600 hover:bg-white-50 text-sm font-medium"
+                >
+                    <i class="bi bi-person-hearts"></i>
+                    Enfants
+
+                    <span class="px-2 py-0.5 rounded-full bg-gray-100 text-xs">
+                        {{ membre.enfants.all|length }}
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="afficherOnglet('carte')"
+                    id="btn-carte"
+                    class="onglet-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-blue-600 hover:bg-white-50 text-sm font-medium"
+                >
+                    <i class="bi bi-credit-card"></i>
+                    Carte
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- ONGLET INFORMATIONS -->
+    <!-- ========================================================= -->
+
+    <div id="contenu-informations" class="onglet-contenu mt-6">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- INFORMATIONS PERSONNELLES -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+
+                <h3 class="text-lg font-bold text-blue-900 mb-6">
+                    Informations personnelles
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">
+                            Nom
+                        </p>
+                        <p class="text-sm font-medium text-gray-800 mt-1">
+                            {{ membre.nom }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">
+                            Prénom
+                        </p>
+                        <p class="text-sm font-medium text-gray-800 mt-1">
+                            {{ membre.prenom }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">
+                            Sexe
+                        </p>
+                        <p class="text-sm font-medium text-gray-800 mt-1">
+                            {{ membre.get_sexe_display }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">
+                            Matricule
+                        </p>
+                        <p class="text-sm font-medium text-gray-800 mt-1">
+                            {{ membre.matricule }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">
+                            Emploi
+                        </p>
+                        <p class="text-sm font-medium text-gray-800 mt-1">
+                            {{ membre.emploi }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-medium text-gray-400 uppercase">
+                            Service
+                        </p>
+                        <p class="text-sm font-medium text-gray-800 mt-1">
+                            {{ membre.service }}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO + INFORMATIONS COMPLEMENTAIRES -->
+            <div>
+
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+
+                    <h3 class="text-lg font-bold text-blue-900 mb-5">
+                        Photo du membre
+                    </h3>
+
+                    <div class="flex flex-col items-center">
+
+                        {% if membre.photo %}
+                            <img
+                                src="{{ membre.photo.url }}"
+                                alt="Photo de {{ membre.prenom }} {{ membre.nom }}"
+                                class="w-56 h-64 object-cover rounded-xl border border-gray-200 shadow-sm"
+                            >
+                        {% elif membre.sexe == 'M' %}
+                            <img
+                                src="{% static 'images/avatar_m.png' %}"
+                                alt="Avatar masculin"
+                                class="w-56 h-64 object-cover rounded-xl border border-gray-200 shadow-sm"
+                            >
+                        {% else %}
+                            <img
+                                src="{% static 'images/avatar_f.png' %}"
+                                alt="Avatar féminin"
+                                class="w-56 h-64 object-cover rounded-xl border border-gray-200 shadow-sm"
+                            >
+                        {% endif %}
+
+                        <a
+                            href="{% url 'modifier_membre' membre.id %}"
+                            class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white text-sm font-medium text-blue-700 hover:bg-white-50"
+                        >
+                            <i class="bi bi-camera"></i>
+                            Changer la photo
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-6">
+
+                    <h3 class="text-lg font-bold text-blue-900 mb-5">
+                        Informations complémentaires
+                    </h3>
+
+                    <div class="space-y-4">
+
+                        <div class="flex justify-between gap-4">
+                            <span class="text-sm text-gray-500">
+                                Date de naissance
+                            </span>
+
+                            <span class="text-sm font-medium text-gray-800">
+                                {% if membre.date_naissance %}
+                                    {{ membre.date_naissance }}
+                                {% else %}
+                                    Non renseignée
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between gap-4">
+                            <span class="text-sm text-gray-500">
+                                Clé
+                            </span>
+
+                            <span class="text-sm font-medium text-gray-800">
+                                {{ membre.cle }}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between gap-4">
+                            <span class="text-sm text-gray-500">
+                                N° d'ordre
+                            </span>
+
+                            <span class="text-sm font-medium text-gray-800">
+                                {{ membre.compteur|stringformat:"04d" }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+<!-- ONGLET CONJOINTS -->
+<!-- ========================================================= -->
+
+<div id="contenu-conjoints" class="onglet-contenu hidden mt-6">
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+
+        <div class="flex items-center justify-between mb-6">
+
+            <div>
+                <h3 class="text-lg font-bold text-gray-900">
+                    Conjoints
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Liste des conjoints enregistrés pour ce membre.
+                </p>
+            </div>
+
+            <span class="px-3 py-1 rounded-full bg-gray-100 text-sm font-medium text-gray-700">
+                {{ membre.conjoints.all|length }}
+            </span>
+
+        </div>
+
+
+        {% if membre.conjoints.all %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                {% for conjoint in membre.conjoints.all %}
+
+                    <div class="border border-gray-100 rounded-xl p-5 bg-gray-50">
+
+                        <div class="flex items-center gap-4">
+
+                            <div class="w-11 h-11 rounded-full bg-white border border-gray-200 flex items-center justify-center shrink-0">
+                                <i class="bi bi-person text-gray-500 text-lg"></i>
+                            </div>
+
+                            <div>
+                                <p class="text-sm text-gray-400">
+                                    Conjoint {{ forloop.counter }}
+                                </p>
+
+                                <p class="text-base font-semibold text-gray-900 mt-1">
+                                    {{ conjoint.prenom }} {{ conjoint.nom }}
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-12">
+
+                <div class="w-12 h-12 mx-auto rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                    <i class="bi bi-people text-gray-400 text-xl"></i>
+                </div>
+
+                <p class="text-sm font-medium text-gray-700">
+                    Aucun conjoint enregistré
+                </p>
+
+                <p class="text-xs text-gray-500 mt-1">
+                    Ce membre n'a actuellement aucun conjoint enregistré.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+    <!-- ========================================================= -->
+<!-- ONGLET ENFANTS -->
+<!-- ========================================================= -->
+
+<div id="contenu-enfants" class="onglet-contenu hidden mt-6">
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+
+        <div class="flex items-center justify-between mb-6">
+
+            <div>
+                <h3 class="text-lg font-bold text-gray-900">
+                    Enfants
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Liste des enfants enregistrés pour ce membre.
+                </p>
+            </div>
+
+            <span class="px-3 py-1 rounded-full bg-gray-100 text-sm font-medium text-gray-700">
+                {{ membre.enfants.all|length }}
+            </span>
+
+        </div>
+
+
+        {% if membre.enfants.all %}
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead>
+                        <tr class="border-b border-gray-100">
+
+                            <th class="text-left text-xs font-semibold text-gray-400 uppercase py-3 px-3">
+                                N°
+                            </th>
+
+                            <th class="text-left text-xs font-semibold text-gray-400 uppercase py-3 px-3">
+                                Prénom
+                            </th>
+
+                            <th class="text-left text-xs font-semibold text-gray-400 uppercase py-3 px-3">
+                                Nom
+                            </th>
+
+                            <th class="text-left text-xs font-semibold text-gray-400 uppercase py-3 px-3">
+                                Date de naissance
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for enfant in membre.enfants.all %}
+
+                            <tr class="border-b border-gray-50 hover:bg-gray-50">
+
+                                <td class="py-4 px-3 text-sm text-gray-500">
+                                    {{ forloop.counter }}
+                                </td>
+
+                                <td class="py-4 px-3">
+
+                                    <div class="flex items-center gap-3">
+
+                                        <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                                            <i class="bi bi-person-hearts text-gray-500"></i>
+                                        </div>
+
+                                        <span class="text-sm font-medium text-gray-900">
+                                            {{ enfant.prenom }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                                <td class="py-4 px-3 text-sm text-gray-800">
+                                    {{ enfant.nom }}
+                                </td>
+
+                                <td class="py-4 px-3 text-sm text-gray-600">
+                                    {{ enfant.date_naissance|date:"d/m/Y" }}
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-12">
+
+                <div class="w-12 h-12 mx-auto rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                    <i class="bi bi-person-hearts text-gray-400 text-xl"></i>
+                </div>
+
+                <p class="text-sm font-medium text-gray-700">
+                    Aucun enfant enregistré
+                </p>
+
+                <p class="text-xs text-gray-500 mt-1">
+                    Ce membre n'a actuellement aucun enfant enregistré.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+    <!-- ========================================================= -->
+    <!-- ONGLET CARTE -->
+    <!-- ========================================================= -->
+
+    <div id="contenu-carte" class="onglet-contenu hidden mt-6">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- INFORMATIONS CARTE -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+
+                <h3 class="text-lg font-bold text-gray-900 mb-6">
+                    Carte du membre
+                </h3>
+
+                <div class="space-y-5">
+
+                    <div class="flex justify-between gap-4">
+                        <span class="text-sm text-gray-500">
+                            Membre
+                        </span>
+
+                        <span class="text-sm font-medium text-gray-800">
+                            {{ membre.nom }} {{ membre.prenom }}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between gap-4">
+                        <span class="text-sm text-gray-500">
+                            Matricule
+                        </span>
+
+                        <span class="text-sm font-medium text-gray-800">
+                            {{ membre.matricule }}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between gap-4">
+                        <span class="text-sm text-gray-500">
+                            N° d'ordre
+                        </span>
+
+                        <span class="text-sm font-medium text-gray-800">
+                            {{ membre.compteur|stringformat:"04d" }}
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="border-t border-gray-100 mt-6 pt-6">
+
+                    <a
+                        href="{% url 'generer_carte' membre.id %}"
+                        target="_blank"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800"
+                    >
+                        <i class="bi bi-credit-card"></i>
+                        Produire la carte
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- APERCU DE LA CARTE -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+
+    <h3 class="text-lg font-bold text-gray-900 mb-6">
+        Aperçu de la carte
+    </h3>
+
+    <div class="flex justify-center">
+
+        <div class="relative w-full max-w-md">
+
+            <!-- MAQUETTE DE LA CARTE -->
+            <img
+                src="{% static 'images/Maquette.jpg' %}"
+                alt="Aperçu de la carte"
+                class="w-full rounded-xl shadow-sm border border-gray-200"
+            >
+
+            <!-- INFORMATIONS SUR LA CARTE -->
+            <div class="absolute inset-0">
+
+                <div class="absolute top-[23%] left-[7%] text-[9px] font-bold text-black">
+                    {{ membre.nom|upper }}
+                </div>
+
+                <div class="absolute top-[31%] left-[7%] text-[9px] font-bold text-black">
+                    {{ membre.prenom }}
+                </div>
+
+                <div class="absolute top-[39%] left-[7%] text-[9px] font-bold text-black">
+                    {{ membre.sexe }}
+                </div>
+
+                <div class="absolute top-[47%] left-[7%] text-[9px] font-bold text-black">
+                    {{ membre.matricule }}
+                </div>
+
+                <div class="absolute top-[55%] left-[7%] text-[9px] font-bold text-black">
+                    {{ membre.emploi }}
+                </div>
+
+                <div class="absolute top-[8%] right-[8%] text-[9px] font-bold text-black">
+                    N : {{ membre.compteur|stringformat:"04d" }}
+                </div>
+
+                {% if membre.photo %}
+                    <img
+                        src="{{ membre.photo.url }}"
+                        alt="Photo du membre"
+                        class="absolute top-[28%] right-[6%] w-[24%] aspect-square object-cover"
+                    >
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT DES ONGLETS ================= -->
+
+<script>
+
+function afficherOnglet(onglet) {
+
+    const contenus = document.querySelectorAll('.onglet-contenu');
+
+    contenus.forEach(function(contenu) {
+        contenu.classList.add('hidden');
+    });
+
+
+    const boutons = document.querySelectorAll('.onglet-btn');
+
+    boutons.forEach(function(bouton) {
+
+        bouton.classList.remove(
+            'bg-gray-900',
+            'text-white'
+        );
+
+        bouton.classList.add(
+            'text-gray-600',
+            'hover:bg-gray-50'
+        );
+    });
+
+
+    const contenuActif = document.getElementById(
+        'contenu-' + onglet
+    );
+
+    const boutonActif = document.getElementById(
+        'btn-' + onglet
+    );
+
+
+    if (contenuActif) {
+        contenuActif.classList.remove('hidden');
+    }
+
+
+    if (boutonActif) {
+
+        boutonActif.classList.remove(
+            'text-gray-600',
+            'hover:bg-gray-50'
+        );
+
+        boutonActif.classList.add(
+            'bg-gray-900',
+            'text-white'
+        );
+    }
+
+}
+
+</script>
+
+{% endblock %}
+```

@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Modification des enfants
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="form-card">
+
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        Modification des enfants
+                    </h5>
+
+                    <small class="text-muted">
+                        Étape 3 sur 3 : Informations des enfants
+                    </small>
+
+                </div>
+
+                <a href="{% url 'liste_membres' %}"
+                   class="btn btn-primary btn-sm">
+
+                    ← Retour
+
+                </a>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+            <div class="mb-4">
+
+                <div class="progress"
+                     style="height:7px; border-radius:20px;">
+
+                    <div class="progress-bar bg-success"
+                         style="width:100%">
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between mt-2">
+
+                    <small class="text-muted">
+                        Profil
+                    </small>
+
+                    <small class="text-muted">
+                        Parents & Conjoints
+                    </small>
+
+                    <small class="fw-bold text-success">
+                        Enfants
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORM -->
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ enfant_formset.management_form }}
+
+
+                <!-- ===================================== -->
+                <!-- ENFANTS -->
+                <!-- ===================================== -->
+
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <h5 class="fw-bold mb-0">
+                                👶 Enfants
+                            </h5>
+
+                            <span class="badge bg-light text-dark">
+                                Maximum 9
+                            </span>
+
+                        </div>
+
+                        {% for form in enfant_formset %}
+
+                            <div class="border rounded p-3 mb-3">
+
+                                {{ form.id }}
+
+                                <div class="row">
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label">
+                                            Nom
+                                        </label>
+
+                                        {{ form.nom }}
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label">
+                                            Prénom
+                                        </label>
+
+                                        {{ form.prenom }}
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label class="form-label">
+                                            Date de naissance
+                                        </label>
+
+                                        {{ form.date_naissance }}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-check mt-2">
+
+                                    {{ form.DELETE }}
+
+                                    <label class="form-check-label">
+                                        Supprimer cet enfant
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="d-flex justify-content-between mt-4">
+
+                    <a href="{% url 'modifier_parents_conjoints' membre.id %}"
+                       class="btn btn-secondary">
+
+                        ← Retour
+
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-success">
+
+                        ✔ Terminer la modification
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
