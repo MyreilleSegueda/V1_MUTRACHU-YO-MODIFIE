@@ -1,0 +1,8 @@
+Django
+Pillow
+requests
+reportlab
+mysqlclient
+rembg
+opencv-python
+numpy
