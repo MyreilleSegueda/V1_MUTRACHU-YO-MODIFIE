@@ -382,26 +382,27 @@
 
                             <div class="members-actions">
 
-                                <a href="#"
+                                <a href="{% url 'detail_membre' membre.id %}"
                                 class="member-action action-view"
                                 title="Voir le membre">
                                     <i class="bi bi-eye"></i>
                                 </a>
 
-                                <a href="#"
+                                <a href="{% url 'modifier_membre' membre.id %}"
                                 class="member-action action-edit"
                                 title="Modifier le membre">
                                     <i class="bi bi-pencil"></i>
                                 </a>
 
-                                <button
+                                <a
+                                    href="{% url 'supprimer_membre' membre.id %}"
                                     type="button"
                                     class="member-action action-delete"
                                     title="Supprimer le membre">
 
                                     <i class="bi bi-trash3"></i>
 
-                                </button>
+                                </a>
 
                             </div>
 
@@ -447,67 +448,93 @@
             PAGINATION
         ================================================== -->
 
-        <div class="members-table-footer">
+<div class="members-table-footer">
 
-            <div class="members-result-info">
+    <div class="members-result-info">
 
-                Affichage de
+           Affichage de
 
-                <strong>1</strong>
+           <strong>{{ membres.start_index }}</strong>
 
-                à
+           à
 
-                <strong>{{ membres|length }}</strong>
+           <strong>{{ membres.end_index }}</strong>
 
-                sur
+           sur
 
-                <strong>{{ total_membres }}</strong>
+          <strong>{{ total_membres }}</strong>
 
-                membres
+         membres
 
-            </div>
+        </div>
 
 
-            <div class="members-pagination">
+        <div class="members-pagination">
 
-                <button class="pagination-btn" disabled>
-                    <i class="bi bi-chevron-double-left"></i>
-                </button>
+        {# Première page #}
+        {% if membres.has_previous %}
+            <a href="?page=1{% if search %}&search={{ search|urlencode }}{% endif %}"
+               class="pagination-btn">
+                <i class="bi bi-chevron-double-left"></i>
+            </a>
+        {% else %}
+            <button class="pagination-btn" disabled>
+                <i class="bi bi-chevron-double-left"></i>
+            </button>
+        {% endif %}
 
-                <button class="pagination-btn active">
-                    1
-                </button>
 
-                <button class="pagination-btn">
-                    2
-                </button>
+        {# Pages #}
+        {% for num in membres.paginator.page_range %}
 
-                <button class="pagination-btn">
-                    3
-                </button>
+            {% if num == membres.number %}
 
-                <button class="pagination-btn">
-                    4
-                </button>
+                <span class="pagination-btn active">
+                    {{ num }}
+                </span>
 
-                <button class="pagination-btn">
-                    5
-                </button>
+            {% elif num <= 5 or num > membres.paginator.num_pages|add:"-2" %}
+
+                <a href="?page={{ num }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+                   class="pagination-btn">
+                    {{ num }}
+                </a>
+
+            {% elif num == 6 %}
 
                 <span class="pagination-dots">
                     ...
                 </span>
 
-                <button class="pagination-btn">
-                    255
-                </button>
+            {% endif %}
 
-                <button class="pagination-btn">
-                    <i class="bi bi-chevron-right"></i>
-                </button>
+        {% endfor %}
 
-            </div>
 
+        {# Page suivante #}
+        {% if membres.has_next %}
+
+            <a href="?page={{ membres.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+               class="pagination-btn">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+
+        {% else %}
+
+            <button class="pagination-btn" disabled>
+                <i class="bi bi-chevron-right"></i>
+            </button>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+  
+
+
+            
         </div>
 
     </div>

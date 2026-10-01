@@ -50,6 +50,9 @@ from django.core.paginator import Paginator
 # Affichage de la liste des membres
 
 
+from django.core.paginator import Paginator
+from django.db.models import Q
+
 def Membre_list(request):
 
     membres = Membre.objects.all().order_by("nom", "prenom")
@@ -63,9 +66,21 @@ def Membre_list(request):
             Q(matricule__icontains=search)
         )
 
+    # Nombre total de membres correspondant à la recherche
+    total_membres = membres.count()
+
+    # 10 membres par page
+    paginator = Paginator(membres, 10)
+
+    # Page demandée dans l'URL
+    page_number = request.GET.get("page")
+
+    membres = paginator.get_page(page_number)
+
     return render(request, "Membre_list_refais.html", {
         "membres": membres,
         "search": search,
+        "total_membres": total_membres,
     })
 
 def Liste_cartes(request):

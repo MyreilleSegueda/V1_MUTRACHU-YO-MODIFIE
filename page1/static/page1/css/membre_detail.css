@@ -1,0 +1,224 @@
+/* =========================================================
+   FICHE MEMBRE - COULEURS ET STRUCTURE EXACTES DE LA MAQUETTE
+   ========================================================= */
+
+.fiche-membre-page {
+    padding: 24px 32px;
+    background-color: #f4f6f9; /* Fond général gris-bleu clair de la maquette */
+    min-height: 100vh;
+    font-family: inherit;
+}
+
+/* En-tête (Titre + Boutons) */
+.fiche-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.fiche-title h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1d3d6f; /* Bleu marine exact de la maquette */
+    margin: 0;
+}
+.fiche-title p {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.fiche-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-light { background: #ffffff; border: 1px solid #d1d5db; color: #374151; }
+.btn-light:hover { background: #f9fafb; }
+.btn-primary-blue { background: #1d3d6f; color: #ffffff; border: none; } /* Bleu maquette */
+.btn-primary-blue:hover { background: #152d54; }
+.btn-success-green { background: #15803d; color: #ffffff; border: none; } /* Vert carte */
+.btn-success-green:hover { background: #166534; }
+
+/* Grande carte résumé du haut */
+.top-summary-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+.top-summary-grid {
+    display: grid;
+    grid-template-columns: 180px 1.2fr 1fr;
+    gap: 32px;
+    align-items: center;
+}
+@media(max-width: 1024px) {
+    .top-summary-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+}
+
+/* Photo principale haut */
+.top-photo-box img {
+    width: 150px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Infos principales haut */
+.top-main-info h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+    text-transform: uppercase;
+    margin: 0 0 4px 0;
+}
+.top-matricule {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2563eb; /* Bleu matricule */
+    margin-bottom: 10px;
+}
+.badge-actif {
+    display: inline-block;
+    background: #d1fae5;
+    color: #065f46;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+}
+.text-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-bottom: 6px;
+}
+.text-line i { color: #9ca3af; width: 16px; text-align: center; }
+
+/* Colonne administrative droite haut */
+.top-admin-info {
+    border-left: 1px solid #f3f4f6;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.875rem;
+    color: #374151;
+    width: 100%;
+}
+@media(max-width: 1024px) {
+    .top-admin-info { border-left: none; padding-left: 0; border-top: 1px solid #f3f4f6; padding-top: 16px; }
+}
+
+/* Barre d'onglets intégrée dans la carte */
+.tabs-navigation {
+    border-top: 1px solid #f3f4f6;
+    margin-top: 24px;
+    padding-top: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.tab-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #4b5563;
+    transition: all 0.2s;
+}
+.tab-link-btn.active {
+    background: #1d3d6f; /* Bleu actif de la maquette */
+    color: #ffffff;
+}
+.tab-link-btn:hover:not(.active) {
+    background: #f3f4f6;
+    color: #111827;
+}
+.tab-badge {
+    background: #e5e7eb;
+    color: #374151;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+}
+.tab-link-btn.active .tab-badge {
+    background: rgba(255,255,255,0.25);
+    color: #ffffff;
+}
+
+/* Contenus des onglets */
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* Structure principale de l'onglet Infos (2 colonnes) */
+.info-grid-layout {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 24px;
+}
+@media(max-width: 1024px) {
+    .info-grid-layout { grid-template-columns: 1fr; }
+}
+
+/* Boîtes de contenu blanches */
+.content-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin-bottom: 24px;
+}
+.content-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1d3d6f; /* Titre en bleu maquette */
+    margin: 0 0 20px 0;
+}
+
+/* Tableau des informations personnelles */
+.personal-table-rows {
+    display: flex;
+    flex-direction: column;
+}
+.row-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.875rem;
+}
+.row-item:last-child { border-bottom: none; }
+.row-label { color: #6b7280; width: 45%; }
+.row-value { font-weight: 600; color: #111827; width: 55%; text-align: right; }

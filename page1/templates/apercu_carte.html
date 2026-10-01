@@ -5,19 +5,34 @@
 
 {% block content %}
 
-<div class="min-h-screen bg-gray-50 p-0">
+<div class="container-fluid px-4 pt-0 pb-4 font-sans">
 
     <!-- ===================================================== -->
     <!-- EN-TÊTE -->
     <!-- ===================================================== -->
+    <div class="mb-1">
 
-    <div class="mb-6">
+        <!-- Breadcrumb à droite -->
+        <nav aria-label="breadcrumb" class="mb-2">
+            <ol class="breadcrumb mb-0 small justify-content-end">
+                <li class="breadcrumb-item">
+                    <span class="text-muted">Accueil</span>
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="text-muted">Cartes</span>
+                </li>
+                <li class="breadcrumb-item active text-dark fw-medium"
+                    aria-current="page">
+                    Aperçu de la carte
+                </li>
+            </ol>
+        </nav>
 
-        <h1 class="text-2xl font-bold text-blue-900">
+        <h1 class="h3 fw-bold text-dark mb-0">
             Aperçu de la carte
         </h1>
 
-        <p class="text-sm text-gray-500 mt-1">
+        <p class="text-muted small mb-0">
             Vérifiez les informations avant l'impression
         </p>
 
@@ -25,468 +40,522 @@
 
 
     <!-- ===================================================== -->
-    <!-- CONTENU PRINCIPAL -->
+    <!-- PARTIE PRINCIPALE -->
     <!-- ===================================================== -->
-
-    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-6">
-
+    <div class="row g-4 mb-4">
 
         <!-- ================================================= -->
-        <!-- PARTIE GAUCHE -->
+        <!-- GAUCHE : APERÇU -->
         <!-- ================================================= -->
+        <div class="col-lg-8">
 
-        <div class="space-y-6">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
 
+                <!-- RECTO / VERSO -->
+                <div class="d-flex justify-content-center mb-4">
 
-            <!-- ============================= -->
-            <!-- BOUTONS RECTO / VERSO -->
-            <!-- ============================= -->
+                    <div class="bg-light p-1 rounded-pill d-inline-flex border shadow-sm">
 
-            <div class="flex items-center gap-2">
+                        <button type="button"
+                                id="btn-recto"
+                                onclick="afficherRecto()"
+                                class="btn btn-primary btn-sm rounded-pill px-4 fw-semibold">
+                            Recto
+                        </button>
 
-                <button
-                    type="button"
-                    id="btn-recto"
-                    onclick="afficherRecto()"
-                    class="px-5 py-2.5 rounded-lg bg-white-900 text-white text-sm font-medium hover:bg-blue-800 transition"
-                >
-                    Recto
-                </button>
+                        <button type="button"
+                                id="btn-verso"
+                                onclick="afficherVerso()"
+                                class="btn btn-light btn-sm rounded-pill px-4 text-muted fw-semibold border-0">
+                            Verso
+                        </button>
 
-                <button
-                    type="button"
-                    id="btn-verso"
-                    onclick="afficherVerso()"
-                    class="px-5 py-2.5 rounded-lg bg-white-100 text-white-700 text-sm font-medium hover:bg-white-800 transition"
-                >
-                    Verso
-                </button>
+                    </div>
 
-            </div>
+                </div>
 
 
-            <!-- ============================= -->
-            <!-- APERÇU DE LA CARTE -->
-            <!-- ============================= -->
+                <!-- ============================================= -->
+                <!-- VRAIE CARTE -->
+                <!-- ============================================= -->
+                <div class="d-flex justify-content-center">
 
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                    <!-- RECTO -->
+                    <div id="carte-recto"
+                         class="position-relative w-100"
+                         style="max-width: 620px;">
 
-                
+                        <img src="{% static 'images/Maquette.jpg' %}"
+                             alt="Aperçu de la carte"
+                             class="img-fluid w-100 rounded-4 shadow-sm border">
 
+                        <div class="position-absolute top-0 start-0 w-100 h-100">
 
-                <div class="flex justify-center">
-
-
-                    <!-- ========================================= -->
-                    <!-- CARTE RECTO -->
-                    <!-- ========================================= -->
-
-                    <div
-                        id="carte-recto"
-                        class="relative w-full max-w-md"
-                    >
-
-                        <!-- MAQUETTE RECTO -->
-
-                        <img
-                            src="{% static 'images/Maquette.jpg' %}"
-                            alt="Aperçu de la carte"
-                            class="w-full rounded-xl shadow-sm border border-gray-200"
-                        >
-
-
-                        <!-- INFORMATIONS SUR LA CARTE -->
-
-                        <div class="absolute inset-0">
-
-
-                            <!-- NUMÉRO DE CARTE -->
-
-                            <div
-                                class="absolute top-[8%] right-[8%] text-[9px] font-bold text-black"
-                            >
-                                N : {{ membre.compteur|stringformat:"04d" }}
+                            <!-- NUMÉRO -->
+                            <div id="apercu-numero"
+                                 class="position-absolute fw-bold"
+                                 style="top: 7%; left: 8%;">
+                                {{ membre.compteur|stringformat:"04d" }}
                             </div>
 
-
                             <!-- NOM -->
-
-                            <div
-                                class="absolute top-[23%] left-[7%] text-[9px] font-bold text-black"
-                            >
+                            <div id="apercu-nom"
+                                 class="position-absolute fw-bold text-uppercase"
+                                 style="top: 30%; left: 8%;">
                                 {{ membre.nom|upper }}
                             </div>
 
-
                             <!-- PRÉNOM -->
-
-                            <div
-                                class="absolute top-[31%] left-[7%] text-[9px] font-bold text-black"
-                            >
+                            <div id="apercu-prenom"
+                                 class="position-absolute"
+                                 style="top: 36%; left: 8%;">
                                 {{ membre.prenom }}
                             </div>
 
-
                             <!-- SEXE -->
-
-                            <div
-                                class="absolute top-[39%] left-[7%] text-[9px] font-bold text-black"
-                            >
+                            <div id="apercu-sexe"
+                                 class="position-absolute"
+                                 style="top: 42%; left: 8%;">
                                 {{ membre.sexe }}
                             </div>
 
-
                             <!-- MATRICULE -->
-
-                            <div
-                                class="absolute top-[47%] left-[7%] text-[9px] font-bold text-black"
-                            >
+                            <div id="apercu-matricule"
+                                 class="position-absolute"
+                                 style="top: 48%; left: 8%;">
                                 {{ membre.matricule }}
                             </div>
 
-
                             <!-- EMPLOI -->
-
-                            <div
-                                class="absolute top-[55%] left-[7%] text-[9px] font-bold text-black"
-                            >
+                            <div id="apercu-emploi"
+                                 class="position-absolute"
+                                 style="top: 54%; left: 8%;">
                                 {{ membre.emploi }}
                             </div>
 
 
                             <!-- PHOTO -->
-
                             {% if membre.photo %}
-
-                                <img
-                                    src="{{ membre.photo.url }}"
-                                    alt="Photo du membre"
-                                    class="absolute top-[28%] right-[6%] w-[24%] aspect-square object-cover"
-                                >
-
+                            <img id="apercu-photo"
+                                 src="{{ membre.photo.url }}"
+                                 alt="Photo du membre"
+                                 class="position-absolute object-fit-cover"
+                                 style="
+                                    top:28%;
+                                    right:6%;
+                                    width:24%;
+                                    aspect-ratio:1/1;
+                                 ">
                             {% endif %}
 
 
                             <!-- QR CODE -->
+                            <div id="qr-code"
+                                 class="position-absolute bg-white d-flex align-items-center justify-content-center"
+                                 style="
+                                    bottom:4%;
+                                    left:4%;
+                                    width:18%;
+                                    aspect-ratio:1/1;
+                                 ">
+                            </div>
 
-                            <div
-                                id="qr-code"
-                                class="absolute bottom-[4%] left-[4%] w-[18%] aspect-square bg-white flex items-center justify-center"
-                            >
+                        </div>
+
+                    </div>
+
+
+                    <!-- VERSO -->
+                    <div id="carte-verso"
+                         class="position-relative w-100 d-none"
+                         style="max-width: 620px;">
+
+                        <img src="{% static 'images/Maquette_verso.jpg' %}"
+                             alt="Verso de la carte"
+                             class="img-fluid w-100 rounded-4 shadow-sm border">
+
+                        <div class="position-absolute top-0 start-0 w-100 h-100 text-black">
+
+                            <!-- TITRE -->
+                            <div class="position-absolute fw-bold text-uppercase"
+                                 style="top:8%; left:8%;">
+                                PERSONNES À CHARGE
                             </div>
 
 
+                            <!-- ENFANTS -->
+                            <div class="position-absolute"
+                                 style="top:18%; left:8%; width:84%;">
+
+                                {% for enfant in membre.enfants.all|slice:":9" %}
+                                    <div class="small mb-1">
+                                        {{ enfant.nom }}
+                                        {{ enfant.prenom }}
+                                        {% if enfant.date_naissance %}
+                                            - {{ enfant.date_naissance|date:"d/m/Y" }}
+                                        {% endif %}
+                                    </div>
+                                {% empty %}
+                                    <div class="small text-muted">
+                                        Aucun enfant enregistré
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                            <!-- CONJOINTS -->
+                            <div class="position-absolute"
+                                 style="top:55%; left:8%; width:84%;">
+
+                                {% for conjoint in membre.conjoints.all %}
+                                    <div class="small mb-1">
+                                        {{ conjoint.nom }}
+                                        {{ conjoint.prenom }}
+                                    </div>
+                                {% empty %}
+                                    <div class="small text-muted">
+                                        Aucun conjoint enregistré
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                            <!-- PARENTS -->
+                            <div class="position-absolute"
+                                 style="top:72%; left:8%; width:84%;">
+
+                                {% for parent in membre.parents.all %}
+                                    <div class="small mb-1">
+                                        {{ parent.nom }}
+                                        {{ parent.prenom }}
+                                    </div>
+                                {% empty %}
+                                    <div class="small text-muted">
+                                        Aucun parent enregistré
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                            <!-- FOOTER -->
+                            <div class="position-absolute bottom-0 start-0 w-100 text-center small pb-2">
+                                Cette carte est la propriété exclusive de la MU.TRA.CHU-YO
+                            </div>
+
                         </div>
 
                     </div>
 
-
-
-                    <!-- ===================== VERSO ===================== -->
-<div
-    id="carte-verso"
-    class="relative w-full max-w-md hidden"
->
-
-    <!-- MAQUETTE DU VERSO -->
-    <img
-        src="{% static 'images/Maquette_verso.jpg' %}"
-        alt="Verso de la carte"
-        class="w-full rounded-xl shadow-sm border border-gray-200"
-    >
-
-    <!-- CONTENU DU VERSO -->
-    <div class="absolute inset-0 text-black">
-
-        <!-- TITRE -->
-        <div
-            class="absolute top-[7%] left-[10%] w-[80%] text-center
-                   text-[8px] font-bold"
-        >
-            PERSONNES A CHARGES
-        </div>
-
-
-        <!-- ================= DESCENDANTS ================= -->
-
-        <!-- Ligne 1 -->
-        <div class="absolute top-[16%] left-[5%] w-[64%] text-[6px]">
-            {% if membre.enfants.all %}
-                {% for enfant in membre.enfants.all|slice:":9" %}
-                    <div class="h-[5.5%] flex items-center">
-                        <span class="w-full truncate">
-                            {{ enfant.nom|upper }} {{ enfant.prenom }}
-                        </span>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-        <!-- DATES DE NAISSANCE -->
-        <div class="absolute top-[16%] right-[7%] w-[25%] text-[6px] text-center">
-            {% if membre.enfants.all %}
-                {% for enfant in membre.enfants.all|slice:":9" %}
-                    <div class="h-[5.5%] flex items-center justify-center">
-                        {{ enfant.date_naissance|date:"d/m/Y" }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-
-        <!-- ================= CONJOINTS ================= -->
-
-        <div
-            class="absolute left-[6%] top-[69%] w-[88%]
-                   text-[6px] leading-tight"
-        >
-            {% if membre.conjoints.all %}
-                <div class="font-bold mb-[2px]">
-                    Conjoint(e)(s) :
                 </div>
 
-                {% for conjoint in membre.conjoints.all %}
-                    <div>
-                        - {{ conjoint.nom|upper }} {{ conjoint.prenom }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+            </div>
+
         </div>
 
 
-        <!-- ================= PARENTS ================= -->
+        <!-- ================================================= -->
+        <!-- DROITE : OPTIONS D'IMPRESSION -->
+        <!-- ================================================= -->
+        <!-- ================================================= -->
+<!-- DROITE : OPTIONS D'IMPRESSION -->
+<!-- ================================================= -->
+<div class="col-lg-4">
 
-        <div
-            class="absolute left-[6%] top-[82%] w-[88%]
-                   text-[6px] leading-tight"
-        >
-            {% for parent in membre.parents.all %}
+    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
 
-                {% if parent.type_parent == "P" %}
-                    <div>
-                        Père :
-                        {{ parent.prenom }}
-                        {{ parent.nom|upper }}
-                    </div>
-                {% else %}
-                    <div>
-                        Mère :
-                        {{ parent.prenom }}
-                        {{ parent.nom|upper }}
-                    </div>
-                {% endif %}
+        <h3 class="h6 fw-bold text-dark mb-4 d-flex align-items-center">
+            <i class="bi bi-printer text-primary me-2"></i>
+            Options d'impression
+        </h3>
 
-            {% endfor %}
+        <!-- MODÈLE + FORMAT -->
+        <div class="row g-3">
+
+            <!-- MODÈLE -->
+            <div class="col-6">
+
+                <label class="form-label small fw-semibold text-dark">
+                    Modèle
+                </label>
+
+                <select class="form-select form-select-sm">
+                    <option>Carte MU.TRA.CHU</option>
+                </select>
+
+            </div>
+
+            <!-- FORMAT -->
+            <div class="col-6">
+
+                <label class="form-label small fw-semibold text-dark">
+                    Format
+                </label>
+
+                <select class="form-select form-select-sm">
+                    <option>85,6 × 53,98 mm</option>
+                </select>
+
+            </div>
+
+            <!-- IMPRIMANTE -->
+            <div class="col-6">
+
+                <label class="form-label small fw-semibold text-dark">
+                    Imprimante
+                </label>
+
+                <select class="form-select form-select-sm">
+                    <option>Imprimante par défaut</option>
+                </select>
+
+            </div>
+
+            <!-- QUANTITÉ -->
+            <div class="col-6">
+
+                <label class="form-label small fw-semibold text-dark">
+                    Quantité
+                </label>
+
+                <input type="number"
+                       class="form-control form-control-sm"
+                       value="1"
+                       min="1">
+
+            </div>
+
         </div>
 
 
-        <!-- ================= PIED DE CARTE ================= -->
+        <!-- OPTIONS -->
+        <!-- OPTIONS -->
+<div class="border-top pt-3 mt-4 mb-4">
 
-        <div
-            class="absolute bottom-[2%] left-[5%] w-[90%]
-                   text-[5px] text-right"
-        >
-            Cette carte est la propriété exclusive de la MU.TRA.CHU-YO
+    <div class="row g-2">
+
+        <!-- QR CODE -->
+        <div class="col-6">
+            <div class="form-check">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="optionQr"
+                       checked>
+
+                <label class="form-check-label small"
+                       for="optionQr">
+                    Afficher QR code
+                </label>
+            </div>
+        </div>
+
+        <!-- PHOTO -->
+        <div class="col-6">
+            <div class="form-check">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="optionPhoto"
+                       checked>
+
+                <label class="form-check-label small"
+                       for="optionPhoto">
+                    Afficher photo
+                </label>
+            </div>
+        </div>
+
+        <!-- RECTO-VERSO -->
+        <div class="col-6">
+            <div class="form-check">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="optionRectoVerso">
+
+                <label class="form-check-label small"
+                       for="optionRectoVerso">
+                    Impression recto-verso
+                </label>
+            </div>
         </div>
 
     </div>
 
 </div>
 
+
+        <!-- ACTIONS -->
+        <div class="d-grid gap-2">
+
+            <a href="{% url 'generer_carte' membre.id %}"
+               target="_blank"
+               class="btn btn-primary rounded-3">
+
+                <i class="bi bi-printer me-2"></i>
+                Imprimer la carte
+
+            </a>
+
+            <a href="{% url 'generer_carte' membre.id %}"
+               target="_blank"
+               class="btn btn-outline-primary rounded-3">
+
+                <i class="bi bi-file-earmark-pdf me-2"></i>
+                Générer en PDF
+
+            </a>
+
+            <button type="button"
+                    onclick="ouvrirPleinEcran()"
+                    class="btn btn-light border rounded-3">
+
+                <i class="bi bi-arrows-fullscreen me-2"></i>
+                Aperçu plein écran
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- ===================================================== -->
+    <!-- BLOCS D'INFORMATIONS -->
+    <!-- ===================================================== -->
+    <div class="row g-4">
+
+        <!-- INFORMATIONS DU MEMBRE -->
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+
+                <h3 class="h6 fw-bold text-dark mb-4">
+                    <i class="bi bi-person-vcard text-primary me-2"></i>
+                    Informations du membre
+                </h3>
+
+                <div class="mb-3">
+                    <div class="small text-muted">Nom et prénom</div>
+                    <div class="fw-semibold">
+                        {{ membre.nom|upper }} {{ membre.prenom }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="small text-muted">Matricule</div>
+                    <div class="fw-semibold">
+                        {{ membre.matricule }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="small text-muted">Numéro de carte</div>
+                    <div class="fw-semibold">
+                        {{ membre.compteur|stringformat:"04d" }}
+                    </div>
                 </div>
 
             </div>
 
+        </div>
 
 
-            <!-- ================================================= -->
-            <!-- INFORMATIONS DU BAS -->
-            <!-- ================================================= -->
+        <!-- ÉLÉMENTS AFFICHÉS -->
+        <div class="col-lg-4">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
 
+                <h3 class="h6 fw-bold text-dark mb-4">
+                    <i class="bi bi-eye text-primary me-2"></i>
+                    Éléments affichés
+                </h3>
 
-                <!-- ============================= -->
-                <!-- INFORMATIONS DU MEMBRE -->
-                <!-- ============================= -->
-
-                <div class="bg-white border border-gray-200 rounded-xl p-4">
-
-                    <h3 class="text-sm font-bold text-blue-900 mb-4">
-                        INFORMATIONS DU MEMBRE
-                    </h3>
-
-
-                    <div class="space-y-3">
-
-                        <div>
-
-                            <p class="text-xs text-blue-400">
-                                Nom complet
-                            </p>
-
-                            <p class="text-sm font-medium text-blue-800">
-                                {{ membre.nom }} {{ membre.prenom }}
-                            </p>
-
-                        </div>
-
-
-                        <div>
-
-                            <p class="text-xs text-blue-400">
-                                Matricule
-                            </p>
-
-                            <p class="text-sm font-medium text-blue-800">
-                                {{ membre.matricule }}
-                            </p>
-
-                        </div>
-
-
-                        <div>
-
-                            <p class="text-xs text-gray-400">
-                                N° carte
-                            </p>
-
-                            <p class="text-sm font-medium text-gray-800">
-                                {{ membre.compteur|stringformat:"04d" }}
-                            </p>
-
-                        </div>
-
-                    </div>
-
+                <div class="form-check mb-3">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           checked
+                           disabled>
+                    <label class="form-check-label small">
+                        Photo du membre
+                    </label>
                 </div>
 
-
-
-                <!-- ============================= -->
-                <!-- ÉLÉMENTS AFFICHÉS -->
-                <!-- ============================= -->
-
-                <div class="bg-white border border-gray-200 rounded-xl p-2">
-
-                    <h3 class="text-sm font-bold text-blue-900 mb-4">
-                        ÉLÉMENTS AFFICHÉS SUR LA CARTE
-                    </h3>
-
-
-                    <div class="space-y-3">
-
-
-                        <label class="flex items-center gap-3 text-sm text-gray-700">
-
-                            <input
-                                type="checkbox"
-                                checked
-                                class="w-4 h-4 rounded border-gray-300"
-                            >
-
-                            Photo
-
-                        </label>
-
-
-                        <label class="flex items-center gap-3 text-sm text-gray-700">
-
-                            <input
-                                type="checkbox"
-                                checked
-                                class="w-4 h-4 rounded border-gray-300"
-                            >
-
-                            QR code
-
-                        </label>
-
-
-                        <label class="flex items-center gap-3 text-sm text-gray-700">
-
-                            <input
-                                type="checkbox"
-                                checked
-                                class="w-4 h-4 rounded border-gray-300"
-                            >
-
-                            Informations du membre
-
-                        </label>
-
-
-                    </div>
-
+                <div class="form-check mb-3">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           checked
+                           disabled>
+                    <label class="form-check-label small">
+                        QR code
+                    </label>
                 </div>
 
-
-
-                <!-- ============================= -->
-                <!-- INFORMATIONS -->
-                <!-- ============================= -->
-
-                <div class="bg-white border border-gray-200 rounded-xl p-2">
-
-                    <h3 class="text-sm font-bold text-blue-900 mb-4">
-                        INFORMATIONS
-                    </h3>
-
-
-                    <div class="flex gap-3">
-
-                        <div
-                            class="shrink-0 w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center"
-                        >
-                            <i class="bi bi-qr-code text-gray-700"></i>
-                        </div>
-
-
-                        <p class="text-xs leading-5 text-gray-500">
-
-                            Le QR code permet de vérifier les informations
-                            du membre et l'authenticité de la carte.
-
-                        </p>
-
-                    </div>
-
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           checked
+                           disabled>
+                    <label class="form-check-label small">
+                        Informations du membre
+                    </label>
                 </div>
 
             </div>
 
+        </div>
 
 
-            <!-- ================================================= -->
-            <!-- CARTE PRÊTE + CONSEILS -->
-            <!-- ================================================= -->
+        <!-- INFORMATIONS / STATUT / CONSEIL -->
+        <div class="col-lg-4">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="d-flex flex-column gap-3">
+
+                <!-- INFORMATION -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-primary bg-opacity-10">
+
+                    <div class="d-flex align-items-start">
+
+                        <div class="me-3">
+                            <i class="bi bi-info-circle-fill text-primary fs-5"></i>
+                        </div>
+
+                        <div>
+                            <h6 class="fw-bold text-primary mb-1">
+                                Information
+                            </h6>
+
+                            <p class="small text-muted mb-0">
+                                Le QR code permet de vérifier rapidement
+                                l'identité du membre.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
 
 
                 <!-- CARTE PRÊTE -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-success bg-opacity-10">
 
-                <div class="bg-white border border-gray-200 rounded-xl p-2">
+                    <div class="d-flex align-items-start">
 
-                    <div class="flex items-start gap-3">
-
-                        <div
-                            class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0"
-                        >
-                            <i class="bi bi-check-lg text-gray-700"></i>
+                        <div class="me-3">
+                            <i class="bi bi-check-circle-fill text-success fs-5"></i>
                         </div>
 
-
                         <div>
+                            <h6 class="fw-bold text-success mb-1">
+                                Carte prête
+                            </h6>
 
-                            <h3 class="text-sm font-bold text-gray-900">
-                                Carte prête à imprimer
-                            </h3>
-
-                            <p class="text-xs text-gray-500 mt-1">
-                                Toutes les informations sont valides
+                            <p class="small text-muted mb-0">
+                                Les informations sont prêtes pour
+                                l'impression.
                             </p>
-
                         </div>
 
                     </div>
@@ -494,252 +563,27 @@
                 </div>
 
 
-
-                <!-- CONSEILS -->
-
-                <div class="bg-white border border-gray-200 rounded-xl p-2">
-
-                    <h3 class="text-sm font-bold text-gray-900 mb-2">
-                        Conseils sur la carte
-                    </h3>
-
-                    <p class="text-xs leading-5 text-gray-500">
-                        Vérifiez les informations affichées avant de lancer
-                        l'impression de la carte.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- ================================================= -->
-        <!-- PARTIE DROITE : OPTIONS D'IMPRESSION -->
-        <!-- ================================================= -->
-
-        <div>
-
-            <div
-                class="bg-white border border-gray-200 rounded-xl p-2 sticky top-6"
-            >
-
-
-                <!-- TITRE -->
-
-                <div class="mb-6">
-
-                    <h2 class="text-base font-bold text-blue-900">
-                        IMPRESSION
-                    </h2>
-
-                    <p class="text-xs text-gray-500 mt-1">
-                        Options d'impression
-                    </p>
-
-                </div>
-
-
-
-                <!-- MODÈLE -->
-
-                <div class="mb-4">
-
-                    <label class="block text-xs font-medium text-gray-600 mb-2">
-                        Modèle
-                    </label>
-
-
-                    <select
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-                    >
-
-                        <option>
-                            Modèle standard
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <!-- FORMAT -->
-
-                <div class="mb-4">
-
-                    <label class="block text-xs font-medium text-gray-600 mb-2">
-                        Format
-                    </label>
-
-
-                    <select
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-                    >
-
-                        <option>
-                            Carte bancaire — 85,6 × 53,98 mm
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <!-- IMPRIMANTE -->
-
-                <div class="mb-4">
-
-                    <label class="block text-xs font-medium text-gray-600 mb-2">
-                        Imprimante
-                    </label>
-
-
-                    <select
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-                    >
-
-                        <option>
-                            Imprimante par défaut
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <!-- QUANTITÉ -->
-
-                <div class="mb-6">
-
-                    <label class="block text-xs font-medium text-gray-600 mb-2">
-                        Quantité
-                    </label>
-
-
-                    <input
-                        type="number"
-                        value="1"
-                        min="1"
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-                    >
-
-                </div>
-
-
-
-                <!-- OPTIONS -->
-
-                <div class="border-t border-gray-200 pt-5 space-y-4">
-
-
-                    <label class="flex items-center justify-between gap-3 cursor-pointer">
-
-                        <span class="text-sm text-gray-700">
-                            Afficher QR code
-                        </span>
-
-
-                        <input
-                            type="checkbox"
-                            checked
-                            class="w-4 h-4 rounded border-gray-300"
-                        >
-
-                    </label>
-
-
-
-                    <label class="flex items-center justify-between gap-3 cursor-pointer">
-
-                        <span class="text-sm text-gray-700">
-                            Afficher photo
-                        </span>
-
-
-                        <input
-                            type="checkbox"
-                            checked
-                            class="w-4 h-4 rounded border-gray-300"
-                        >
-
-                    </label>
-
-
-
-                    <label class="flex items-center justify-between gap-3 cursor-pointer">
-
-                        <span class="text-sm text-gray-700">
-                            Impression recto-verso
-                        </span>
-
-
-                        <input
-                            type="checkbox"
-                            checked
-                            class="w-4 h-4 rounded border-gray-300"
-                        >
-
-                    </label>
-
-                </div>
-
-
-
-                <!-- BOUTONS -->
-
-                <div class="border-t border-gray-200 mt-6 pt-6 space-y-3">
-
-
-                    <!-- IMPRIMER -->
-
-                    <a
-                        href="{% url 'generer_carte' membre.id %}"
-                        target="_blank"
-                        class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-green-700 text-white text-sm font-medium hover:bg-gray-800 transition"
-                    >
-
-                        <i class="bi bi-printer"></i>
-
-                        Imprimer la carte
-
-                    </a>
-
-
-
-                    <!-- PDF -->
-
-                    <a
-                        href="{% url 'generer_carte' membre.id %}"
-                        target="_blank"
-                        class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-gray-300 text-blue-700 text-sm font-medium hover:bg-white-50 transition"
-                    >
-
-                        <i class="bi bi-file-earmark-pdf"></i>
-
-                        Générer en PDF
-
-                    </a>
-
-
-
-                    <!-- PLEIN ÉCRAN -->
-
-                    <button
-                        type="button"
-                        onclick="ouvrirPleinEcran()"
-                        class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-gray-300 text-blue-700 text-sm font-medium hover:bg-white-50 transition"
-                    >
-
-                        <i class="bi bi-arrows-fullscreen"></i>
-
-                        Aperçu plein écran
-
-                    </button>
+                <!-- CONSEIL -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-warning bg-opacity-10">
+
+                    <div class="d-flex align-items-start">
+
+                        <div class="me-3">
+                            <i class="bi bi-lightbulb-fill text-warning fs-5"></i>
+                        </div>
+
+                        <div>
+                            <h6 class="fw-bold text-warning mb-1">
+                                Conseil
+                            </h6>
+
+                            <p class="small text-muted mb-0">
+                                Vérifiez les informations avant de lancer
+                                l'impression de la carte.
+                            </p>
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -752,162 +596,84 @@
 </div>
 
 
-
-<!-- ===================================================== -->
-<!-- BIBLIOTHÈQUE QR CODE -->
-<!-- ===================================================== -->
+<!-- ========================================================= -->
+<!-- QR CODE -->
+<!-- ========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 
-
-<!-- ===================================================== -->
-<!-- JAVASCRIPT -->
-<!-- ===================================================== -->
-
 <script>
 
-    /* =========================================
-       AFFICHER RECTO
-    ========================================= */
+function afficherRecto() {
 
-    function afficherRecto() {
+    const recto = document.getElementById("carte-recto");
+    const verso = document.getElementById("carte-verso");
 
-        document
-            .getElementById("carte-recto")
-            .classList
-            .remove("hidden");
+    const btnRecto = document.getElementById("btn-recto");
+    const btnVerso = document.getElementById("btn-verso");
 
-        document
-            .getElementById("carte-verso")
-            .classList
-            .add("hidden");
+    recto.classList.remove("d-none");
+    verso.classList.add("d-none");
 
+    btnRecto.classList.remove("btn-light", "text-muted");
+    btnRecto.classList.add("btn-primary");
 
-        document
-            .getElementById("btn-recto")
-            .classList
-            .remove("bg-gray-100", "text-gray-700");
-
-        document
-            .getElementById("btn-recto")
-            .classList
-            .add("bg-gray-900", "text-white");
+    btnVerso.classList.remove("btn-primary");
+    btnVerso.classList.add("btn-light", "text-muted");
+}
 
 
-        document
-            .getElementById("btn-verso")
-            .classList
-            .remove("bg-gray-900", "text-white");
+function afficherVerso() {
 
-        document
-            .getElementById("btn-verso")
-            .classList
-            .add("bg-gray-100", "text-gray-700");
+    const recto = document.getElementById("carte-recto");
+    const verso = document.getElementById("carte-verso");
 
-    }
+    const btnRecto = document.getElementById("btn-recto");
+    const btnVerso = document.getElementById("btn-verso");
 
+    recto.classList.add("d-none");
+    verso.classList.remove("d-none");
 
+    btnVerso.classList.remove("btn-light", "text-muted");
+    btnVerso.classList.add("btn-primary");
 
-    /* =========================================
-       AFFICHER VERSO
-    ========================================= */
-
-    function afficherVerso() {
-
-        document
-            .getElementById("carte-recto")
-            .classList
-            .add("hidden");
-
-        document
-            .getElementById("carte-verso")
-            .classList
-            .remove("hidden");
+    btnRecto.classList.remove("btn-primary");
+    btnRecto.classList.add("btn-light", "text-muted");
+}
 
 
-        document
-            .getElementById("btn-verso")
-            .classList
-            .remove("bg-gray-100", "text-gray-700");
+document.addEventListener("DOMContentLoaded", function () {
 
-        document
-            .getElementById("btn-verso")
-            .classList
-            .add("bg-gray-900", "text-white");
+    const qrContainer = document.getElementById("qr-code");
 
+    if (qrContainer) {
 
-        document
-            .getElementById("btn-recto")
-            .classList
-            .remove("bg-gray-900", "text-white");
+        new QRCode(qrContainer, {
 
-        document
-            .getElementById("btn-recto")
-            .classList
-            .add("bg-gray-100", "text-gray-700");
+            text: "http://127.0.0.1:8000/verifier/{{ membre.matricule }}",
+
+            width: 80,
+            height: 80,
+
+            correctLevel: QRCode.CorrectLevel.H
+
+        });
 
     }
 
+});
 
 
-    /* =========================================
-       QR CODE
-    ========================================= */
+function ouvrirPleinEcran() {
 
-    document.addEventListener("DOMContentLoaded", function () {
+    const carte = document.getElementById("carte-recto");
 
-        const qrContainer =
-            document.getElementById("qr-code");
-
-
-        if (qrContainer) {
-
-            new QRCode(qrContainer, {
-
-                text:
-                    "http://127.0.0.1:8000/verifier/{{ membre.matricule }}",
-
-                width: 80,
-
-                height: 80,
-
-                correctLevel: QRCode.CorrectLevel.H
-
-            });
-
-        }
-
-    });
-
-
-
-    /* =========================================
-       PLEIN ÉCRAN
-    ========================================= */
-
-    function ouvrirPleinEcran() {
-
-        const carteRecto =
-            document.getElementById("carte-recto");
-
-        const carteVerso =
-            document.getElementById("carte-verso");
-
-
-        const carteVisible =
-            carteRecto.classList.contains("hidden")
-                ? carteVerso
-                : carteRecto;
-
-
-        if (carteVisible.requestFullscreen) {
-
-            carteVisible.requestFullscreen();
-
-        }
-
+    if (carte.requestFullscreen) {
+        carte.requestFullscreen();
     }
+
+}
 
 </script>
 
