@@ -20,11 +20,15 @@ Parents & Conjoints
             <ol class="breadcrumb mb-0 small justify-content-end">
 
                 <li class="breadcrumb-item">
-                    <span class="text-muted">Accueil</span>
+                     <a href="{% url 'core_index' %}" class="text-muted text-decoration-none">
+                         Accueil
+                    </a>
                 </li>
 
                 <li class="breadcrumb-item">
-                    <span class="text-muted">Membres</span>
+                      <a href="{% url 'liste_membres' %}" class="text-muted text-decoration-none">
+                           Membres
+                     </a>
                 </li>
 
                 <li class="breadcrumb-item active text-dark fw-medium"
@@ -41,7 +45,7 @@ Parents & Conjoints
 
             <div>
 
-                <h1 class="h3 fw-bold text-dark mb-1">
+                <h1 class="h3 fw-bold mb-1" style="color: #17366F;">
                     Parents & Conjoints
                 </h1>
 
