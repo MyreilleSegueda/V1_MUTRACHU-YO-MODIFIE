@@ -181,27 +181,25 @@ Tableau de bord | Mutuelle
 
     <div class="kpi-card red">
 
-        <i class="bi bi-exclamation-triangle-fill kpi-icon"></i>
+    <i class="bi bi-exclamation-triangle-fill kpi-icon"></i>
 
-        <div>
+    <div>
 
-            <strong>
-                126
-            </strong>
+        <strong>
+            {{ enfants_age_depasse|length }}
+        </strong>
 
-            <span>
-                Enfants âge dépassé
-            </span>
+        <span>
+            Enfants âge dépassé
+        </span>
 
-            <small>
-                ↗ +6 ce mois
-            </small>
-
-        </div>
+        <small>
+             ↗ +{{ enfants_devenus_age_depasse_ce_mois }} ce mois
+        </small>
 
     </div>
 
-
+</div>
 </div>
 
 
@@ -395,9 +393,10 @@ Tableau de bord | Mutuelle
                 </div>
 
 
-                <a href="#" class="recent-members-all">
+                <a href="{% url 'liste_membres' %}" 
+                  class="btn btn-outline-primary btn-sm recent-members-all">
                     Voir tous
-                    <i class="bi bi-arrow-right"></i>
+                  <i class="bi bi-arrow-right ms-1"></i>
                 </a>
 
             </div>

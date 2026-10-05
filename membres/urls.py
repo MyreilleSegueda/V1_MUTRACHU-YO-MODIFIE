@@ -6,6 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('', views.Membre_list, name='liste_membres'),
     path('cartes/', views.Liste_cartes, name='liste_cartes'),
+    path('cartes/produites/', views.Cartes_produites, name='cartes_produites'),
     path('ajouter/', views.etape1_membre, name='etape1'),
     path('etape2/', views.etape2, name='etape2'),
     path('etape3/', views.etape3, name='etape3'),
@@ -26,4 +27,5 @@ urlpatterns = [
     path('modifier/<int:id>/parents-conjoints/',views.modifier_parents_conjoints,name='modifier_parents_conjoints'),
     path('modifier/<int:id>/enfants/',views.modifier_enfants,name='modifier_enfants'),
     path('supprimer/<int:id>/', views.Supprimer_membre, name='supprimer_membre'),
+    path('verifier-matricule/', views.verifier_matricule, name='verifier_matricule'),
 ]

@@ -299,10 +299,19 @@
 
                             {{ form.matricule }}
 
+                            <div
+                               id="alerte-matricule"
+                               class="field-error"
+                               style="display: none;"
+                           >
+                          <i class="bi bi-exclamation-triangle-fill"></i>
+                             Ce matricule est déjà utilisé. Veuillez en saisir un autre.
+                            </div>
+
                             {% if form.matricule.errors %}
-                                <div class="field-error">
-                                    {{ form.matricule.errors }}
-                                </div>
+                              <div class="field-error">
+                                {{ form.matricule.errors }}
+                              </div>
                             {% endif %}
 
                         </div>
@@ -645,5 +654,49 @@
     </div>
 
 </div>
+{% endblock %}
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const champMatricule = document.getElementById("id_matricule");
+    const alerteMatricule = document.getElementById("alerte-matricule");
+
+    if (!champMatricule || !alerteMatricule) {
+        return;
+    }
+
+    champMatricule.addEventListener("input", function () {
+
+        const matricule = champMatricule.value.trim();
+
+        if (matricule === "") {
+            alerteMatricule.style.display = "none";
+            return;
+        }
+
+        fetch(
+            "{% url 'verifier_matricule' %}?matricule=" +
+            encodeURIComponent(matricule)
+        )
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.existe) {
+                alerteMatricule.style.display = "block";
+            } else {
+                alerteMatricule.style.display = "none";
+            }
+
+        })
+        .catch(error => {
+            console.error("Erreur lors de la vérification :", error);
+        });
+
+    });
+
+});
+</script>
 
 {% endblock %}

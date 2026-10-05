@@ -4,6 +4,7 @@
 
 {% block content %}
 
+
 <div class="max-w-7xl mx-auto">
 
     <!-- EN-TÊTE -->
@@ -184,6 +185,10 @@
                             </label>
 
                             {{ form.matricule }}
+                            <div id="alerte-matricule" class="mt-2 text-sm text-red-600 d-none">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                                Ce matricule est déjà utilisé. Veuillez en saisir un autre.
+                            </div>
 
                         </div>
 
@@ -512,5 +517,59 @@
     </div>
 
 </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const champMatricule = document.getElementById("id_matricule");
+    const alerteMatricule = document.getElementById("alerte-matricule");
+
+    if (!champMatricule || !alerteMatricule) {
+        return;
+    }
+
+    champMatricule.addEventListener("input", function () {
+
+        const matricule = champMatricule.value.trim();
+
+        if (matricule === "") {
+            alerteMatricule.classList.add("d-none");
+            champMatricule.classList.remove("is-invalid");
+            return;
+        }
+
+        fetch(
+            "{% url 'verifier_matricule' %}?matricule=" +
+            encodeURIComponent(matricule)
+        )
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.existe) {
+
+                alerteMatricule.classList.remove("d-none");
+                champMatricule.classList.add("is-invalid");
+
+            } else {
+
+                alerteMatricule.classList.add("d-none");
+                champMatricule.classList.remove("is-invalid");
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Erreur :", error);
+        });
+
+    });
+
+});
+</script>
 
 {% endblock %}

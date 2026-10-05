@@ -62,7 +62,15 @@ class MembreForm(forms.ModelForm):
             }),
 
         }
+def clean_matricule(self):
+        matricule = self.cleaned_data['matricule']
 
+        if Membre.objects.filter(matricule=matricule).exists():
+            raise forms.ValidationError(
+                "Ce matricule est déjà utilisé. Veuillez en saisir un autre."
+            )
+
+        return matricule
 
 # =========================================================
 # FORMULAIRE PHOTO

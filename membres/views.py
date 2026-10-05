@@ -1,4 +1,4 @@
-from page1.models import Membre, Conjoint, Parent  
+from page1.models import Membre, Conjoint, Parent,Carte  
 from page1.forms import (
     MembreForm,
     PhotoForm,
@@ -45,6 +45,8 @@ from reportlab.lib.enums import TA_RIGHT
 from django.db.models import Q
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.utils import timezone
 
 
 # Affichage de la liste des membres
@@ -108,6 +110,21 @@ def Liste_cartes(request):
         "membres": page_obj,
         "page_obj": page_obj,
         "recherche": recherche,
+        "onglet_actif": "toutes",
+    })
+def Cartes_produites(request):
+
+    cartes = Carte.objects.filter(
+        statut='PRODUITE'
+    ).select_related('membre').order_by(
+        'membre__nom',
+        'membre__prenom'
+    )
+
+    return render(request, "liste_cartes.html", {
+        "membres": [carte.membre for carte in cartes],
+        "cartes_produites": True,
+        "onglet_actif": "produites",
     })
 def Exporter_cartes_excel(request):
 
@@ -142,7 +159,14 @@ def Exporter_cartes_excel(request):
     workbook.save(response)
 
     return response
+def verifier_matricule(request):
+    matricule = request.GET.get('matricule', '').strip()
 
+    existe = Membre.objects.filter(matricule=matricule).exists()
+
+    return JsonResponse({
+        'existe': existe
+    })
 #Ajouter les membres
 def etape1_membre(request):
     if request.method == "POST":
@@ -848,6 +872,16 @@ def Generer_carte(request, membre_id):
 # 🔥 Affichage
     footer.drawOn(c, x_footer, y_footer)
     c.save()
+
+    # Enregistrer la carte comme produite
+    Carte.objects.update_or_create(
+        membre=membre,
+        defaults={
+            'statut': 'PRODUITE',
+            'date_production': timezone.now()
+        }
+    )
+
     buffer.seek(0)
 
     return HttpResponse(buffer, content_type='application/pdf')

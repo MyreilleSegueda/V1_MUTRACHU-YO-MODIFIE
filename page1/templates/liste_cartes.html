@@ -260,32 +260,22 @@
     <!-- ONGLETS -->
     <ul class="nav nav-pills gap-2 mb-0 flex-nowrap">
         <li class="nav-item">
-            <a class="nav-link active bg-white text-primary px-3 py-2 rounded-pill small fw-semibold text-nowrap border"
-               href="#">
+            <a class="nav-link {% if onglet_actif == 'toutes' %}active bg-white text-primary border{% else %}text-secondary bg-white{% endif %} px-3 py-2 rounded-pill small fw-semibold text-nowrap"
+               href="{% url 'liste_cartes' %}">
                 Toutes les cartes
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link text-secondary bg-white px-3 py-2 rounded-pill small fw-semibold text-nowrap"
-               href="#">
-                À produire
-            </a>
-        </li>
+        
 
         <li class="nav-item">
-            <a class="nav-link text-secondary bg-white px-3 py-2 rounded-pill small fw-semibold text-nowrap"
-               href="#">
+            <a class="nav-link {% if onglet_actif == 'produites' %}active bg-white text-primary border{% else %}text-secondary bg-white{% endif %} px-3 py-2 rounded-pill small fw-semibold text-nowrap"
+               href="{% url 'cartes_produites' %}">
                 Produites
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link text-secondary bg-white px-3 py-2 rounded-pill small fw-semibold text-nowrap"
-               href="#">
-                Réimpressions
-            </a>
-        </li>
+        
     </ul>
 
     <!-- RECHERCHE + FILTRE -->
@@ -350,7 +340,9 @@
                         <th class="py-3">
                             N° carte
                         </th>
-
+                        <th class="py-3 text-center">
+                            Statut
+                        </th>
                         <th class="py-3 text-center">
                             Actions
                         </th>
@@ -451,7 +443,31 @@
                             {{ membre.compteur|stringformat:"04d" }}
 
                         </td>
+                         <!-- STATUT -->
+                        <td class="text-center">
 
+                            {% if membre.carte.statut == "PRODUITE" %}
+
+                                <a href="{% url 'cartes_produites' %}"
+                                   class="badge bg-success text-decoration-none"
+                                   onclick="event.stopPropagation();">
+                                    Produite
+                                </a>
+                            {% elif membre.carte.statut == "REMIS" %}
+
+                                <span class="badge bg-primary">
+                                 Remise
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-warning text-dark">
+                                  À produire
+                                </span>
+
+                             {% endif %}
+
+                        </td>
 
                         <!-- ACTIONS -->
                         <td class="text-center text">
@@ -778,15 +794,7 @@
                         Produire une carte
                     </button>
 
-                    <button
-                        id="btn-reimprimer-carte"
-                        type="button"
-                        class="btn btn-outline-secondary btn-sm w-100 py-2 d-flex align-items-center justify-content-center bg-white text-dark border shadow-sm"
-                        disabled
-                    >
-                        <i class="bi bi-arrow-repeat me-2"></i>
-                        Réimprimer la carte
-                    </button>
+                    
 
                     <button
                         id="btn-telecharger-pdf"

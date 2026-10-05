@@ -121,3 +121,30 @@ class Parent(models.Model):
 
 
 
+class Carte(models.Model):
+
+    STATUT_CHOICES = [
+        ('A_PRODUIRE', 'À produire'),
+        ('PRODUITE', 'Produite'),
+        ('REMIS', 'Remise'),
+    ]
+
+    membre = models.OneToOneField(
+        Membre,
+        on_delete=models.CASCADE,
+        related_name='carte'
+    )
+
+    statut = models.CharField(
+        max_length=20,
+        choices=STATUT_CHOICES,
+        default='A_PRODUIRE'
+    )
+
+    date_production = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return f"Carte de {self.membre} - {self.get_statut_display()}"
