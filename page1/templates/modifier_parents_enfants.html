@@ -179,42 +179,54 @@ Modification des enfants
 
                                 <div class="d-flex justify-content-between align-items-center mb-4">
 
-                                    <div class="d-flex align-items-center">
+    <!-- TITRE -->
+    <div class="d-flex align-items-center">
 
-                                        <div class="rounded-3 bg-success bg-opacity-10
-                                                    text-success d-flex
-                                                    align-items-center
-                                                    justify-content-center me-3"
-                                             style="width:42px;height:42px;">
+        <div class="rounded-3 bg-success bg-opacity-10
+                    text-success d-flex
+                    align-items-center
+                    justify-content-center me-3"
+             style="width:42px;height:42px;">
 
-                                            <i class="bi bi-person-hearts fs-5"></i>
+            <i class="bi bi-person-hearts fs-5"></i>
 
-                                        </div>
+        </div>
+
+        <div>
+
+            <h5 class="fw-bold mb-1">
+                Enfants
+            </h5>
+
+            <small class="text-muted">
+                Informations des enfants du membre
+            </small>
+
+        </div>
+
+    </div>
 
 
-                                        <div>
+    <!-- BOUTON AJOUTER + LIMITE -->
+    <div class="d-flex align-items-center gap-2">
 
-                                            <h5 class="fw-bold mb-1">
-                                                Enfants
-                                            </h5>
+        <span class="badge bg-light text-dark border rounded-pill px-3 py-2">
+            Maximum 9
+        </span>
 
-                                            <small class="text-muted">
-                                                Informations des enfants du membre
-                                            </small>
+        <button type="button"
+                id="add-enfant"
+                class="btn btn-outline-success rounded-3 px-3">
 
-                                        </div>
+            <i class="bi bi-plus-circle me-1"></i>
 
-                                    </div>
+            Ajouter
 
+        </button>
 
-                                    <span class="badge bg-light text-dark border rounded-pill px-3 py-2">
+    </div>
 
-                                        Maximum 9
-
-                                    </span>
-
-                                </div>
-
+</div>
 
                                 <!-- ========================================= -->
                                 <!-- LISTE DES ENFANTS -->
@@ -298,6 +310,54 @@ Modification des enfants
                                     </div>
 
                                 {% endfor %}
+                                {% for form in enfant_formset %}
+
+    <!-- tes formulaires enfants -->
+
+{% endfor %}
+
+<div id="empty-enfant-form" style="display:none;">
+
+    <div class="border rounded-4 p-3 mb-3 bg-light enfant-form">
+
+        {{ enfant_formset.empty_form.id }}
+
+        <div class="row g-3">
+
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold text-dark">
+                    Nom
+                </label>
+                {{ enfant_formset.empty_form.nom }}
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold text-dark">
+                    Prénom
+                </label>
+                {{ enfant_formset.empty_form.prenom }}
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold text-dark">
+                    Date de naissance
+                </label>
+                {{ enfant_formset.empty_form.date_naissance }}
+            </div>
+
+        </div>
+
+        <div class="text-end mt-3">
+            <button type="button"
+                    class="btn btn-sm btn-outline-danger remove-enfant">
+                <i class="bi bi-trash me-1"></i>
+                Retirer
+            </button>
+        </div>
+
+    </div>
+
+</div>
 
                             </div>
 
@@ -515,5 +575,79 @@ Modification des enfants
     </div>
 
 </div>
+<script>
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const addButton = document.getElementById("add-enfant");
+
+    const totalForms = document.querySelector(
+        '[name$="-TOTAL_FORMS"]'
+    );
+
+    const emptyForm = document.getElementById(
+        "empty-enfant-form"
+    );
+
+    if (!addButton || !totalForms || !emptyForm) {
+        console.log("Élément manquant pour Ajouter un enfant");
+        return;
+    }
+
+
+    addButton.addEventListener("click", function () {
+
+        let formIndex = parseInt(totalForms.value);
+
+        console.log("Ajout enfant numéro :", formIndex);
+
+
+        if (formIndex >= 9) {
+
+            alert("Maximum 9 enfants.");
+
+            return;
+        }
+
+
+        let html = emptyForm.innerHTML.replace(
+            /__prefix__/g,
+            formIndex
+        );
+
+
+        emptyForm.insertAdjacentHTML(
+            "beforebegin",
+            html
+        );
+
+
+        totalForms.value = formIndex + 1;
+
+    });
+
+
+    document.addEventListener("click", function (event) {
+
+        const button = event.target.closest(
+            ".remove-enfant"
+        );
+
+        if (!button) {
+            return;
+        }
+
+        const enfant = button.closest(
+            ".enfant-form"
+        );
+
+        if (enfant) {
+            enfant.remove();
+        }
+
+    });
+
+});
+
+</script>
 {% endblock %}

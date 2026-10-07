@@ -157,111 +157,168 @@ Parents & Conjoints
                         {% csrf_token %}
 
 
-                        <!-- ================================================= -->
-                        <!-- PARENTS -->
-                        <!-- ================================================= -->
+                        
+                                <!-- ================================================= -->
+                                 <!-- PARENTS -->
+                               <!-- ================================================= -->
 
-                        <div class="card border rounded-4 mb-4">
+                                  <div class="card border rounded-4 mb-4">
 
-                            <div class="card-body p-4">
+                                        <div class="card-body p-4">
 
+                                          <!-- TITRE PARENTS -->
 
-                                <!-- TITRE PARENTS -->
+                                        <div class="d-flex align-items-center mb-4">
 
-                                <div class="d-flex align-items-center mb-4">
+                                        <div class="rounded-3 bg-primary bg-opacity-10
+                                             text-primary d-flex
+                                            align-items-center
+                                            justify-content-center me-3"
+                                            style="width:42px;height:42px;">
 
-                                    <div class="rounded-3 bg-primary bg-opacity-10
-                                                text-primary d-flex
-                                                align-items-center
-                                                justify-content-center me-3"
-                                         style="width:42px;height:42px;">
-
-                                        <i class="bi bi-people-fill fs-5"></i>
-
-                                    </div>
-
-
-                                    <div>
-
-                                        <h5 class="fw-bold mb-1">
-                                            Parents
-                                        </h5>
-
-                                        <small class="text-muted">
-                                            Père et mère du membre
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-
-                                {{ parent_formset.management_form }}
-
-
-                                <!-- PARENTS -->
-
-                                <div id="parent-container">
-
-                                    {% for form in parent_formset %}
-
-                                        <div class="border rounded-4 p-3 mb-3 bg-light">
-
-                                            {{ form.id }}
-
-
-                                            <div class="row g-3">
-
-
-                                                <!-- TYPE PARENT -->
-
-                                                <div class="col-md-4">
-
-                                                    <label class="form-label small fw-semibold text-dark">
-                                                        Type parent
-                                                    </label>
-
-                                                    {{ form.type_parent }}
-
-                                                </div>
-
-
-                                                <!-- NOM -->
-
-                                                <div class="col-md-4">
-
-                                                    <label class="form-label small fw-semibold text-dark">
-                                                        Nom
-                                                    </label>
-
-                                                    {{ form.nom }}
-
-                                                </div>
-
-
-                                                <!-- PRÉNOM -->
-
-                                                <div class="col-md-4">
-
-                                                    <label class="form-label small fw-semibold text-dark">
-                                                        Prénom
-                                                    </label>
-
-                                                    {{ form.prenom }}
-
-                                                </div>
-
-                                            </div>
+                                             <i class="bi bi-people-fill fs-5"></i>
 
                                         </div>
 
-                                    {% endfor %}
+                                        <div>
 
-                                </div>
+                                          <h5 class="fw-bold mb-1">
+                                              Parents
+                                          </h5>
+
+                                          <small class="text-muted">
+                                           Père et mère du membre
+                                           </small>
+
+                                         </div>
+
+                                        </div>
+
+
+                 <!-- ================================================= -->
+                  <!-- PÈRE -->
+                     <!-- ================================================= -->
+
+                            <div class="border rounded-4 p-3 mb-3 bg-light">
+
+                            <div class="d-flex align-items-center mb-3">
+
+                              <div class="rounded-3 bg-primary bg-opacity-10
+                                  text-primary d-flex
+                                 align-items-center
+                                 justify-content-center me-2"
+                                 style="width:36px;height:36px;">
+
+                            <i class="bi bi-person-fill"></i>
 
                             </div>
 
-                        </div>
+                           <h6 class="fw-bold mb-0">
+                                 Père
+                            </h6>
+
+                           </div>
+
+
+                           {{ pere_form.id }}
+                          {{ pere_form.type_parent.as_hidden }}
+
+
+                          <div class="row g-3">
+
+                             <!-- NOM DU PÈRE -->
+
+                               <div class="col-md-6">
+
+                           <label class="form-label small fw-semibold text-dark">
+                                 Nom
+                            </label>
+
+                             {{ pere_form.nom }}
+
+                           </div>
+
+
+                             <!-- PRÉNOM DU PÈRE -->
+
+                             <div class="col-md-6">
+
+                            <label class="form-label small fw-semibold text-dark">
+                             Prénom
+                            </label>
+
+                            {{ pere_form.prenom }}
+
+                           </div>
+
+                         </div>
+
+                     </div>
+
+
+        <!-- ================================================= -->
+        <!-- MÈRE -->
+        <!-- ================================================= -->
+
+        <div class="border rounded-4 p-3 mb-3 bg-light">
+
+            <div class="d-flex align-items-center mb-3">
+
+                <div class="rounded-3 bg-danger bg-opacity-10
+                            text-danger d-flex
+                            align-items-center
+                            justify-content-center me-2"
+                     style="width:36px;height:36px;">
+
+                    <i class="bi bi-person-fill"></i>
+
+                </div>
+
+                <h6 class="fw-bold mb-0">
+                    Mère
+                </h6>
+
+            </div>
+
+
+            {{ mere_form.id }}
+            {{ mere_form.type_parent.as_hidden }}
+
+
+            <div class="row g-3">
+
+                <!-- NOM DE LA MÈRE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label small fw-semibold text-dark">
+                        Nom
+                    </label>
+
+                    {{ mere_form.nom }}
+
+                </div>
+
+
+                <!-- PRÉNOM DE LA MÈRE -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label small fw-semibold text-dark">
+                        Prénom
+                    </label>
+
+                    {{ mere_form.prenom }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
                         <!-- ================================================= -->

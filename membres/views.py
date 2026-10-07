@@ -446,11 +446,29 @@ def modifier_parents_conjoints(request, id):
 
     membre = get_object_or_404(Membre, id=id)
 
+    # =====================================================
+    # RÉCUPÉRER LE PÈRE ET LA MÈRE EXISTANTS
+    # =====================================================
+
+    pere = membre.parents.filter(type_parent='P').first()
+    mere = membre.parents.filter(type_parent='M').first()
+
+    # =====================================================
+    # POST
+    # =====================================================
+
     if request.method == 'POST':
 
-        parent_formset = ParentFormSet(
+        pere_form = ParentForm(
             request.POST,
-            instance=membre
+            instance=pere,
+            prefix='pere'
+        )
+
+        mere_form = ParentForm(
+            request.POST,
+            instance=mere,
+            prefix='mere'
         )
 
         conjoint_formset = ConjointFormSet(
@@ -459,30 +477,40 @@ def modifier_parents_conjoints(request, id):
         )
 
         if (
-            parent_formset.is_valid()
+            pere_form.is_valid()
+            and mere_form.is_valid()
             and conjoint_formset.is_valid()
         ):
 
-            # =========================
-            # PARENTS
-            # =========================
-            parents = parent_formset.save(commit=False)
+            # =================================================
+            # PÈRE
+            # =================================================
 
-            for parent in parents:
+            pere_obj = pere_form.save(commit=False)
 
-                parent.membre = membre
-                parent.save()
+            if pere_obj.nom or pere_obj.prenom:
+                pere_obj.membre = membre
+                pere_obj.type_parent = 'P'
+                pere_obj.save()
 
-            for obj in parent_formset.deleted_objects:
-                obj.delete()
+            # =================================================
+            # MÈRE
+            # =================================================
 
-            # =========================
+            mere_obj = mere_form.save(commit=False)
+
+            if mere_obj.nom or mere_obj.prenom:
+                mere_obj.membre = membre
+                mere_obj.type_parent = 'M'
+                mere_obj.save()
+
+            # =================================================
             # CONJOINTS
-            # =========================
+            # =================================================
+
             conjoints = conjoint_formset.save(commit=False)
 
             for conjoint in conjoints:
-
                 conjoint.membre = membre
                 conjoint.save()
 
@@ -494,31 +522,50 @@ def modifier_parents_conjoints(request, id):
                 id=membre.id
             )
 
+    # =====================================================
+    # AFFICHAGE INITIAL
+    # =====================================================
+
     else:
 
-        parent_formset = ParentFormSet(
-            instance=membre
+        pere_form = ParentForm(
+            instance=pere,
+            prefix='pere',
+            initial={
+                'type_parent': 'P'
+            } if not pere else None
+        )
+
+        mere_form = ParentForm(
+            instance=mere,
+            prefix='mere',
+            initial={
+                'type_parent': 'M'
+            } if not mere else None
         )
 
         conjoint_formset = ConjointFormSet(
             instance=membre
         )
 
+    # =====================================================
+    # AFFICHAGE
+    # =====================================================
+
     return render(
         request,
         'modifier_parents_conjoints.html',
         {
-
             'membre': membre,
 
-            'parent_formset': parent_formset,
+            'pere_form': pere_form,
+            'mere_form': mere_form,
 
             'conjoint_formset': conjoint_formset,
 
             'step': 2
         }
     )
-
 #modifier les enfants
 def modifier_enfants(request, id):
 

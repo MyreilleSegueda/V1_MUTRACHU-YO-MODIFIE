@@ -168,7 +168,7 @@ ConjointFormSet = inlineformset_factory(
 
     form=ConjointForm,
 
-    extra=1,
+    extra=0,
 
     max_num=4,
 
@@ -222,7 +222,7 @@ EnfantFormSet = inlineformset_factory(
 
     form=EnfantForm,
 
-    extra=1,
+    extra=0,
 
     max_num=9,
 
@@ -275,7 +275,7 @@ ParentFormSet = inlineformset_factory(
 
     form=ParentForm,
 
-    extra=1,
+    extra=0,
 
     max_num=2,
 
