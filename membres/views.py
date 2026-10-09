@@ -634,7 +634,7 @@ def Detail_membre(request, membre_id):
 
 
 #Generation de la carte recto-verso
-def Generer_carte(request, membre_id):
+def Generer_carte(request, membre_id,apercu=False):
     membre = get_object_or_404(Membre, id=membre_id)
 
     # Dimensions carte PVC
@@ -921,13 +921,15 @@ def Generer_carte(request, membre_id):
     c.save()
 
     # Enregistrer la carte comme produite
-    Carte.objects.update_or_create(
-        membre=membre,
-        defaults={
-            'statut': 'PRODUITE',
-            'date_production': timezone.now()
-        }
-    )
+    # Enregistrer la carte uniquement lors de la production officielle
+    if not apercu:
+        Carte.objects.update_or_create(
+            membre=membre,
+            defaults={
+                 'statut': 'PRODUITE',
+                 'date_production': timezone.now()
+           }
+        )
 
     buffer.seek(0)
 

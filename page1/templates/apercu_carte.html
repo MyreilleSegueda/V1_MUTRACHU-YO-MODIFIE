@@ -82,182 +82,26 @@
                 <!-- ============================================= -->
                 <!-- VRAIE CARTE -->
                 <!-- ============================================= -->
-                <div class="d-flex justify-content-center">
+                <!-- APERÇU DU PDF OFFICIEL -->
+            <div class="d-flex justify-content-center">
+    <div id="zone-apercu-pdf"
+         class="position-relative w-100"
+         style="max-width:620px; aspect-ratio:85.6 / 53.98;">
 
-                    <!-- RECTO -->
-                    <div id="carte-recto"
-                         class="position-relative w-100"
-                         style="max-width: 620px;">
+        <div id="zone-apercu-pdf"
+     class="d-flex justify-content-center w-100"
+     style="max-width:620px;">
 
-                        <img src="{% static 'images/Maquette.jpg' %}"
-                             alt="Aperçu de la carte"
-                             class="img-fluid w-100 rounded-4 shadow-sm border">
+    <canvas id="carte-pdf"
+            class="img-fluid w-100 rounded-4 shadow-sm border">
+    </canvas>
 
-                        <div class="position-absolute top-0 start-0 w-100 h-100">
+</div>
+    </div>
+</div>
 
-                            <!-- NUMÉRO -->
-                            <div id="apercu-numero"
-                                 class="position-absolute fw-bold"
-                                 style="top: 7%; left: 8%;">
-                                {{ membre.compteur|stringformat:"04d" }}
-                            </div>
-
-                            <!-- NOM -->
-                            <div id="apercu-nom"
-                                 class="position-absolute fw-bold text-uppercase"
-                                 style="top: 30%; left: 8%;">
-                                {{ membre.nom|upper }}
-                            </div>
-
-                            <!-- PRÉNOM -->
-                            <div id="apercu-prenom"
-                                 class="position-absolute"
-                                 style="top: 36%; left: 8%;">
-                                {{ membre.prenom }}
-                            </div>
-
-                            <!-- SEXE -->
-                            <div id="apercu-sexe"
-                                 class="position-absolute"
-                                 style="top: 42%; left: 8%;">
-                                {{ membre.sexe }}
-                            </div>
-
-                            <!-- MATRICULE -->
-                            <div id="apercu-matricule"
-                                 class="position-absolute"
-                                 style="top: 48%; left: 8%;">
-                                {{ membre.matricule }}
-                            </div>
-
-                            <!-- EMPLOI -->
-                            <div id="apercu-emploi"
-                                 class="position-absolute"
-                                 style="top: 54%; left: 8%;">
-                                {{ membre.emploi }}
-                            </div>
-
-
-                            <!-- PHOTO -->
-                            {% if membre.photo %}
-                            <img id="apercu-photo"
-                                 src="{{ membre.photo.url }}"
-                                 alt="Photo du membre"
-                                 class="position-absolute object-fit-cover"
-                                 style="
-                                    top:28%;
-                                    right:6%;
-                                    width:24%;
-                                    aspect-ratio:1/1;
-                                 ">
-                            {% endif %}
-
-
-                            <!-- QR CODE -->
-                            <div id="qr-code"
-                                 class="position-absolute bg-white d-flex align-items-center justify-content-center"
-                                 style="
-                                    bottom:4%;
-                                    left:4%;
-                                    width:18%;
-                                    aspect-ratio:1/1;
-                                 ">
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- VERSO -->
-                    <div id="carte-verso"
-                         class="position-relative w-100 d-none"
-                         style="max-width: 620px;">
-
-                        <img src="{% static 'images/Maquette_verso.jpg' %}"
-                             alt="Verso de la carte"
-                             class="img-fluid w-100 rounded-4 shadow-sm border">
-
-                        <div class="position-absolute top-0 start-0 w-100 h-100 text-black">
-
-                            <!-- TITRE -->
-                            <div class="position-absolute fw-bold text-uppercase"
-                                 style="top:8%; left:8%;">
-                                PERSONNES À CHARGE
-                            </div>
-
-
-                            <!-- ENFANTS -->
-                            <div class="position-absolute"
-                                 style="top:18%; left:8%; width:84%;">
-
-                                {% for enfant in membre.enfants.all|slice:":9" %}
-                                    <div class="small mb-1">
-                                        {{ enfant.nom }}
-                                        {{ enfant.prenom }}
-                                        {% if enfant.date_naissance %}
-                                            - {{ enfant.date_naissance|date:"d/m/Y" }}
-                                        {% endif %}
-                                    </div>
-                                {% empty %}
-                                    <div class="small text-muted">
-                                        Aucun enfant enregistré
-                                    </div>
-                                {% endfor %}
-
-                            </div>
-
-
-                            <!-- CONJOINTS -->
-                            <div class="position-absolute"
-                                 style="top:55%; left:8%; width:84%;">
-
-                                {% for conjoint in membre.conjoints.all %}
-                                    <div class="small mb-1">
-                                        {{ conjoint.nom }}
-                                        {{ conjoint.prenom }}
-                                    </div>
-                                {% empty %}
-                                    <div class="small text-muted">
-                                        Aucun conjoint enregistré
-                                    </div>
-                                {% endfor %}
-
-                            </div>
-
-
-                            <!-- PARENTS -->
-                            <div class="position-absolute"
-                                 style="top:72%; left:8%; width:84%;">
-
-                                {% for parent in membre.parents.all %}
-                                    <div class="small mb-1">
-                                        {{ parent.nom }}
-                                        {{ parent.prenom }}
-                                    </div>
-                                {% empty %}
-                                    <div class="small text-muted">
-                                        Aucun parent enregistré
-                                    </div>
-                                {% endfor %}
-
-                            </div>
-
-
-                            <!-- FOOTER -->
-                            <div class="position-absolute bottom-0 start-0 w-100 text-center small pb-2">
-                                Cette carte est la propriété exclusive de la MU.TRA.CHU-YO
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+</div>
+</div>
 
 
         <!-- ================================================= -->
@@ -604,74 +448,69 @@
 <!-- QR CODE -->
 <!-- ========================================================= -->
 
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 
-function afficherRecto() {
+const urlPDF = "{% url 'apercu_carte_pdf' membre.id %}";
 
-    const recto = document.getElementById("carte-recto");
-    const verso = document.getElementById("carte-verso");
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-    const btnRecto = document.getElementById("btn-recto");
-    const btnVerso = document.getElementById("btn-verso");
+let documentPDF = null;
 
-    recto.classList.remove("d-none");
-    verso.classList.add("d-none");
+async function afficherPageCarte(numeroPage) {
+    try {
+        if (!documentPDF) {
+            documentPDF = await pdfjsLib.getDocument(urlPDF).promise;
+        }
 
-    btnRecto.classList.remove("btn-light", "text-muted");
-    btnRecto.classList.add("btn-primary");
+        const page = await documentPDF.getPage(numeroPage);
+        const canvas = document.getElementById("carte-pdf");
+        const contexte = canvas.getContext("2d");
 
-    btnVerso.classList.remove("btn-primary");
-    btnVerso.classList.add("btn-light", "text-muted");
+        const largeurMax = 620;
+        const viewportInitial = page.getViewport({ scale: 1 });
+        const echelle = largeurMax / viewportInitial.width;
+        const viewport = page.getViewport({ scale: echelle });
+
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await page.render({
+            canvasContext: contexte,
+            viewport: viewport
+        }).promise;
+
+        const btnRecto = document.getElementById("btn-recto");
+        const btnVerso = document.getElementById("btn-verso");
+
+        btnRecto.classList.toggle("btn-primary", numeroPage === 1);
+        btnRecto.classList.toggle("btn-light", numeroPage !== 1);
+        btnRecto.classList.toggle("text-muted", numeroPage !== 1);
+
+        btnVerso.classList.toggle("btn-primary", numeroPage === 2);
+        btnVerso.classList.toggle("btn-light", numeroPage !== 2);
+        btnVerso.classList.toggle("text-muted", numeroPage !== 2);
+
+    } catch (erreur) {
+        console.error("Erreur d'affichage de la carte :", erreur);
+    }
 }
 
+function afficherRecto() {
+    afficherPageCarte(1);
+}
 
 function afficherVerso() {
-
-    const recto = document.getElementById("carte-recto");
-    const verso = document.getElementById("carte-verso");
-
-    const btnRecto = document.getElementById("btn-recto");
-    const btnVerso = document.getElementById("btn-verso");
-
-    recto.classList.add("d-none");
-    verso.classList.remove("d-none");
-
-    btnVerso.classList.remove("btn-light", "text-muted");
-    btnVerso.classList.add("btn-primary");
-
-    btnRecto.classList.remove("btn-primary");
-    btnRecto.classList.add("btn-light", "text-muted");
+    afficherPageCarte(2);
 }
 
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const qrContainer = document.getElementById("qr-code");
-
-    if (qrContainer) {
-
-        new QRCode(qrContainer, {
-
-            text: "http://127.0.0.1:8000/verifier/{{ membre.matricule }}",
-
-            width: 80,
-            height: 80,
-
-            correctLevel: QRCode.CorrectLevel.H
-
-        });
-
-    }
-
-});
+document.addEventListener("DOMContentLoaded", () => afficherPageCarte(1));
 
 
 function ouvrirPleinEcran() {
 
-    const carte = document.getElementById("carte-recto");
+    const carte = document.getElementById("zone-apercu-pdf");
 
     if (carte.requestFullscreen) {
         carte.requestFullscreen();

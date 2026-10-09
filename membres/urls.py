@@ -2,6 +2,7 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from . import views
 from django.conf import settings
+from .apercu_views import Apercu_carte_pdf
 
 urlpatterns = [
     path('', views.Membre_list, name='liste_membres'),
@@ -18,6 +19,11 @@ urlpatterns = [
     path('details/<int:membre_id>/', views.Detail_membre, name='detail_membre'),
     path('carte/<int:membre_id>/', views.Generer_carte, name='generer_carte'),
     path('carte/<int:membre_id>/apercu/', views.Apercu_carte, name='apercu_carte'),
+    path(
+    'carte/<int:membre_id>/apercu-pdf/',
+    Apercu_carte_pdf,
+    name='apercu_carte_pdf'
+    ),
     path(
     "exporter-cartes-excel/",
     views.Exporter_cartes_excel,

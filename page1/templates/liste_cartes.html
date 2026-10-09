@@ -367,6 +367,7 @@
                             '{{ membre.matricule|escapejs }}',
                             '{{ membre.emploi|escapejs }}',
                             '{% if membre.photo %}{{ membre.photo.url }}{% endif %}',
+                            '{% url 'apercu_carte_pdf' membre.id %}',
                             '{% url 'generer_carte' membre.id %}'
                         )"
                     >
@@ -650,123 +651,21 @@
 
 
                 <!-- MAQUETTE -->
-                <div
-                    id="carte-recto-apercu"
-                    class="rounded-4 position-relative overflow-hidden shadow-sm"
-                >
+                
+<!-- APERÇU DU PDF OFFICIEL -->
+<div
+    id="carte-recto-apercu"
+    class="rounded-4 overflow-hidden shadow-sm"
+    style="aspect-ratio: 85.6 / 53.98; background: #fff;"
+>
+    <canvas
+        id="carte-pdf-apercu"
+        class="w-100 h-100 d-block"
+        style="object-fit: contain;"
+    ></canvas>
+</div>
+</div>
 
-                    <img
-                        src="{% static 'images/Maquette.jpg' %}"
-                        alt="Aperçu de la carte"
-                        class="img-fluid w-100 d-block"
-                    >
-
-                    <div
-                        class="position-absolute top-0 start-0 w-100 h-100 text-dark"
-                    >
-
-                        <div
-                            id="apercu-numero"
-                            class="position-absolute fw-bold"
-                            style="
-                                top:8%;
-                                right:8%;
-                                font-size:9px;
-                            "
-                        >
-                            N : ----
-                        </div>
-
-                        <div
-                            id="apercu-nom"
-                            class="position-absolute fw-bold"
-                            style="
-                                top:23%;
-                                left:7%;
-                                font-size:9px;
-                            "
-                        >
-                            NOM
-                        </div>
-
-                        <div
-                            id="apercu-prenom"
-                            class="position-absolute fw-bold"
-                            style="
-                                top:31%;
-                                left:7%;
-                                font-size:9px;
-                            "
-                        >
-                            Prénom
-                        </div>
-
-                        <div
-                            id="apercu-sexe"
-                            class="position-absolute fw-bold"
-                            style="
-                                top:39%;
-                                left:7%;
-                                font-size:9px;
-                            "
-                        >
-                            -
-                        </div>
-
-                        <div
-                            id="apercu-matricule"
-                            class="position-absolute fw-bold"
-                            style="
-                                top:47%;
-                                left:7%;
-                                font-size:9px;
-                            "
-                        >
-                            -
-                        </div>
-
-                        <div
-                            id="apercu-emploi"
-                            class="position-absolute fw-bold"
-                            style="
-                                top:55%;
-                                left:7%;
-                                font-size:9px;
-                            "
-                        >
-                            -
-                        </div>
-
-                        <img
-                            id="apercu-photo"
-                            src=""
-                            alt="Photo du membre"
-                            class="position-absolute object-fit-cover d-none"
-                            style="
-                                top:28%;
-                                right:6%;
-                                width:24%;
-                                aspect-ratio:1;
-                                border-radius:6px;
-                            "
-                        >
-
-                        <div
-                            id="apercu-qr"
-                            class="position-absolute bg-white"
-                            style="
-                                bottom:4%;
-                                left:4%;
-                                width:18%;
-                                aspect-ratio:1;
-                            "
-                        ></div>
-
-                    </div>
-
-                </div>
-
-            </div>
 
 
             <!-- ACTIONS RAPIDES -->
@@ -847,193 +746,131 @@
 <!-- ========================================================= -->
 <!-- JAVASCRIPT : CONSERVÉ -->
 <!-- ========================================================= -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 
 let urlCarteSelectionnee = null;
+let urlApercuCarteSelectionnee = null;
 let numeroCarteSelectionnee = null;
+const canvasPDF = document.getElementById("carte-pdf-apercu");
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+pdfjsLib.getDocument(urlApercuCarteSelectionnee).promise
+    .then(pdf => pdf.getPage(1))
+    .then(page => {
+        const largeurMax = 620;
+        const viewportInitial = page.getViewport({ scale: 1 });
+        const viewport = page.getViewport({
+            scale: largeurMax / viewportInitial.width
+        });
+
+        canvasPDF.width = viewport.width;
+        canvasPDF.height = viewport.height;
+
+        return page.render({
+            canvasContext: canvasPDF.getContext("2d"),
+            viewport: viewport
+        }).promise;
+    })
+    .catch(erreur => {
+        console.error("Erreur d'affichage du PDF :", erreur);
+    });
+
 
 function selectionnerMembre(
-    id,
-    nom,
-    prenom,
-    numeroCarte,
-    sexe,
-    matricule,
-    emploi,
-    photo,
-    urlCarte
+    id, nom, prenom, numeroCarte, sexe, matricule, emploi, photo,
+    urlApercu, urlCarte
 ) {
+    const bloc = document.getElementById("membre-selectionne");
+    const nomMembre = document.getElementById("nom-membre-selectionne");
+    const numeroCarteMembre = document.getElementById("numero-carte-selectionnee");
 
-    const bloc =
-        document.getElementById("membre-selectionne");
+    const boutonProduire = document.getElementById("btn-produire-carte");
+    const boutonReimprimer = document.getElementById("btn-reimprimer-carte");
+    const boutonTelecharger = document.getElementById("btn-telecharger-pdf");
 
-    const nomMembre =
-        document.getElementById("nom-membre-selectionne");
-
-    const numeroCarteMembre =
-        document.getElementById("numero-carte-selectionnee");
-
-    const boutonProduire =
-        document.getElementById("btn-produire-carte");
-
-    const boutonReimprimer =
-        document.getElementById("btn-reimprimer-carte");
-
-    const boutonTelecharger =
-        document.getElementById("btn-telecharger-pdf");
-
-    const apercuNumero =
-        document.getElementById("apercu-numero");
-
-    const apercuNom =
-        document.getElementById("apercu-nom");
-
-    const apercuPrenom =
-        document.getElementById("apercu-prenom");
-
-    const apercuSexe =
-        document.getElementById("apercu-sexe");
-
-    const apercuMatricule =
-        document.getElementById("apercu-matricule");
-
-    const apercuEmploi =
-        document.getElementById("apercu-emploi");
-
-    const apercuPhoto =
-        document.getElementById("apercu-photo");
-
+    const canvasPDF = document.getElementById("carte-pdf-apercu");
 
     bloc.classList.remove("hidden");
+    nomMembre.textContent = nom + " " + prenom;
+    numeroCarteMembre.textContent = "N° carte : " + numeroCarte;
 
-    nomMembre.textContent =
-        nom + " " + prenom;
+    urlApercuCarteSelectionnee = urlApercu;
+    urlCarteSelectionnee = urlCarte;
+    numeroCarteSelectionnee = numeroCarte;
 
-    numeroCarteMembre.textContent =
-        "N° carte : " + numeroCarte;
+    // Afficher le recto du PDF officiel sans produire la carte
+    if (typeof pdfjsLib !== "undefined" && canvasPDF) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
+        pdfjsLib.getDocument(urlApercu).promise
+            .then(pdf => pdf.getPage(1))
+            .then(page => {
+                const largeurMax = 620;
+                const viewportInitial = page.getViewport({ scale: 1 });
+                const viewport = page.getViewport({
+                    scale: largeurMax / viewportInitial.width
+                });
 
-    apercuNumero.textContent =
-        "N : " + numeroCarte;
+                canvasPDF.width = viewport.width;
+                canvasPDF.height = viewport.height;
 
-    apercuNom.textContent =
-        nom.toUpperCase();
-
-    apercuPrenom.textContent =
-        prenom;
-
-    apercuSexe.textContent =
-        sexe;
-
-    apercuMatricule.textContent =
-        matricule;
-
-    apercuEmploi.textContent =
-        emploi;
-
-
-    if (photo) {
-
-        apercuPhoto.src = photo;
-        apercuPhoto.classList.remove("d-none");
-
+                return page.render({
+                    canvasContext: canvasPDF.getContext("2d"),
+                    viewport: viewport
+                }).promise;
+            })
+            .catch(erreur => {
+                console.error("Erreur d'affichage du PDF :", erreur);
+            });
     } else {
-
-        apercuPhoto.src = "";
-        apercuPhoto.classList.add("d-none");
-
+        console.error("PDF.js ou le canvas d'aperçu est introuvable.");
     }
 
+    if (boutonProduire) {
+        boutonProduire.disabled = false;
+        boutonProduire.onclick = () => window.open(urlCarteSelectionnee, "_blank");
+    }
 
-    urlCarteSelectionnee =
-        urlCarte;
+    if (boutonReimprimer) {
+        boutonReimprimer.disabled = false;
+        boutonReimprimer.onclick = () => window.open(urlCarteSelectionnee, "_blank");
+    }
 
-    numeroCarteSelectionnee =
-        numeroCarte;
+    if (boutonTelecharger) {
+        boutonTelecharger.disabled = false;
+        boutonTelecharger.onclick = () => {
+            fetch(urlCarteSelectionnee)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Erreur HTTP : " + response.status);
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const urlTemporaire = URL.createObjectURL(blob);
+                    const lien = document.createElement("a");
 
+                    lien.href = urlTemporaire;
+                    lien.download = "carte-" + numeroCarteSelectionnee + ".pdf";
 
-    boutonProduire.disabled = false;
-    boutonReimprimer.disabled = false;
-    boutonTelecharger.disabled = false;
+                    document.body.appendChild(lien);
+                    lien.click();
+                    lien.remove();
 
-
-    boutonProduire.onclick = function() {
-
-        window.open(
-            urlCarteSelectionnee,
-            "_blank"
-        );
-
-    };
-
-
-    boutonReimprimer.onclick = function() {
-
-        window.open(
-            urlCarteSelectionnee,
-            "_blank"
-        );
-
-    };
-
-
-    boutonTelecharger.onclick = function() {
-
-        fetch(urlCarteSelectionnee)
-
-            .then(response => {
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Erreur HTTP : " +
-                        response.status
-                    );
-
-                }
-
-                return response.blob();
-
-            })
-
-            .then(blob => {
-
-                const url =
-                    window.URL.createObjectURL(blob);
-
-                const lien =
-                    document.createElement("a");
-
-                lien.href = url;
-
-                lien.download =
-                    "carte-" +
-                    numeroCarteSelectionnee +
-                    ".pdf";
-
-                document.body.appendChild(lien);
-
-                lien.click();
-
-                lien.remove();
-
-                window.URL.revokeObjectURL(url);
-
-            })
-
-            .catch(error => {
-
-                console.error(error);
-
-                alert(
-                    "Erreur lors du téléchargement du PDF."
-                );
-
-            });
-
-    };
-
+                    URL.revokeObjectURL(urlTemporaire);
+                })
+                .catch(erreur => {
+                    console.error(erreur);
+                    alert("Erreur lors du téléchargement du PDF.");
+                });
+        };
+    }
 }
+
 const casesMembres = document.querySelectorAll(".checkbox-membre");
 
 const compteurSelection = document.getElementById("nombre-selectionnes");
